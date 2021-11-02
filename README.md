@@ -15,6 +15,10 @@ v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02-??
     - explain all file names
     - [see example notebook](https://docs.google.com/document/d/1KJAZZpvzMqlzfekco8q_vjajGqBRnzcg/edit)
 
+# Menu
+- [2021.10.13 - Read counting](#2021-10-13-read-counting)
+- [2021.10.19 - Trimmomatic](#2021-10-19-trimmomatic)
+
 # 2021.10.13 - Read counting
 
 ## Summary description of objectives / goals of the analysis.
