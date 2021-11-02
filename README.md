@@ -24,8 +24,8 @@ v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02-??
 - [2021.11.02 - Transfer to GitHub](#20211102---transfer-to-github)
 - [&lt;Template&gt; yyyy.mm.dd - Title](#template-yyyymmdd---title)
 
-
 # 2021.10.13 - Read counting
+[Back to menu](#menu)
 
 ## Summary description of objectives / goals of the analysis.
 Goal is to count total number of reads in fastq files before cleaning for WTC2 R1 and R2 fastq files. 
@@ -59,6 +59,7 @@ $ bc -l <<< '81630776/4'
 **There are 20,407,694 reads in each of the two WTC2 fastq files.**
 
 # 2021.10.19 - Trimmomatic
+[Back to menu](#menu)
 
 ## Summary description of objectives / goals of the analysis.
 The goal is to use Trimmomatic to trim the raw reads so as to remove the problematic first ten bases of each read, reduce adapter content, improve reverse read quality, and do an overall trimming via sliding window. 
@@ -172,6 +173,7 @@ Per Base Sequence Content greatly improved from before, but still has some visib
 High-Duplication sequences do not appear to have been trimmed, which is fine considering this is RNA-seq data.
 
 # 2021.10.21 - Obtain reference genome
+[Back to menu](#menu)
 ## Summary description of objectives / goals of the analysis.
 Goal is to download refseq C. albicans genome assembly from Entrez genome into a separate folder.
 
@@ -191,6 +193,7 @@ File obtained:
 GCF_000182965.3_ASM18296v3_genomic.fna.gz
 
 # 2021.10.26 - bowtie2 sequence alignment
+[Back to menu](#menu)
 
 ## Summary description of objectives / goals of the analysis.
 Run a bowtie2 (non-spliced) alignment of trimmed reads to the reference genome for C. albicans. Mostly, this bowtie2 run results will be replaced by the tophat results later on. This is mostly to familiarize with bowtie2 usage.
@@ -311,6 +314,7 @@ The bowtie2 job took 01:37:18 (1.5+ hours) to complete.
 
 
 # 2021.10.28 - Tophat alignment
+[Back to menu](#menu)
 
 ## Summary description of objectives / goals of the analysis.
 Perform spliced alignment using tophat. 
@@ -410,6 +414,7 @@ Tophat spliced alignment resulted in 90.3% concordant pair alignment rate.
 [See class's alignment results.](https://docs.google.com/spreadsheets/d/1GZOHIUhfYA523kkOdoF9APQEkRsberddvEsEZOkIIvA/edit)
 
 # 2021.11.02 - Transfer to GitHub
+[Back to menu](#menu)
 
 ## Summary description of objectives / goals of the analysis.
 Transfer notes to GitHub.
