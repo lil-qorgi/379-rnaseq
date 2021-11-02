@@ -16,8 +16,14 @@ v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02-??
     - [see example notebook](https://docs.google.com/document/d/1KJAZZpvzMqlzfekco8q_vjajGqBRnzcg/edit)
 
 # Menu
-- [2021.10.13 - Read counting](#2021-10-13-read-counting)
-- [2021.10.19 - Trimmomatic](#2021-10-19-trimmomatic)
+- [2021.10.13 - Read counting](#20211013---read-counting)
+- [2021.10.19 - Trimmomatic](#20211019---trimmomatic)
+- [2021.10.21 - Obtain reference genome](#20211021---obtain-reference-genome)
+- [2021.10.26 - bowtie2 sequence alignment](#20211026---bowtie2-sequence-alignment)
+- [2021.10.28 - Tophat alignment](#20211028---tophat-alignment)
+- [2021.11.02 - Transfer to GitHub](#20211102---transfer-to-github)
+- [&lt;Template&gt; yyyy.mm.dd - Title](#template-yyyymmdd---title)
+
 
 # 2021.10.13 - Read counting
 
