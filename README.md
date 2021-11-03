@@ -22,6 +22,7 @@ v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02-??
 - [2021.10.26 - bowtie2 sequence alignment](#20211026---bowtie2-sequence-alignment)
 - [2021.10.28 - Tophat alignment](#20211028---tophat-alignment)
 - [2021.11.02 - Transfer to GitHub](#20211102---transfer-to-github)
+- [2021.11.04 - Infer transcripts using cufflinks](20211104---infer-transcripts-using-cufflinks)
 - [&lt;Template&gt; yyyy.mm.dd - Title](#template-yyyymmdd---title)
 
 # 2021.10.13 - Read counting
@@ -446,7 +447,8 @@ $ git push
 The journal has been transferred onto Github.
 
 
-# 2021.11.4 - Infer transcripts using cufflinks
+# 2021.11.04 - Infer transcripts using cufflinks
+[Back to menu](#menu)
 
 ## Summary description of objectives / goals of the analysis.
 The goal is to use cufflinks to take in the tophat read alignment results to infer the transcripts that are found in the sequenced samples. 
@@ -482,7 +484,7 @@ $ nano cufflinks.sbatch
 #SBATCH --nodes=1 --ntasks=1 --cpus-per-task=1 --time=72:00:00
 #SBATCH --mem=40G
 
-# Tophat
+# Cufflinks
 
 module load cufflinks
 
