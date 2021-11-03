@@ -337,7 +337,9 @@ Paired-end inputs
 Folder containing all outputs
 - WTC2_tophat/
     - **accepted_hits.bam**
+        - The sequences that were successfully aligned by tophat to the reference genome.
     - **align_summary.txt**
+        - A summary of the percentage of input reads that were aligned, either concordantly or discordantly, to the reference genome.
     - deletions.bed  
     - insertions.bed   
     - junctions.bed  
@@ -380,7 +382,7 @@ jobid: 37967
 # wait for some hours…
 
 $ less z01.tophat_WTC2
-# last two lines:
+# last two lines of z01.tophat_WTC2:
 [2021-10-28 13:03:03] A summary of the alignment counts can be found in WTC2_tophat/align_summary.txt
 [2021-10-28 13:03:03] Run complete: 02:52:28 elapsed
 
@@ -410,6 +412,7 @@ Aligned pairs:  17584504
 
 ## Summary description of results & interpretation.
 Tophat spliced alignment resulted in 90.3% concordant pair alignment rate. 
+Reads aligned to the reference genome were collected in the accepted_hits.bam file.
 
 [See class's alignment results.](https://docs.google.com/spreadsheets/d/1GZOHIUhfYA523kkOdoF9APQEkRsberddvEsEZOkIIvA/edit)
 
@@ -440,6 +443,85 @@ $ git push
 ```
 
 ## Summary description of results & interpretation.
+The journal has been transferred onto Github.
+
+
+# 2021.11.4 - Infer transcripts using cufflinks
+
+## Summary description of objectives / goals of the analysis.
+The goal is to use cufflinks to take in the tophat read alignment results to infer the transcripts that are found in the sequenced samples. 
+
+See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/)
+
+## Files involved.
+### —cufflinks—
+### *input files*
+- GCF_000182965.3_ASM18296v3_genomic.gff
+    - The reference genome annotation file
+- accepted_hits.bam
+    - The sequences that were successfully aligned by tophat to the reference genome from the previous step.
+### *output files*
+- cufflinks_output/
+    - genes.fpkm_tracking
+    - isoforms.fpkm_tracking
+    - skipped.gtf
+    - **transcripts.gtf**
+
+## Specific commands used in analyses. (Copy & paste.)
+```
+# First, pull all required files together into the same folder for easier usage.
+
+# Then write the slurm script for cufflinks
+$ nano cufflinks.sbatch
+```
+—cufflinks.sbatch—
+```
+#!/bin/bash
+#SBATCH --job-name=cufflinks_WTC2 --output=z01.%x
+#SBATCH --mail-type=END,FAIL --mail-user=qz108@georgetown.edu
+#SBATCH --nodes=1 --ntasks=1 --cpus-per-task=1 --time=72:00:00
+#SBATCH --mem=40G
+
+# Tophat
+
+module load cufflinks
+
+cufflinks -o cufflinks_output --GTF GCF_000182965.3_ASM18296v3_genomic.gff accepted_hits.bam
+
+module unload cufflinks
+```
+——
+```
+# Run the sbatch script
+$ sbatch cufflinks.sbatch
+
+$ squeue -u qz108
+
+# Wait for job to complete.
+
+$ sacct -j 44135 --format=jobid,jobname,account,state,elapsed
+# The job took 05:48 minutes to complete.
+
+$ less z01.cufflinks_WTC2
+# One of the last lines says:
+Processed 6131 loci.
+
+$ cd cufflinks_output/
+$ ls -l
+-rw-r--r-- 1 qz108 users  739513 Nov  2 19:59 genes.fpkm_tracking
+-rw-r--r-- 1 qz108 users  756069 Nov  2 19:59 isoforms.fpkm_tracking
+-rw-r--r-- 1 qz108 users       0 Nov  2 19:55 skipped.gtf
+-rw-r--r-- 1 qz108 users 2958558 Nov  2 19:59 transcripts.gtf
+$ less transcripts.gft
+# The file looks good.
+
+$ wc -l transcripts.gtf
+# There are 12994 lines in the file. There is no header in the file.
+```
+
+## Summary description of results & interpretation.
+The cufflinks program successfully inferred transcripts based on the tophat alignment results. 
+
 
 <br></br>
 # &lt;Template&gt; yyyy.mm.dd - Title
