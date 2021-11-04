@@ -460,7 +460,7 @@ See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/)
 ### *input files*
 - GCF_000182965.3_ASM18296v3_genomic.gff
     - The reference genome annotation file
-        - Note that .gff works for cufflinks even though it specifies .gtf, as the two file formats are very similar.
+        - Note that, even though cufflinks manual says it requires .gtf., .gff works for cufflinks as well because the two file formats are very similar.
 - accepted_hits.bam
     - The sequences that were successfully aligned by tophat to the reference genome from the previous step.
 ### *output files*
@@ -469,6 +469,7 @@ See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/)
     - isoforms.fpkm_tracking
     - skipped.gtf
     - **transcripts.gtf**
+        - this is the annotations file containing the transcripts inferred from the accepted_hits.bam alignment file.
 
 ## Specific commands used in analyses. (Copy & paste.)
 ```
@@ -534,7 +535,8 @@ The goal is to merge the transcript annotations from all biological replicates t
 ### —cuffmerge—
 ### *input files*
 - GCF_000182965.3_ASM18296v3_genomic.gff
-- transcript gtfs
+    - Note that, similar to cufflinks, even though cuffmerge  requires .gtf., .gff works as well because the two file formats are very similar.
+- transcript gtf's, resulting from running previous steps from Trimmomatic to tophat (not including bowtie2) over each original raw reads file from the sequencing run.
     - WTA1_transcripts.gtf
     - WTA2_transcripts.gtf
     - WTB1_transcripts.gtf
@@ -542,14 +544,142 @@ The goal is to merge the transcript annotations from all biological replicates t
     - WTC1_transcripts.gtf
     - WTC2_transcripts.gtf
 - file specifying the transcript gtfs
+    - transcripts_gtf.txt
+        ```
+        WTA1_transcripts.gtf
+        WTA2_transcripts.gtf
+        WTB1_transcripts.gtf
+        WTB2_transcripts.gtf
+        WTC1_transcripts.gtf
+        WTC2_transcripts.gtf
+        ```
 
 ### *output files*
-
+- cuffmerge_output/
+    - logs/
+        - run.log
+    - **merged.gtf**
+        - this is the annotation file that merges the transcripts.gtf file from the previous (cufflinks) step obtained for all biological replicates: WTA1, A2, B1, B2, C1, C2. 
 
 ## Specific commands used in analyses. (Copy & paste.)
+```
+# First, move all required input files into the same folder.
+# Obtain all transcripts.gtf files from Google Bucket:
+$ gsutil cp gs://gu-biology-dept-class/*.gtf 
+
+# Create a text file specifying the transcript.gtf files
+$ nano transcripts_gtf.txt
+```
+```
+WTA1_transcripts.gtf
+WTA2_transcripts.gtf
+WTB1_transcripts.gtf
+WTB2_transcripts.gtf
+WTC1_transcripts.gtf
+WTC2_transcripts.gtf
+```
+```
+# Create an sbatch file for cuffmerge.
+$ nano cuffmerge.sbatch
+```
+```
+#!/bin/bash
+#SBATCH --job-name=cuffmerge --output=z01.%x
+#SBATCH --mail-type=END,FAIL --mail-user=qz108@georgetown.edu
+#SBATCH --nodes=1 --ntasks=1 --cpus-per-task=1 --time=72:00:00
+#SBATCH --mem=40G
+
+# Variables
+output_dir=cuffmerge_output
+reference_anno=GCF_000182965.3_ASM18296v3_genomic.gff
+gtf_list=transcripts_gtf.txt
+
+# Cuffmerge
+module load anaconda2
+module load cufflinks
+
+cuffmerge \
+-o $output_dir \
+-g $reference_anno \
+$gtf_list
+
+module unload cufflinks
+module unload anaconda2 
+```
+```
+# check folder contents
+$ ls -1
+cuffmerge.sbatch
+GCF_000182965.3_ASM18296v3_genomic.gff
+transcripts_gtf.txt
+WTA1_transcripts.gtf
+WTA2_transcripts.gtf
+WTB1_transcripts.gtf
+WTB2_transcripts.gtf
+WTC1_transcripts.gtf
+WTC2_transcripts.gtf
+
+# run sbatch script
+sbatch cuffmerge.sbatch
+
+# wait for sbatch script to finish
+
+# check the sbatch output file
+$ less z01.cuffmerge
+```
+```
+[Thu Nov  4 10:34:27 2021] Beginning transcriptome assembly merge
+-------------------------------------------
+
+[Thu Nov  4 10:34:27 2021] Preparing output location cuffmerge_output/
+[Thu Nov  4 10:34:27 2021] Converting GTF files to SAM
+[10:34:27] Loading reference annotation.
+[10:34:27] Loading reference annotation.
+[10:34:27] Loading reference annotation.
+[10:34:27] Loading reference annotation.
+[10:34:27] Loading reference annotation.
+[10:34:27] Loading reference annotation.
+[Thu Nov  4 10:34:28 2021] Quantitating transcripts
+Warning: Could not connect to update server to verify current version. Please check at the Cufflinks website (http://cufflinks.cbcb.umd.edu).
+Command line:
+cufflinks -o cuffmerge_output/ -F 0.05 -g GCF_000182965.3_ASM18296v3_genomic.gff -q --overhang-tolerance 200 --library-type=transfrags -A 0.0 --min-frags-per-transfrag 0 --no-5-extend -p 1 cuffmerge_output/tmp/mergeSam_fileMtoAzQ
+[bam_header_read] EOF marker is absent. The input is probably truncated.
+[bam_header_read] invalid BAM binary header (this is not a BAM file).
+File cuffmerge_output/tmp/mergeSam_fileMtoAzQ doesn't appear to be a valid BAM file, trying SAM...
+[10:34:28] Loading reference annotation.
+[10:34:28] Inspecting reads and determining fragment length distribution.
+Processed 5882 loci.
+> Map Properties:
+>       Normalized Map Mass: 37578.00
+>       Raw Map Mass: 37578.00
+>       Fragment Length Distribution: Truncated Gaussian (default)
+>                     Default Mean: 200
+>                  Default Std Dev: 80
+[10:34:28] Assembling transcripts and estimating abundances.
+Processed 5882 loci.
+[Thu Nov  4 10:34:58 2021] Comparing against reference file GCF_000182965.3_ASM18296v3_genomic.gff
+Warning: Could not connect to update server to verify current version. Please check at the Cufflinks website (http://cufflinks.cbcb.umd.edu).
+[Thu Nov  4 10:34:59 2021] Comparing against reference file GCF_000182965.3_ASM18296v3_genomic.gff
+Warning: Could not connect to update server to verify current version. Please check at the Cufflinks website (http://cufflinks.cbcb.umd.edu).
+```
+```
+# go to cuffmerge_output
+$ cd cuffmerge_output
+
+# check contents
+$ ll
+drwxr-xr-x 2 qz108 users       0 Nov  4 10:34 logs
+-rw-r--r-- 1 qz108 users 1577746 Nov  4 10:35 merged.gtf
+
+# check job elapsed time
+$ sacct -j <jobid> --format=jobname,jobid,user,elapsed
+# the process took 35 seconds.
+```
 
 ## Summary description of results & interpretation.
+Cuffmerge successfully merged the transcript annotation (.gtf) files and produced the merged.gtf file.
 
+The process took 35 seconds.
 
 <br></br>
 # &lt;Template&gt; yyyy.mm.dd - Title
