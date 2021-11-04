@@ -328,7 +328,7 @@ $ cd WTC2_tophat
 
 $ less align_summary.txt
 ```
-- [**align_summary.txt**](summary_outputs/align_summary.txt)
+- [**align_summary.txt**](summary_outputs/tophat_align_summary.txt)
 
 ## Results & interpretation.
 Tophat spliced alignment resulted in 90.3% concordant pair alignment rate. 
