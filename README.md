@@ -15,7 +15,7 @@ v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02-??
 - Document everything that someone would need to follow to recapitulate your analysis:
     - downloading files, software, commands, scripts, analyses runs, etc.
     - explain all file names
-    - [see example notebook](https://docs.google.com/document/d/1KJAZZpvzMqlzfekco8q_vjajGqBRnzcg/edit)
+    - [see example notebook (private link)](https://docs.google.com/document/d/1KJAZZpvzMqlzfekco8q_vjajGqBRnzcg/edit)
 
 # Menu
 - [2021.10.13 - Read counting](#20211013---read-counting)
