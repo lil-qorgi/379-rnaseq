@@ -26,7 +26,7 @@ v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02-??
 - [2021.11.02 - Transfer to GitHub](#20211102---transfer-to-github)
 - [2021.11.04 - Infer transcripts using cufflinks](#20211104---infer-transcripts-using-cufflinks)
 - [2021.11.09 - Merge transcript annotation files using cuffmerge](#20211109---merge-transcript-annotation-files-using-cuffmerge)
-- [&lt;Template&gt; yyyy.mm.dd - Title](#template-yyyymmdd---title)
+- [Template](#template)
 
 ---
 
