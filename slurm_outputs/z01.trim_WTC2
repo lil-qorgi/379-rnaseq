@@ -1,0 +1,7 @@
+TrimmomaticPE: Started with arguments:
+ WTC2_1.fq.gz WTC2_2.fq.gz WTC2_1.trPE.fq.gz WTC2_1.trSE.fq.gz WTC2_2.trPE.fq.gz WTC2_2.trSE.fq.gz ILLUMINACLIP:/home/qz108/Trimmomatic/adapters/TruSeq3-PE.fa:2:30:10 HEADCROP:10 TRAILING:10 SLIDINGWINDOW:4:15 MINLEN:75
+Using PrefixPair: 'TACACTCTTTCCCTACACGACGCTCTTCCGATCT' and 'GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT'
+ILLUMINACLIP: Using 1 prefix pairs, 0 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Read Pairs: 20407694 Both Surviving: 19459631 (95.35%) Forward Only Surviving: 599344 (2.94%) Reverse Only Surviving: 218664 (1.07%) Dropped: 130055 (0.64%)
+TrimmomaticPE: Completed successfully

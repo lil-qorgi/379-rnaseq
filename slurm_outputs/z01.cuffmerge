@@ -1,0 +1,33 @@
+[Thu Nov  4 10:34:27 2021] Beginning transcriptome assembly merge
+-------------------------------------------
+
+[Thu Nov  4 10:34:27 2021] Preparing output location cuffmerge_output/
+[Thu Nov  4 10:34:27 2021] Converting GTF files to SAM
+[10:34:27] Loading reference annotation.
+[10:34:27] Loading reference annotation.
+[10:34:27] Loading reference annotation.
+[10:34:27] Loading reference annotation.
+[10:34:27] Loading reference annotation.
+[10:34:27] Loading reference annotation.
+[Thu Nov  4 10:34:28 2021] Quantitating transcripts
+Warning: Could not connect to update server to verify current version. Please check at the Cufflinks website (http://cufflinks.cbcb.umd.edu).
+Command line:
+cufflinks -o cuffmerge_output/ -F 0.05 -g GCF_000182965.3_ASM18296v3_genomic.gff -q --overhang-tolerance 200 --library-type=transfrags -A 0.0 --min-frags-per-transfrag 0 --no-5-extend -p 1 cuffmerge_output/tmp/mergeSam_fileMtoAzQ
+[bam_header_read] EOF marker is absent. The input is probably truncated.
+[bam_header_read] invalid BAM binary header (this is not a BAM file).
+File cuffmerge_output/tmp/mergeSam_fileMtoAzQ doesn't appear to be a valid BAM file, trying SAM...
+[10:34:28] Loading reference annotation.
+[10:34:28] Inspecting reads and determining fragment length distribution.
+Processed 5882 loci.
+> Map Properties:
+>       Normalized Map Mass: 37578.00
+>       Raw Map Mass: 37578.00
+>       Fragment Length Distribution: Truncated Gaussian (default)
+>                     Default Mean: 200
+>                  Default Std Dev: 80
+[10:34:28] Assembling transcripts and estimating abundances.
+Processed 5882 loci.
+[Thu Nov  4 10:34:58 2021] Comparing against reference file GCF_000182965.3_ASM18296v3_genomic.gff
+Warning: Could not connect to update server to verify current version. Please check at the Cufflinks website (http://cufflinks.cbcb.umd.edu).
+[Thu Nov  4 10:34:59 2021] Comparing against reference file GCF_000182965.3_ASM18296v3_genomic.gff
+Warning: Could not connect to update server to verify current version. Please check at the Cufflinks website (http://cufflinks.cbcb.umd.edu).

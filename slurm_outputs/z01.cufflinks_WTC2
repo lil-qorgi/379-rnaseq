@@ -1,0 +1,9 @@
+Warning: Could not connect to update server to verify current version. Please check at the C
+ufflinks website (http://cufflinks.cbcb.umd.edu).
+[19:54:11] Loading reference annotation.
+[19:54:11] Inspecting reads and determining fragment length distribution.
+^M> Processing Locus NC_032089.1:4408-4720 
+... 
+a lot of lines of "Processing Locus" are omitted here.
+...
+Processed 6131 loci.                         [*************************] 100%

@@ -23,6 +23,7 @@ v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02-??
 - [2021.10.28 - Tophat alignment](#20211028---tophat-alignment)
 - [2021.11.02 - Transfer to GitHub](#20211102---transfer-to-github)
 - [2021.11.04 - Infer transcripts using cufflinks](#20211104---infer-transcripts-using-cufflinks)
+- [2021.11.09 - Merge transcript annotation files using cuffmerge](#20211109---merge-transcript-annotation-files-using-cuffmerge)
 - [&lt;Template&gt; yyyy.mm.dd - Title](#template-yyyymmdd---title)
 
 # 2021.10.13 - Read counting
@@ -87,45 +88,7 @@ Output files from Trimmomatic:
 ```
 $ nano trim.sbatch
 ```
-Inside **trim.sbatch**
-```
-#!/bin/bash
-#SBATCH --job-name=trim_WTC2 --output=z01.%x
-#SBATCH --mail-type=END,FAIL --mail-user=<netID>@georgetown.edu
-#SBATCH --nodes=1 --ntasks=1 --cpus-per-task=1 --time=72:00:00
-#SBATCH --mem=4G
-
-# Author: QZ            #
-
-# Set up variables	#
-trim_prog=/home/qz108/Trimmomatic/trimmomatic-0.39.jar
-
-in_R1=WTC2_1.fq.gz
-in_R2=WTC2_2.fq.gz
-
-out_R1_PE=WTC2_1.trPE.fq.gz
-out_R1_SE=WTC2_1.trSE.fq.gz
-
-out_R2_PE=WTC2_2.trPE.fq.gz
-out_R2_SE=WTC2_2.trSE.fq.gz
-
-adapters=/home/qz108/Trimmomatic/adapters/TruSeq3-PE.fa
-
-# Run Trimmomatic	#
-
-java -jar $trim_prog PE \
-$in_R1 \
-$in_R2 \
-$out_R1_PE \
-$out_R1_SE \
-$out_R2_PE \
-$out_R2_SE \
-ILLUMINACLIP:$adapters:2:30:10 \
-HEADCROP:10 \
-TRAILING:10 \
-SLIDINGWINDOW:4:15 \
-MINLEN:75
-```
+- [**trim.sbatch**](scripts/trim.sbatch)
 
 ### Run sbatch Trimmomatic command
 ```
@@ -145,6 +108,11 @@ $ sacct -j 24813 --format=Elapsed
 ```
 # observe output
 $ less z01.trim_WTC2
+```
+- [**z01.trim_WTC2**](slurm_outputs/z01.trim_WTC2)
+
+```
+# Highlighted output:
 Input Read Pairs: 20407694 Both Surviving: 19459631 (95.35%) Forward Only Surviving: 599344 (2.94%) Reverse Only Surviving: 218664 (1.07%) Dropped: 130055 (0.64%)
 # This already gives the answer of 19459631 reads. Let's check by unzipping.
 
@@ -162,6 +130,7 @@ $ bc -l <<< '/4'
 ```
 # download (with custom alias)
 get_hpc /home/qz108/RNA_seq_workflow/WTC2*trPE*
+
 # open with FastQC & observe.
 ```
 
@@ -256,23 +225,8 @@ $ cp ../1019_Trimmomatic/WTC2*trPE.fq .
 
 $ nano bt2.sbatch
 ```
-—bt2.sbatch—
-```
-#!/bin/bash
-#SBATCH --job-name=bt2_WTC2 --output=z01.%x
-#SBATCH --mail-type=END,FAIL --mail-user=netID@georgetown.edu
-#SBATCH --nodes=1 --ntasks=1 --cpus-per-task=1 --time=72:00:00
-#SBATCH --mem=4G
+- [**bt2.sbatch**](scripts/bt2.sbatch)
 
-# Bowtie2
-
-module load bowtie2/2.4.4
-
-bowtie2 -x Calbicans -1 WTC2_1.trPE.fq -2 WTC2_2.trPE.fq -S WTC2.sam
-
-module unload bowtie2/2.4.4
-```
-——
 ```
 # Run bowtie2 for alignment via slurm script
 $ sbatch bt2.sbatch
@@ -285,29 +239,12 @@ $ 31143 --format=jobid,jobname,account,state,elapsed
 # Check z01 output:
 $ less z01.bt2_WTC2
 ```
-—z01.bt2_WTC2—
-```
-19459631 reads; of these:
-  19459631 (100.00%) were paired; of these:
-    942014 (4.84%) aligned concordantly 0 times
-    17615558 (90.52%) aligned concordantly exactly 1 time
-    902059 (4.64%) aligned concordantly >1 times
-    ----
-    942014 pairs aligned concordantly 0 times; of these:
-      300558 (31.91%) aligned discordantly 1 time
-    ----
-    641456 pairs aligned 0 times concordantly or discordantly; of these:
-      1282912 mates make up the pairs; of these:
-        791009 (61.66%) aligned 0 times
-        448352 (34.95%) aligned exactly 1 time
-        43551 (3.39%) aligned >1 times
-97.97% overall alignment rate
-```
-——
-
+- [**z01.bt2_WTC2**](slurm_outputs/z01.bt2_WTC2)
 
 ## Summary description of results & interpretation.
 90.52% of the input (paired) reads aligned concordantly exactly 1 time.
+
+97.97% overall alignment rate
 
 The bowtie2 job took 01:37:18 (1.5+ hours) to complete.
 
@@ -356,26 +293,8 @@ $ gunzip GCF_000182965.3_ASM18296v3_genomic.gff.gz
 
 $ nano tophat_align.sbatch
 ```
-—tophat_align.sbatch—
-```
-#!/bin/bash
-#SBATCH --job-name=tophat_WTC2 --output=z01.%x
-#SBATCH --mail-type=END,FAIL --mail-user=netID@georgetown.edu
-#SBATCH --nodes=1 --ntasks=1 --cpus-per-task=1 --time=72:00:00
-#SBATCH --mem=40G
+- [**tophat_align.sbatch**](scripts/tophat_align.sbatch)
 
-# Tophat
-
-module load tophat
-
-tophat -o WTC2_tophat \
--G GCF_000182965.3_ASM18296v3_genomic.gff \
-Calbicans \
-WTC2_1.trPE.fq WTC2_2.trPE.fq
-
-module unload tophat
-```
-——
 ```
 $ sbatch tophat_align.sbatch
 jobid: 37967
@@ -383,7 +302,8 @@ jobid: 37967
 # wait for some hours…
 
 $ less z01.tophat_WTC2
-# last two lines of z01.tophat_WTC2:
+# last two lines of z01.tophat_WTC2 are:
+
 [2021-10-28 13:03:03] A summary of the alignment counts can be found in WTC2_tophat/align_summary.txt
 [2021-10-28 13:03:03] Run complete: 02:52:28 elapsed
 
@@ -391,25 +311,7 @@ $ cd WTC2_tophat
 
 $ less align_summary.txt
 ```
-—align_summary.txt—
-```
-Left reads:
-          Input     :  19459631
-           Mapped   :  18359897 (94.3% of input)
-            of these:    418573 ( 2.3%) have multiple alignments (216 have >20)
-Right reads:
-          Input     :  19459631
-           Mapped   :  18213032 (93.6% of input)
-            of these:    414252 ( 2.3%) have multiple alignments (215 have >20)
-94.0% overall read mapping rate.
-
-Aligned pairs:  17584504
-     of these:    401012 ( 2.3%) have multiple alignments
-                   15884 ( 0.1%) are discordant alignments
-90.3% concordant pair alignment rate.
-```
-——
-
+- [**align_summary.txt**](summary_outputs/align_summary.txt)
 
 ## Summary description of results & interpretation.
 Tophat spliced alignment resulted in 90.3% concordant pair alignment rate. 
@@ -478,23 +380,8 @@ See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/)
 # Then write the slurm script for cufflinks
 $ nano cufflinks.sbatch
 ```
-—cufflinks.sbatch—
-```
-#!/bin/bash
-#SBATCH --job-name=cufflinks_WTC2 --output=z01.%x
-#SBATCH --mail-type=END,FAIL --mail-user=qz108@georgetown.edu
-#SBATCH --nodes=1 --ntasks=1 --cpus-per-task=1 --time=72:00:00
-#SBATCH --mem=40G
+- [**cufflinks.sbatch**](scripts/cufflinks.sbatch)
 
-# Cufflinks
-
-module load cufflinks
-
-cufflinks -o cufflinks_output --GTF GCF_000182965.3_ASM18296v3_genomic.gff accepted_hits.bam
-
-module unload cufflinks
-```
-——
 ```
 # Run the sbatch script
 $ sbatch cufflinks.sbatch
@@ -506,16 +393,23 @@ $ squeue -u qz108
 $ sacct -j 44135 --format=jobid,jobname,account,state,elapsed
 # The job took 05:48 minutes to complete.
 
+# See the sbatch output
 $ less z01.cufflinks_WTC2
+```
+- [**z01.cufflinks_WTC2**](slurm_outputs/z01.cufflinks_WTC2)
+
+```
 # One of the last lines says:
 Processed 6131 loci.
 
 $ cd cufflinks_output/
 $ ls -l
+
 -rw-r--r-- 1 qz108 users  739513 Nov  2 19:59 genes.fpkm_tracking
 -rw-r--r-- 1 qz108 users  756069 Nov  2 19:59 isoforms.fpkm_tracking
 -rw-r--r-- 1 qz108 users       0 Nov  2 19:55 skipped.gtf
 -rw-r--r-- 1 qz108 users 2958558 Nov  2 19:59 transcripts.gtf
+
 $ less transcripts.gft
 # The file looks good.
 
@@ -527,6 +421,7 @@ $ wc -l transcripts.gtf
 The cufflinks program successfully inferred transcripts based on the tophat alignment results. 
 
 # 2021.11.09 - Merge transcript annotation files using cuffmerge
+[Back to menu](#menu)
 
 ## Summary description of objectives / goals of the analysis.
 The goal is to merge the transcript annotations from all biological replicates to obtain the merged annotation file merged.gtf.
@@ -582,30 +477,8 @@ WTC2_transcripts.gtf
 # Create an sbatch file for cuffmerge.
 $ nano cuffmerge.sbatch
 ```
-```
-#!/bin/bash
-#SBATCH --job-name=cuffmerge --output=z01.%x
-#SBATCH --mail-type=END,FAIL --mail-user=qz108@georgetown.edu
-#SBATCH --nodes=1 --ntasks=1 --cpus-per-task=1 --time=72:00:00
-#SBATCH --mem=40G
+- [**cuffmerge.sbatch**](scripts/cuffmerge.sbatch)
 
-# Variables
-output_dir=cuffmerge_output
-reference_anno=GCF_000182965.3_ASM18296v3_genomic.gff
-gtf_list=transcripts_gtf.txt
-
-# Cuffmerge
-module load anaconda2
-module load cufflinks
-
-cuffmerge \
--o $output_dir \
--g $reference_anno \
-$gtf_list
-
-module unload cufflinks
-module unload anaconda2 
-```
 ```
 # check folder contents
 $ ls -1
@@ -627,41 +500,8 @@ sbatch cuffmerge.sbatch
 # check the sbatch output file
 $ less z01.cuffmerge
 ```
-```
-[Thu Nov  4 10:34:27 2021] Beginning transcriptome assembly merge
--------------------------------------------
+- [**z01.cuffmerge**](slurm_outputs/z01.cuffmerge)
 
-[Thu Nov  4 10:34:27 2021] Preparing output location cuffmerge_output/
-[Thu Nov  4 10:34:27 2021] Converting GTF files to SAM
-[10:34:27] Loading reference annotation.
-[10:34:27] Loading reference annotation.
-[10:34:27] Loading reference annotation.
-[10:34:27] Loading reference annotation.
-[10:34:27] Loading reference annotation.
-[10:34:27] Loading reference annotation.
-[Thu Nov  4 10:34:28 2021] Quantitating transcripts
-Warning: Could not connect to update server to verify current version. Please check at the Cufflinks website (http://cufflinks.cbcb.umd.edu).
-Command line:
-cufflinks -o cuffmerge_output/ -F 0.05 -g GCF_000182965.3_ASM18296v3_genomic.gff -q --overhang-tolerance 200 --library-type=transfrags -A 0.0 --min-frags-per-transfrag 0 --no-5-extend -p 1 cuffmerge_output/tmp/mergeSam_fileMtoAzQ
-[bam_header_read] EOF marker is absent. The input is probably truncated.
-[bam_header_read] invalid BAM binary header (this is not a BAM file).
-File cuffmerge_output/tmp/mergeSam_fileMtoAzQ doesn't appear to be a valid BAM file, trying SAM...
-[10:34:28] Loading reference annotation.
-[10:34:28] Inspecting reads and determining fragment length distribution.
-Processed 5882 loci.
-> Map Properties:
->       Normalized Map Mass: 37578.00
->       Raw Map Mass: 37578.00
->       Fragment Length Distribution: Truncated Gaussian (default)
->                     Default Mean: 200
->                  Default Std Dev: 80
-[10:34:28] Assembling transcripts and estimating abundances.
-Processed 5882 loci.
-[Thu Nov  4 10:34:58 2021] Comparing against reference file GCF_000182965.3_ASM18296v3_genomic.gff
-Warning: Could not connect to update server to verify current version. Please check at the Cufflinks website (http://cufflinks.cbcb.umd.edu).
-[Thu Nov  4 10:34:59 2021] Comparing against reference file GCF_000182965.3_ASM18296v3_genomic.gff
-Warning: Could not connect to update server to verify current version. Please check at the Cufflinks website (http://cufflinks.cbcb.umd.edu).
-```
 ```
 # go to cuffmerge_output
 $ cd cuffmerge_output
@@ -672,7 +512,7 @@ drwxr-xr-x 2 qz108 users       0 Nov  4 10:34 logs
 -rw-r--r-- 1 qz108 users 1577746 Nov  4 10:35 merged.gtf
 
 # check job elapsed time
-$ sacct -j <jobid> --format=jobname,jobid,user,elapsed
+$ sacct -j 47686 --format=jobname,jobid,user,elapsed
 # the process took 35 seconds.
 ```
 
