@@ -37,14 +37,18 @@ v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02-??
 Goal is to count total number of reads in fastq files before cleaning for WTC2 R1 and R2 fastq files. 
 
 ## Files involved.
-WTC2_1.fq.gz, WTC2_2.fq.gz
-- WT = Wildtype Candida albicans
-- C = one of three biological replicates
-- C2 = Thi– = sampled from yeast grown from environment without thiamine
-- _1, _2 = forward & reverse reads (?)
+Raw data files for paired-end sequencing data for a single biological replicate
+- WTC2_1.fq.gz, WTC2_2.fq.gz
+    - WT = Wildtype Candida albicans
+    - C = one of three biological replicates
+    - C2 = Thi– = sampled from yeast grown from environment without thiamine
+    - _1, _2 = forward & reverse reads (?)
 
 ## Specific commands used in the analysis.
 ```
+# obtain the .gz files from Google Bucket
+$ gsutil cp gs://gu-biology-dept-class/*.gz
+
 # unzip the .gz files
 $ gunzip WTC*
 
@@ -77,11 +81,12 @@ The goal is to use Trimmomatic to trim the raw reads so as to remove the problem
 Review trimmed PE files in FastQC to ensure Trim achieved aims as intended.
 
 ## Files involved.
-Input files into Trimmomatic:
+### —Trimmomatic—
+### *input files*
 - WTC2_1.fq.gz, WTC2_2.fq.gz
-- For descriptions, see previous entry.
+    - Raw data files for wildtype C2 treatment. (Yeast grown without thiamine.) (see also previous entry)
 
-Output files from Trimmomatic:
+### *output files*
 - Paired-end and Single-end trimmed sequence files for forward reads (R1)
     - WTC2_1.trPE.fq.gz
     - WTC2_1.trSE.fq.gz
