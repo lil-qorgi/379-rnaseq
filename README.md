@@ -29,7 +29,7 @@ v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02-??
 # 2021.10.13 - Read counting
 [Back to menu](#menu)
 
-## Summary description of objectives / goals of the analysis.
+## Objectives of the analysis.
 Goal is to count total number of reads in fastq files before cleaning for WTC2 R1 and R2 fastq files. 
 
 ## Files involved.
@@ -39,7 +39,7 @@ WTC2_1.fq.gz, WTC2_2.fq.gz
 - C2 = Thi– = sampled from yeast grown from environment without thiamine
 - _1, _2 = forward & reverse reads (?)
 
-## Specific commands used in analyses. (Copy & paste.)
+## Specific commands used in the analysis.
 ```
 # unzip the .gz files
 $ gunzip WTC*
@@ -57,13 +57,13 @@ $ bc -l <<< '81630776/4'
 20407694
 ```
 
-## Summary description of results & interpretation.
+## Results & interpretation.
 **There are 20,407,694 reads in each of the two WTC2 fastq files.**
 
 # 2021.10.19 - Trimmomatic
 [Back to menu](#menu)
 
-## Summary description of objectives / goals of the analysis.
+## Objectives of the analysis.
 The goal is to use Trimmomatic to trim the raw reads so as to remove the problematic first ten bases of each read, reduce adapter content, improve reverse read quality, and do an overall trimming via sliding window. 
 
 Review trimmed PE files in FastQC to ensure Trim achieved aims as intended.
@@ -83,7 +83,7 @@ Output files from Trimmomatic:
 - *Note that the trSE versions will not be used in subsequent steps.
 
 
-## Specific commands used in analyses. (Copy & paste.)
+## Specific commands used in the analysis.
 ### Create trim.sbatch
 ```
 $ nano trim.sbatch
@@ -134,7 +134,7 @@ get_hpc /home/qz108/RNA_seq_workflow/WTC2*trPE*
 # open with FastQC & observe.
 ```
 
-## Summary description of results & interpretation.
+## Results & interpretation.
 There are 19,459,631 reads in the trimmed paired-end fastq files.
 **95.35% surviving.** 
 
@@ -144,28 +144,28 @@ High-Duplication sequences do not appear to have been trimmed, which is fine con
 
 # 2021.10.21 - Obtain reference genome
 [Back to menu](#menu)
-## Summary description of objectives / goals of the analysis.
+## Objectives of the analysis.
 Goal is to download refseq C. albicans genome assembly from Entrez genome into a separate folder.
 
 Species: [Candida albicans SC5314 (budding yeasts)](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=237561&lvl=3&lin=f&keep=1&srchmode=1&unlock)
 Link at Entrez Genome: [GCA_000182965.3](https://www.ncbi.nlm.nih.gov/assembly/GCA_000182965.3)
 
 ## Files involved.
-## Specific commands used in analyses. (Copy & paste.)
+## Specific commands used in the analysis.
 ```
 $ mkdir refseq_GCF_000182965.3
 $ cd refseq_GCF_000182965.3
 $ wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/182/965/GCF_000182965.3_ASM18296v3/GCF_000182965.3_ASM18296v3_genomic.fna.gz
 ```
 
-## Summary description of results & interpretation.
+## Results & interpretation.
 File obtained:
 GCF_000182965.3_ASM18296v3_genomic.fna.gz
 
 # 2021.10.26 - bowtie2 sequence alignment
 [Back to menu](#menu)
 
-## Summary description of objectives / goals of the analysis.
+## Objectives of the analysis.
 Run a bowtie2 (non-spliced) alignment of trimmed reads to the reference genome for C. albicans. Mostly, this bowtie2 run results will be replaced by the tophat results later on. This is mostly to familiarize with bowtie2 usage.
 
 ## Files involved.
@@ -200,7 +200,7 @@ Trimmed FastQ paired-end files (from Trimmomatic) to align
 Sequence alignment map
 - WTC2.sam
 
-## Specific commands used in analyses. (Copy & paste.)
+## Specific commands used in the analysis.
 ```
 # Create & navigate to directory
 $ mkdir 1021-26_bowtie2_alignment
@@ -241,7 +241,7 @@ $ less z01.bt2_WTC2
 ```
 - [**z01.bt2_WTC2**](slurm_outputs/z01.bt2_WTC2)
 
-## Summary description of results & interpretation.
+## Results & interpretation.
 90.52% of the input (paired) reads aligned concordantly exactly 1 time.
 
 97.97% overall alignment rate
@@ -254,7 +254,7 @@ The bowtie2 job took 01:37:18 (1.5+ hours) to complete.
 # 2021.10.28 - Tophat alignment
 [Back to menu](#menu)
 
-## Summary description of objectives / goals of the analysis.
+## Objectives of the analysis.
 Perform spliced alignment using tophat. 
 
 ## Files involved.
@@ -287,7 +287,7 @@ Folder containing all outputs
 
 **Bolded files** are important.
 
-## Specific commands used in analyses. (Copy & paste.)
+## Specific commands used in the analysis.
 ```
 $ gunzip GCF_000182965.3_ASM18296v3_genomic.gff.gz
 
@@ -313,7 +313,7 @@ $ less align_summary.txt
 ```
 - [**align_summary.txt**](summary_outputs/align_summary.txt)
 
-## Summary description of results & interpretation.
+## Results & interpretation.
 Tophat spliced alignment resulted in 90.3% concordant pair alignment rate. 
 Reads aligned to the reference genome were collected in the accepted_hits.bam file.
 
@@ -322,7 +322,7 @@ Reads aligned to the reference genome were collected in the accepted_hits.bam fi
 # 2021.11.02 - Transfer to GitHub
 [Back to menu](#menu)
 
-## Summary description of objectives / goals of the analysis.
+## Objectives of the analysis.
 Transfer notes to GitHub.
 
 ## Files involved.
@@ -332,7 +332,7 @@ Repository
 READ<span>ME.md</span>
 - Notes document for RNAseq workflow.
 
-## Specific commands used in analyses. (Copy & paste.)
+## Specific commands used in the analysis.
 ```
 # Create local repo.
 # (in parent folder:)
@@ -345,14 +345,14 @@ $ git commit -m "Transferred journal to readme."
 $ git push
 ```
 
-## Summary description of results & interpretation.
+## Results & interpretation.
 The journal has been transferred onto Github.
 
 
 # 2021.11.04 - Infer transcripts using cufflinks
 [Back to menu](#menu)
 
-## Summary description of objectives / goals of the analysis.
+## Objectives of the analysis.
 The goal is to use cufflinks to take in the tophat read alignment results to infer the transcripts that are found in the sequenced samples. 
 
 See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/)
@@ -373,7 +373,7 @@ See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/)
     - **transcripts.gtf**
         - this is the annotations file containing the transcripts inferred from the accepted_hits.bam alignment file.
 
-## Specific commands used in analyses. (Copy & paste.)
+## Specific commands used in the analysis.
 ```
 # First, pull all required files together into the same folder for easier usage.
 
@@ -417,13 +417,13 @@ $ wc -l transcripts.gtf
 # There are 12994 lines in the file. There is no header in the file.
 ```
 
-## Summary description of results & interpretation.
+## Results & interpretation.
 The cufflinks program successfully inferred transcripts based on the tophat alignment results. 
 
 # 2021.11.09 - Merge transcript annotation files using cuffmerge
 [Back to menu](#menu)
 
-## Summary description of objectives / goals of the analysis.
+## Objectives of the analysis.
 The goal is to merge the transcript annotations from all biological replicates to obtain the merged annotation file merged.gtf.
 
 ## Files involved.
@@ -456,7 +456,7 @@ The goal is to merge the transcript annotations from all biological replicates t
     - **merged.gtf**
         - this is the annotation file that merges the transcripts.gtf file from the previous (cufflinks) step obtained for all biological replicates: WTA1, A2, B1, B2, C1, C2. 
 
-## Specific commands used in analyses. (Copy & paste.)
+## Specific commands used in the analysis.
 ```
 # First, move all required input files into the same folder.
 # Obtain all transcripts.gtf files from Google Bucket:
@@ -516,7 +516,7 @@ $ sacct -j 47686 --format=jobname,jobid,user,elapsed
 # the process took 35 seconds.
 ```
 
-## Summary description of results & interpretation.
+## Results & interpretation.
 Cuffmerge successfully merged the transcript annotation (.gtf) files and produced the merged.gtf file.
 
 The process took 35 seconds.
@@ -524,10 +524,10 @@ The process took 35 seconds.
 <br></br>
 # &lt;Template&gt; yyyy.mm.dd - Title
 
-## Summary description of objectives / goals of the analysis.
+## Objectives of the analysis.
 
 ## Files involved.
 
-## Specific commands used in analyses. (Copy & paste.)
+## Specific commands used in the analysis.
 
-## Summary description of results & interpretation.
+## Results & interpretation.
