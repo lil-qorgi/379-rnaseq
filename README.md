@@ -460,6 +460,7 @@ See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/)
 ### *input files*
 - GCF_000182965.3_ASM18296v3_genomic.gff
     - The reference genome annotation file
+        - Note that .gff works for cufflinks even though it specifies .gtf, as the two file formats are very similar.
 - accepted_hits.bam
     - The sequences that were successfully aligned by tophat to the reference genome from the previous step.
 ### *output files*
@@ -523,6 +524,31 @@ $ wc -l transcripts.gtf
 
 ## Summary description of results & interpretation.
 The cufflinks program successfully inferred transcripts based on the tophat alignment results. 
+
+# 2021.11.09 - Merge transcript annotation files using cuffmerge
+
+## Summary description of objectives / goals of the analysis.
+The goal is to merge the transcript annotations from all biological replicates to obtain the merged annotation file merged.gtf.
+
+## Files involved.
+### —cuffmerge—
+### *input files*
+- GCF_000182965.3_ASM18296v3_genomic.gff
+- transcript gtfs
+    - WTA1_transcripts.gtf
+    - WTA2_transcripts.gtf
+    - WTB1_transcripts.gtf
+    - WTB2_transcripts.gtf
+    - WTC1_transcripts.gtf
+    - WTC2_transcripts.gtf
+- file specifying the transcript gtfs
+
+### *output files*
+
+
+## Specific commands used in analyses. (Copy & paste.)
+
+## Summary description of results & interpretation.
 
 
 <br></br>
