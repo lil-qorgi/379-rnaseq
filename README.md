@@ -26,6 +26,8 @@ v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02-??
 - [2021.11.09 - Merge transcript annotation files using cuffmerge](#20211109---merge-transcript-annotation-files-using-cuffmerge)
 - [&lt;Template&gt; yyyy.mm.dd - Title](#template-yyyymmdd---title)
 
+<br></br>
+
 # 2021.10.13 - Read counting
 [Back to menu](#menu)
 
@@ -59,6 +61,8 @@ $ bc -l <<< '81630776/4'
 
 ## Results & interpretation.
 **There are 20,407,694 reads in each of the two WTC2 fastq files.**
+
+<br></br>
 
 # 2021.10.19 - Trimmomatic
 [Back to menu](#menu)
@@ -142,6 +146,8 @@ Per Base Sequence Content greatly improved from before, but still has some visib
 
 High-Duplication sequences do not appear to have been trimmed, which is fine considering this is RNA-seq data.
 
+<br></br>
+
 # 2021.10.21 - Obtain reference genome
 [Back to menu](#menu)
 ## Objectives of the analysis.
@@ -161,6 +167,8 @@ $ wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/182/965/GCF_000182965.3_
 ## Results & interpretation.
 File obtained:
 GCF_000182965.3_ASM18296v3_genomic.fna.gz
+
+<br></br>
 
 # 2021.10.26 - bowtie2 sequence alignment
 [Back to menu](#menu)
@@ -250,6 +258,7 @@ The bowtie2 job took 01:37:18 (1.5+ hours) to complete.
 
 [See class's alignment results.](https://docs.google.com/spreadsheets/d/1GZOHIUhfYA523kkOdoF9APQEkRsberddvEsEZOkIIvA/edit)
 
+<br></br>
 
 # 2021.10.28 - Tophat alignment
 [Back to menu](#menu)
@@ -319,6 +328,8 @@ Reads aligned to the reference genome were collected in the accepted_hits.bam fi
 
 [See class's alignment results.](https://docs.google.com/spreadsheets/d/1GZOHIUhfYA523kkOdoF9APQEkRsberddvEsEZOkIIvA/edit)
 
+<br></br>
+
 # 2021.11.02 - Transfer to GitHub
 [Back to menu](#menu)
 
@@ -348,6 +359,7 @@ $ git push
 ## Results & interpretation.
 The journal has been transferred onto Github.
 
+<br></br>
 
 # 2021.11.04 - Infer transcripts using cufflinks
 [Back to menu](#menu)
@@ -419,6 +431,8 @@ $ wc -l transcripts.gtf
 
 ## Results & interpretation.
 The cufflinks program successfully inferred transcripts based on the tophat alignment results. 
+
+<br></br>
 
 # 2021.11.09 - Merge transcript annotation files using cuffmerge
 [Back to menu](#menu)
@@ -522,7 +536,9 @@ The process took 35 seconds.
 Cuffmerge successfully merged the transcript annotation (.gtf) files and produced the merged.gtf file.
 
 <br></br>
+
 # —Template—
+
 <br></br>
 
 # yyyy.mm.dd - Title
