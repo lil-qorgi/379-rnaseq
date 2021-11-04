@@ -517,12 +517,16 @@ $ sacct -j 47686 --format=jobname,jobid,user,elapsed
 ```
 
 ## Results & interpretation.
-Cuffmerge successfully merged the transcript annotation (.gtf) files and produced the merged.gtf file.
-
 The process took 35 seconds.
 
+Cuffmerge successfully merged the transcript annotation (.gtf) files and produced the merged.gtf file.
+
 <br></br>
-# &lt;Template&gt; yyyy.mm.dd - Title
+# —Template—
+<br></br>
+
+# yyyy.mm.dd - Title
+[Back to menu](#menu)
 
 ## Objectives of the analysis.
 
