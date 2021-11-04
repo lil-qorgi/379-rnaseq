@@ -1,6 +1,8 @@
 # *C. albicans* RNAseq Workflow Notes 
 
-Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Q Zhang
+Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Q Zhang
+
+Course&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BIOL 379
 ## Version
 v0.1.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.10.12-10.31
 - Entries logged using Google Docs.
@@ -13,7 +15,7 @@ v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02-??
 - Document everything that someone would need to follow to recapitulate your analysis:
     - downloading files, software, commands, scripts, analyses runs, etc.
     - explain all file names
-    - [see example notebook](https://docs.google.com/document/d/1KJAZZpvzMqlzfekco8q_vjajGqBRnzcg/edit)
+    - [see example notebook (private link)](https://docs.google.com/document/d/1KJAZZpvzMqlzfekco8q_vjajGqBRnzcg/edit)
 
 # Menu
 - [2021.10.13 - Read counting](#20211013---read-counting)
@@ -24,7 +26,7 @@ v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02-??
 - [2021.11.02 - Transfer to GitHub](#20211102---transfer-to-github)
 - [2021.11.04 - Infer transcripts using cufflinks](#20211104---infer-transcripts-using-cufflinks)
 - [2021.11.09 - Merge transcript annotation files using cuffmerge](#20211109---merge-transcript-annotation-files-using-cuffmerge)
-- [&lt;Template&gt; yyyy.mm.dd - Title](#template-yyyymmdd---title)
+- [Template](#template)
 
 ---
 
