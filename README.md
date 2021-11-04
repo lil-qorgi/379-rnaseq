@@ -45,7 +45,7 @@ Raw data files for paired-end sequencing data for a single biological replicate
     - _1, _2 = forward & reverse reads (?)
 
 ## Specific commands used in the analysis.
-```
+```bash
 # obtain the .gz files from Google Bucket
 $ gsutil cp gs://gu-biology-dept-class/*.gz
 
@@ -98,13 +98,13 @@ Review trimmed PE files in FastQC to ensure Trim achieved aims as intended.
 
 ## Specific commands used in the analysis.
 ### Create trim.sbatch
-```
+```bash
 $ nano trim.sbatch
 ```
 - [**trim.sbatch**](scripts/trim.sbatch)
 
 ### Run sbatch Trimmomatic command
-```
+```bash
 $ sbatch trim.sbatch
 
 # to check on sbatch status
@@ -118,13 +118,13 @@ $ sacct -j 24813 --format=Elapsed
 ```
 
 ### Observe output on GCP
-```
+```bash
 # observe output
 $ less z01.trim_WTC2
 ```
 - [**z01.trim_WTC2**](slurm_outputs/z01.trim_WTC2)
 
-```
+```bash
 # Highlighted output:
 Input Read Pairs: 20407694 Both Surviving: 19459631 (95.35%) Forward Only Surviving: 599344 (2.94%) Reverse Only Surviving: 218664 (1.07%) Dropped: 130055 (0.64%)
 # This already gives the answer of 19459631 reads. Let's check by unzipping.
@@ -140,7 +140,7 @@ $ bc -l <<< '/4'
 ```
 
 ### Observe output on local
-```
+```bash
 # download (with custom alias)
 get_hpc /home/qz108/RNA_seq_workflow/WTC2*trPE*
 
@@ -169,7 +169,7 @@ Link at Entrez Genome: [GCA_000182965.3](https://www.ncbi.nlm.nih.gov/assembly/G
 
 ## Files involved.
 ## Specific commands used in the analysis.
-```
+```bash
 $ mkdir refseq_GCF_000182965.3
 $ cd refseq_GCF_000182965.3
 $ wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/182/965/GCF_000182965.3_ASM18296v3/GCF_000182965.3_ASM18296v3_genomic.fna.gz
@@ -222,13 +222,13 @@ Sequence alignment map
 - WTC2.sam
 
 ## Specific commands used in the analysis.
-```
+```bash
 # Create & navigate to directory
 $ mkdir 1021-26_bowtie2_alignment
 $ cd 1021-26_bowtie2_alignment
 ```
 ### —bowtie2-build—
-```
+```bash
 # This is to build an index of the reference genome, which is then used by bowtie2 for alignment.
 
 # Enter a compute node
@@ -238,7 +238,7 @@ $ srun --pty bash
 $ bowtie2-build GCF_000182965.3_ASM18296v3_genomic.fna.gz Calbicans
 ```
 ### —bowtie2—
-```
+```bash
 # Copy over the WTC2 trPE fastq files from the outputs of the Trimmomatic run.
 $ cp ../1019_Trimmomatic/WTC2*trPE.fq .
 
@@ -248,7 +248,7 @@ $ nano bt2.sbatch
 ```
 - [**bt2.sbatch**](scripts/bt2.sbatch)
 
-```
+```bash
 # Run bowtie2 for alignment via slurm script
 $ sbatch bt2.sbatch
 
@@ -312,14 +312,14 @@ Folder containing all outputs
 **Bolded files** are important.
 
 ## Specific commands used in the analysis.
-```
+```bash
 $ gunzip GCF_000182965.3_ASM18296v3_genomic.gff.gz
 
 $ nano tophat_align.sbatch
 ```
 - [**tophat_align.sbatch**](scripts/tophat_align.sbatch)
 
-```
+```bash
 $ sbatch tophat_align.sbatch
 jobid: 37967
 
@@ -361,7 +361,7 @@ READ<span>ME.md</span>
 - Notes document for RNAseq workflow.
 
 ## Specific commands used in the analysis.
-```
+```bash
 # Create local repo.
 # (in parent folder:)
 $ git clone https://github.com/lil-qorgi/379-rnaseq.git RNAseq_notes
@@ -405,7 +405,7 @@ See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/)
         - this is the annotations file containing the transcripts inferred from the accepted_hits.bam alignment file.
 
 ## Specific commands used in the analysis.
-```
+```bash
 # First, pull all required files together into the same folder for easier usage.
 
 # Then write the slurm script for cufflinks
@@ -413,7 +413,7 @@ $ nano cufflinks.sbatch
 ```
 - [**cufflinks.sbatch**](scripts/cufflinks.sbatch)
 
-```
+```bash
 # Run the sbatch script
 $ sbatch cufflinks.sbatch
 
@@ -429,7 +429,7 @@ $ less z01.cufflinks_WTC2
 ```
 - [**z01.cufflinks_WTC2**](slurm_outputs/z01.cufflinks_WTC2)
 
-```
+```bash
 # One of the last lines says:
 Processed 6131 loci.
 
@@ -492,7 +492,7 @@ The goal is to merge the transcript annotations from all biological replicates t
         - this is the annotation file that merges the transcripts.gtf file from the previous (cufflinks) step obtained for all biological replicates: WTA1, A2, B1, B2, C1, C2. 
 
 ## Specific commands used in the analysis.
-```
+```bash
 # First, move all required input files into the same folder.
 # Obtain all transcripts.gtf files from Google Bucket:
 $ gsutil cp gs://gu-biology-dept-class/*.gtf 
@@ -508,13 +508,13 @@ WTB2_transcripts.gtf
 WTC1_transcripts.gtf
 WTC2_transcripts.gtf
 ```
-```
+```bash
 # Create an sbatch file for cuffmerge.
 $ nano cuffmerge.sbatch
 ```
 - [**cuffmerge.sbatch**](scripts/cuffmerge.sbatch)
 
-```
+```bash
 # check folder contents
 $ ls -1
 cuffmerge.sbatch
@@ -537,7 +537,7 @@ $ less z01.cuffmerge
 ```
 - [**z01.cuffmerge**](slurm_outputs/z01.cuffmerge)
 
-```
+```bash
 # go to cuffmerge_output
 $ cd cuffmerge_output
 
@@ -574,6 +574,8 @@ Cuffmerge successfully merged the transcript annotation (.gtf) files and produce
 ## Files involved.
 
 ## Specific commands used in the analysis.
+```bash
+```
 
 ## Results & interpretation.
 
