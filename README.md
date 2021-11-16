@@ -17,9 +17,23 @@ v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02-??
     - explain all file names
     - [see example notebook (private link)](https://docs.google.com/document/d/1KJAZZpvzMqlzfekco8q_vjajGqBRnzcg/edit)
 
+# Background
+
+The Rolfes lab has sequenced wildtype *Candida albicans* yeast cells grown in two different environments: with thiamine (Thi+) and without thiamine (Thi-).
+
+For each environmental condition, there are three biological replicates — A, B, and C — grown and sequenced. 
+
+The biological motivation is to better understand the role of environmental thiamine in modulating the pathogenicity of *C. albicans*, which is a normally commensal species. 
+
+The aim of this bioinformatics analysis is to identify genes that are differentially expressed in yeast cells grown in Thi+ versus Thi- environments. 
+
+---
+
+<br></br>
+
 # Menu
-- [2021.10.13 - Read counting](#20211013---read-counting)
-- [2021.10.19 - Trimmomatic](#20211019---trimmomatic)
+- [2021.10.13 - Obtain reads and read counting](#20211013---obtain-reads-and-read-counting)
+- [2021.10.19 - Clean reads via Trimmomatic](#20211019---clean-reads-via-trimmomatic)
 - [2021.10.21 - Obtain reference genome](#20211021---obtain-reference-genome)
 - [2021.10.26 - bowtie2 sequence alignment (mostly for practice)](#20211026---bowtie2-sequence-alignment-mostly-for-practice)
 - [2021.10.28 - Tophat alignment](#20211028---tophat-alignment)
@@ -32,59 +46,66 @@ v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02-??
 
 <br></br>
 
-# 2021.10.13 - Read counting
+# 2021.10.13 - Obtain reads and read counting
 [Back to menu](#menu)
 
-## Objectives of the analysis.
-Goal is to count total number of reads in fastq files before cleaning for WTC2 R1 and R2 fastq files. 
+## Objective(s) of this step of analysis.
+The goal in this step is to obtain the raw RNA sequencing reads files (focusing on the WTC2 biological replicate) and count the total number of reads in the R1 and R2 fastq files before cleaning. 
 
 ## Files involved.
-Raw data files for paired-end sequencing data for a single biological replicate
-- WTC2_1.fq.gz, WTC2_2.fq.gz
-    - WT = Wildtype Candida albicans
-    - C = one of three biological replicates
-    - C2 = Thi– = sampled from yeast grown from environment without thiamine
-    - _1, _2 = forward & reverse reads
-- TODO: explain all of the replicates and samples
-    - WTA1 is wildtype, replicate A, Thi+ environment.
-    - WTB1 is wildtype, replicate B, Thi+ environment.
-    - WTC1 is wildtype, replicate C, Thi+ environment.
-    - WTA2 is wildtype, replicate A, Thi- environment.
-    - WTB2 is wildtype, replicate B, Thi- environment.
-    - WTC2 is wildtype, replicate C, Thi- environment.
+The raw RNA-seq files for paired-end sequencing data for biological replicates are all from the same wildtype (WT) cell line.
+- Overview of all of the replicates and treatment conditions
+    - WTA1 is wildtype, Thi+ environment, replicate A.
+    - WTB1 is wildtype, Thi+ environment, replicate B.
+    - WTC1 is wildtype, Thi+ environment, replicate C.
+    <br></br>
+    - WTA2 is wildtype, Thi- environment, replicate A.
+    - WTB2 is wildtype, Thi- environment, replicate B.
+    - **WTC2** is wildtype, Thi- environment, replicate C.
+
+As the class used a divide & conquer strategy on these files, I focused on WTC2's paired-end raw data files.
+- WTC2_1.fq.gz
+    - forward reads of wildtype, Thi-, replicate C.
+- WTC2_2.fq.gz
+    - reverse reads of wildtype, Thi-, replicate C.
+
 
 ## Specific commands used in the analysis.
 ```bash
 # obtain the .gz files from Google Bucket
-$ gsutil cp gs://gu-biology-dept-class/*.gz
+$ gsutil cp gs://gu-biology-dept-class/WTC2*.gz
 
 # unzip the .gz files
-$ gunzip WTC*
+$ gunzip *.gz
 
 # count the number of lines in _1.fq & divide by 4
 $ wc -l WTC2_1.fq
 81630776
+
 $ bc -l <<< '81630776/4'
 20407694
 
 # count the number of lines in _2.fq & divide by 4
 $ wc -l WTC2_2.fq
 81630776
+
 $ bc -l <<< '81630776/4'
 20407694
 ```
 
 ## Results & interpretation.
-**There are 20,407,694 reads in each of the two WTC2 fastq files.**
+There are **20,407,694** reads in both the forward and the reverse read files for WTC2.
+
+The agreement in read numbers between the forward and reverse read files makes sense because they are obtained from the same paired-end sequencing run.
 
 ---
 
 <br></br>
 
-# 2021.10.19 - Trimmomatic
+# 2021.10.19 - Clean reads via Trimmomatic
 [Back to menu](#menu)
 
-## Objectives of the analysis.
+## Objective(s) of this step of analysis.
 The goal is to use Trimmomatic to trim the raw reads so as to remove the problematic first ten bases of each read, reduce adapter content, improve reverse read quality, and do an overall trimming via sliding window. 
 
 Review trimmed PE files in FastQC to ensure Trim achieved aims as intended.
@@ -170,7 +191,7 @@ High-Duplication sequences do not appear to have been trimmed, which is fine con
 
 # 2021.10.21 - Obtain reference genome
 [Back to menu](#menu)
-## Objectives of the analysis.
+## Objective(s) of this step of analysis.
 Goal is to download refseq C. albicans genome assembly from Entrez genome into a separate folder.
 
 Species: [Candida albicans SC5314 (budding yeasts)](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=237561&lvl=3&lin=f&keep=1&srchmode=1&unlock)
@@ -195,7 +216,7 @@ GCF_000182965.3_ASM18296v3_genomic.fna.gz
 # 2021.10.26 - bowtie2 sequence alignment (mostly for practice)
 [Back to menu](#menu)
 
-## Objectives of the analysis.
+## Objective(s) of this step of analysis.
 Run a bowtie2 (non-spliced) alignment of trimmed reads to the reference genome for C. albicans. Mostly, this bowtie2 run results will be replaced by the tophat results later on. This is mostly to familiarize with bowtie2 usage.
 
 ## Files involved.
@@ -287,7 +308,7 @@ The bowtie2 job took 01:37:18 (1.5+ hours) to complete.
 # 2021.10.28 - Tophat alignment
 [Back to menu](#menu)
 
-## Objectives of the analysis.
+## Objective(s) of this step of analysis.
 Perform spliced alignment using tophat. 
 
 ## Files involved.
@@ -359,7 +380,7 @@ Reads aligned to the reference genome were collected in the accepted_hits.bam fi
 # 2021.11.02 - Transfer to GitHub
 [Back to menu](#menu)
 
-## Objectives of the analysis.
+## Objective(s) of this step of analysis.
 Transfer notes to GitHub.
 
 ## Files involved.
@@ -392,7 +413,7 @@ The journal has been transferred onto Github.
 # 2021.11.04 - Infer transcripts using cufflinks
 [Back to menu](#menu)
 
-## Objectives of the analysis.
+## Objective(s) of this step of analysis.
 The goal is to use cufflinks to take in the tophat read alignment results to infer the transcripts that are found in the sequenced samples. 
 
 See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/)
@@ -467,7 +488,7 @@ The cufflinks program successfully inferred transcripts based on the tophat alig
 # 2021.11.09 - Merge transcript annotation files using cuffmerge
 [Back to menu](#menu)
 
-## Objectives of the analysis.
+## Objective(s) of this step of analysis.
 The goal is to merge the transcript annotations from all biological replicates to obtain the merged annotation file merged.gtf.
 
 ## Files involved.
@@ -498,7 +519,7 @@ The goal is to merge the transcript annotations from all biological replicates t
     - logs/
         - run.log
     - **merged.gtf**
-        - this is the annotation file that merges the transcripts.gtf file from the previous (cufflinks) step obtained for all biological replicates: WTA1, A2, B1, B2, C1, C2. 
+        - this is the annotation file that merges the transcripts.gtf file from the previous (cufflinks) step obtained for all biological replicates and experimental conditions: WTA1, A2, B1, B2, C1, C2. 
 
 ## Specific commands used in the analysis.
 ```bash
@@ -570,27 +591,37 @@ Cuffmerge successfully merged the transcript annotation (.gtf) files and produce
 
 <br></br>
 
-# 2021.11.11 - Differential expression analysis using cuffdiff
+# 2021.11.11 - Identify differentially expressed genes using cuffdiff
 [Back to menu](#menu)
 
-## Objectives of the analysis.
-To find genes that are significantly differentially expressed between the control (Thi+) and treatment (Thi-) groups,
-e.g., between WTA1 (Thi+) vs. WTA2 (Thi-), using cuffdiff.
+## Objective(s) of this step of analysis.
+To find genes that are significantly differentially expressed between the control (Thi+) and treatment (Thi-) groups
+(e.g., between WTA1 (Thi+) vs. WTA2 (Thi-)) using cuffdiff.
 
 ## Files involved.
 ### —cuffdiff—
 ### *input files*
+Place all input files for cuffdiff into a new folder named "cuffdiff_input"
 - cuffdiff_input/
     - merged.gtf
-    - —The following are the accepted hits for all samples under Thi+ and Thi- treatments—
-    - WTA1_accepted_hits.bam
-    - WTB1_accepted_hits.bam
-    - WTC1_accepted_hits.bam
-    - WTA2_accepted_hits.bam
-    - WTB2_accepted_hits.bam
-    - WTC2_accepted_hits.bam
+        - the feature annotation file that merged all biological replicates (A1 through C2) via cuffmerge from the previous step.
+    - *The following files are the  accepted hits for all replicates under Thi+ and Thi- treatments*
+        - WTA1_accepted_hits.bam
+        - WTB1_accepted_hits.bam
+        - WTC1_accepted_hits.bam
+        - WTA2_accepted_hits.bam
+        - WTB2_accepted_hits.bam
+        - WTC2_accepted_hits.bam
+        - the accepted hits were obtained following the previous analysis steps up to tophat alignment (minus the bowtie2 step, which was for practice) for each raw sequence reads file:
+            1. [Obtain the reference genome](#20211021---obtain-reference-genome) for *Candida albicans*. It only needs to be obtained once.
+            1. [Obtain the raw RNA-seq paired-end fastq files](#20211013---obtain-reads-and-read-counting) for the biological replicate (e.g. WTB1)
+            1. Clean the reads via [Trimmomatic]((#20211019---clean-reads-via-trimmomatic))
+            1. Run the paired-end reads against the reference genome using the [Tophat spliced alignment program](#20211028---tophat-alignment) to obtain accepted_hits.bam for the replicate
+                - prepend accepted_hits.bam with the replicate name (e.g. WTB1_accepted_hits.bam)
+
 ### *output files*
 - cuffdiff_output/
+    - 
 
 
 ## Specific commands used in the analysis.
@@ -602,6 +633,23 @@ nano cuffdiff.sbatch
 ```
 [cuffdiff.sbatch](scripts/cuffdiff.sbatch)
 
+
+## Results & interpretation.
+
+---
+
+<br></br>
+
+# 2021.11.16 - Linking cuffdiff genes with proteins and functions
+[Back to menu](#menu)
+
+## Objective(s) of this step of analysis.
+
+## Files involved.
+
+## Specific commands used in the analysis.
+```bash
+```
 
 ## Results & interpretation.
 
@@ -620,7 +668,7 @@ nano cuffdiff.sbatch
 # yyyy.mm.dd - Title
 [Back to menu](#menu)
 
-## Objectives of the analysis.
+## Objective(s) of this step of analysis.
 
 ## Files involved.
 
