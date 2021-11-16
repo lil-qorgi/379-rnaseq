@@ -44,7 +44,14 @@ Raw data files for paired-end sequencing data for a single biological replicate
     - WT = Wildtype Candida albicans
     - C = one of three biological replicates
     - C2 = Thi– = sampled from yeast grown from environment without thiamine
-    - _1, _2 = forward & reverse reads (?)
+    - _1, _2 = forward & reverse reads
+- TODO: explain all of the replicates and samples
+    - WTA1 is wildtype, replicate A, Thi+ environment.
+    - WTB1 is wildtype, replicate B, Thi+ environment.
+    - WTC1 is wildtype, replicate C, Thi+ environment.
+    - WTA2 is wildtype, replicate A, Thi- environment.
+    - WTB2 is wildtype, replicate B, Thi- environment.
+    - WTC2 is wildtype, replicate C, Thi- environment.
 
 ## Specific commands used in the analysis.
 ```bash
@@ -559,6 +566,28 @@ The process took 35 seconds.
 Cuffmerge successfully merged the transcript annotation (.gtf) files and produced the merged.gtf file.
 
 ---
+
+
+<br></br>
+
+# 2021.11.11 - Differential expression analysis using cuffdiff
+[Back to menu](#menu)
+
+## Objectives of the analysis.
+To find genes that are significantly differentially expressed between the control (Thi+) and treatment (Thi-) groups,
+e.g., between WTA1 (Thi+) vs. WTA2 (Thi-), using cuffdiff.
+
+## Files involved.
+
+## Specific commands used in the analysis.
+```bash
+```
+
+## Results & interpretation.
+
+---
+
+
 
 <br></br>
 
