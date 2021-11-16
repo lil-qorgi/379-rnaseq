@@ -21,7 +21,7 @@ v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02-??
 - [2021.10.13 - Read counting](#20211013---read-counting)
 - [2021.10.19 - Trimmomatic](#20211019---trimmomatic)
 - [2021.10.21 - Obtain reference genome](#20211021---obtain-reference-genome)
-- [2021.10.26 - bowtie2 sequence alignment](#20211026---bowtie2-sequence-alignment)
+- [2021.10.26 - bowtie2 sequence alignment (mostly for practice)](#20211026---bowtie2-sequence-alignment-mostly-for-practice)
 - [2021.10.28 - Tophat alignment](#20211028---tophat-alignment)
 - [2021.11.02 - Transfer to GitHub](#20211102---transfer-to-github)
 - [2021.11.04 - Infer transcripts using cufflinks](#20211104---infer-transcripts-using-cufflinks)
@@ -192,7 +192,7 @@ GCF_000182965.3_ASM18296v3_genomic.fna.gz
 
 <br></br>
 
-# 2021.10.26 - bowtie2 sequence alignment
+# 2021.10.26 - bowtie2 sequence alignment (mostly for practice)
 [Back to menu](#menu)
 
 ## Objectives of the analysis.
@@ -578,10 +578,30 @@ To find genes that are significantly differentially expressed between the contro
 e.g., between WTA1 (Thi+) vs. WTA2 (Thi-), using cuffdiff.
 
 ## Files involved.
+### —cuffdiff—
+### *input files*
+- cuffdiff_input/
+    - merged.gtf
+    - —The following are the accepted hits for all samples under Thi+ and Thi- treatments—
+    - WTA1_accepted_hits.bam
+    - WTB1_accepted_hits.bam
+    - WTC1_accepted_hits.bam
+    - WTA2_accepted_hits.bam
+    - WTB2_accepted_hits.bam
+    - WTC2_accepted_hits.bam
+### *output files*
+- cuffdiff_output/
+
 
 ## Specific commands used in the analysis.
 ```bash
+mkdir cuffdiff_input
+# copy merged.gtf and all of the <sample>.bam files into cuffdiff_input/
+
+nano cuffdiff.sbatch
 ```
+[cuffdiff.sbatch](scripts/cuffdiff.sbatch)
+
 
 ## Results & interpretation.
 
