@@ -42,8 +42,8 @@ The aim of this bioinformatics analysis is to identify genes that are differenti
 - [2021.11.04 - Infer transcripts using cufflinks](#20211104---infer-transcripts-using-cufflinks)
 - [2021.11.09 - Merge transcript annotation files using cuffmerge](#20211109---merge-transcript-annotation-files-using-cuffmerge)
 - [2021.11.11 - Identify differentially expressed genes using cuffdiff](#20211111---identify-differentially-expressed-genes-using-cuffdiff)
-- [2021.11.16 - Interpreting cuffdiff results](#20211116---interpreting-cuffdiff-results)
-- [2021.11.18 - cummeRbund?]()
+- [2021.11.16 - Building summary table](##20211116---building-summary-table)
+- [2021.11.18 - cummeRbund]()
 - [Template](#template)
 
 ---
