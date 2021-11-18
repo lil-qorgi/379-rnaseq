@@ -23,7 +23,8 @@ The Rolfes lab has sequenced wildtype *Candida albicans* yeast cells grown in tw
 
 For each environmental condition, there are three biological replicates — A, B, and C — grown and sequenced. 
 
-The biological motivation is to better understand the role of environmental thiamine in modulating the pathogenicity of *C. albicans*, which is a normally commensal species. 
+The biological motivation is to identify genes regulating 
+thiamine biosynthesis. Through this process, we may also (?) better understand the role of thiamine in modulating the pathogenicity of *C. albicans*, which is a normally commensal species. 
 
 The aim of this bioinformatics analysis is to identify genes that are differentially expressed in yeast cells grown in Thi+ versus Thi- environments. 
 
@@ -40,6 +41,9 @@ The aim of this bioinformatics analysis is to identify genes that are differenti
 - [2021.11.02 - Transfer to GitHub](#20211102---transfer-to-github)
 - [2021.11.04 - Infer transcripts using cufflinks](#20211104---infer-transcripts-using-cufflinks)
 - [2021.11.09 - Merge transcript annotation files using cuffmerge](#20211109---merge-transcript-annotation-files-using-cuffmerge)
+- [2021.11.11 - Identify differentially expressed genes using cuffdiff](#20211111---identify-differentially-expressed-genes-using-cuffdiff)
+- [2021.11.16 - Interpreting cuffdiff results](#20211116---interpreting-cuffdiff-results)
+- [2021.11.18 - cummeRbund?]()
 - [Template](#template)
 
 ---
@@ -595,61 +599,161 @@ Cuffmerge successfully merged the transcript annotation (.gtf) files and produce
 [Back to menu](#menu)
 
 ## Objective(s) of this step of analysis.
-To find genes that are significantly differentially expressed between the control (Thi+) and treatment (Thi-) groups
-(e.g., between WTA1 (Thi+) vs. WTA2 (Thi-)) using cuffdiff.
+The goal is to identify genes that are significantly differentially expressed between the control (Thi+) and treatment (Thi-) groups ...
+
+i.e., between WTX1 (Thi+) vs. WTX2 (Thi-), where X is one of {A, B, C} 
+
+... using cuffdiff.
 
 ## Files involved.
 ### —cuffdiff—
 ### *input files*
 Place all input files for cuffdiff into a new folder named "cuffdiff_input"
 - cuffdiff_input/
-    - merged.gtf
-        - the feature annotation file that merged all biological replicates (A1 through C2) via cuffmerge from the previous step.
-    - *The following files are the  accepted hits for all replicates under Thi+ and Thi- treatments*
-        - WTA1_accepted_hits.bam
-        - WTB1_accepted_hits.bam
-        - WTC1_accepted_hits.bam
-        - WTA2_accepted_hits.bam
-        - WTB2_accepted_hits.bam
-        - WTC2_accepted_hits.bam
-        - the accepted hits were obtained following the previous analysis steps up to tophat alignment (minus the bowtie2 step, which was for practice) for each raw sequence reads file:
+    - **merged.gtf**
+        - the feature annotation file from the previous step that merged all biological replicates (A1 through C2) via cuffmerge.
+    - &ast;*The following files are the  accepted hits for all replicates under Thi+ and Thi- treatments*:
+        - **WTA1_accepted_hits.bam**
+        - **WTB1_accepted_hits.bam**
+        - **WTC1_accepted_hits.bam**
+        - **WTA2_accepted_hits.bam**
+        - **WTB2_accepted_hits.bam**
+        - **WTC2_accepted_hits.bam**
+        - these accepted hits .bam files were obtained from tophat alignment over Trimmomatic-cleaned RNAseq data for each of the samples. In other words, we repeated the previous analysis steps from the first step (2021.10.13) through to the tophat alignment step (2021.10.28) for each raw sequence reads file (excluding the bowtie2 step, which was for practice). The links below reference those steps.
             1. [Obtain the reference genome](#20211021---obtain-reference-genome) for *Candida albicans*. It only needs to be obtained once.
             1. [Obtain the raw RNA-seq paired-end fastq files](#20211013---obtain-reads-and-read-counting) for the biological replicate (e.g. WTB1)
             1. Clean the reads via [Trimmomatic]((#20211019---clean-reads-via-trimmomatic))
-            1. Run the paired-end reads against the reference genome using the [Tophat spliced alignment program](#20211028---tophat-alignment) to obtain accepted_hits.bam for the replicate
-                - prepend accepted_hits.bam with the replicate name (e.g. WTB1_accepted_hits.bam)
+            1. Run the paired-end reads against the reference genome using the [Tophat spliced alignment program](#20211028---tophat-alignment) to obtain accepted_hits.bam for the replicate. 
+                - After obtaining the file, prepend accepted_hits.bam with the replicate name (e.g. WTB1_accepted_hits.bam), then copy the file into cuffdiff_input/
 
 ### *output files*
 - cuffdiff_output/
-    - 
-
+    - **gene_exp.diff**
+    - ... (many other cuffdiff results)
+- [**z01.cuffdiff**](slurm_outputs/z01.cuffdiff)
 
 ## Specific commands used in the analysis.
 ```bash
-mkdir cuffdiff_input
+$ mkdir cuffdiff_input
 # copy merged.gtf and all of the <sample>.bam files into cuffdiff_input/
 
-nano cuffdiff.sbatch
+# edit cuffdiff.sbatch
+$ nano cuffdiff.sbatch
 ```
 [cuffdiff.sbatch](scripts/cuffdiff.sbatch)
 
+```bash
+# run sbatch script. Note that cuffdiff_inputs/ is parallel to cuffdiff.sbatch
+$ sbatch cuffdiff.sbatch
+
+# wait for job to finish...
+
+# check job status
+$ sacct -j <jobid> --format=jobid,jobname,account,state,elapsed
+
+# it took 01:20:09 (~80 minutes) for the job to finish.
+
+# observe the slurm output 
+$ less z01.cuffdiff
+```
+[**z01.cuffdiff**](slurm_outputs/z01.cuffdiff)
+```bash
+# first change into the output folder, then check the output files
+$ cd cuffdiff_output
+
+$ ls -1
+bias_params.info
+cds.count_tracking
+cds.diff
+cds_exp.diff
+cds.fpkm_tracking
+cds.read_group_tracking
+gene_exp.diff
+genes.count_tracking
+genes.fpkm_tracking
+genes.read_group_tracking
+isoform_exp.diff
+isoforms.count_tracking
+isoforms.fpkm_tracking
+isoforms.read_group_tracking
+promoters.diff
+read_groups.info
+run.info
+splicing.diff
+tss_group_exp.diff
+tss_groups.count_tracking
+tss_groups.fpkm_tracking
+tss_groups.read_group_tracking
+var_model.info
+
+# check whether the gene_exp.diff file was properly generated 
+$ less gene_exp.diff
+
+# the file appears to have 14 tab-delimited columns and contents. This file appears to be properly generated.
+```
 
 ## Results & interpretation.
+Cuffdiff differential expression analysis output appeared successful. We can now move on to building the RNAseq summary table of differentially genes. 
+
 
 ---
 
 <br></br>
 
-# 2021.11.16 - Linking cuffdiff genes with proteins and functions
+# 2021.11.16 - Building summary table
 [Back to menu](#menu)
 
 ## Objective(s) of this step of analysis.
+Using the results stored in gene_exp.diff from the previous cuffdiff run as well as Uniprot and Entrez Nucleotide websites (for protein functional annotation), we will build a summary table of the genes that were (statistically) significantly differentially expressed in the absence of thiamine when compared with in the presence of thiamine.
+
+The method is to link the genes along with their FPKMs, log2 FC, and q-value from cuffdiff with NCBI protein IDs and known descriptions of their functions from Uniprot and Entrez Nucleotide.
 
 ## Files involved.
+- **gene_exp.diff**
+    - value_1
+        - FPKM for the gene in Thiamine+ samples
+    - value_2
+        - FPKM for the gene in Thiamine- samples 
+
+
 
 ## Specific commands used in the analysis.
+Columns we'll need in our summary table:
+- TUXEDO SUITE ID
+- NCBI ID
+- GENE LABEL (acronym)
+- FPKM_THI+
+- FPKM_THI-
+- LOG2_FC (THI- relative THI+)
+- Q-VALUE (FDR CORRECTED)
+- NOTES INTERPRETATION (from uniport and entrez nucleotide)
+
+To begin, we'll copy merged.gtf and gene_exp.diff into a separate folder. 
+
+In this case, I named that folder 1116_cuffdiff_results_interpretation/
+
+
+
+We'll first obtain the things we can from gene_exp.diff.
 ```bash
+# The columns that we need from gene_exp.diff are: 1, 3, 8, 9, 10, 13
+$ grep "yes" gene_exp.diff | cut -f1,3,8-10,13 > partial_summary.txt
 ```
+
+We'll next obtain the corresponding NCBI IDs to the TUXEDO SUITE IDs (XLOC IDs) by grepping the XLOC IDs against merged.gtf, which contains the NCBI IDs.
+```bash
+# We extract only the XLOC ID column from the "yes," i.e., differentially expressed, genes.
+$ grep "yes" gene_exp.diff|cut -f1 > signif_xlocIDs
+
+# We grep the significantly regulated xlocIDs against merged.gtf.
+$ grep -wFf signif_xlocIDs merged.gtf > results_summary
+
+# We extract those columns representing xlocIDs, gene names, and NCBI IDs
+$ cut -f9 results_summary|cut -d " " -f2,8,10 > results_summary2.txt
+```
+
+Now that we have both the gene_exp.diff's columns and their corresponding NCBI IDs, we'll export them both into Excel, sort both, then check if they align. If so, we will then join the tables by introducing .
+
 
 ## Results & interpretation.
 
