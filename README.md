@@ -732,27 +732,39 @@ To begin, we'll copy merged.gtf and gene_exp.diff into a separate folder.
 
 In this case, I named that folder 1116_cuffdiff_results_interpretation/
 
-
-
-We'll first obtain the things we can from gene_exp.diff.
+We'll first obtain the columns we want from gene_exp.diff.
 ```bash
 # The columns that we need from gene_exp.diff are: 1, 3, 8, 9, 10, 13
 $ grep "yes" gene_exp.diff | cut -f1,3,8-10,13 > partial_summary.txt
 ```
 
-We'll next obtain the corresponding NCBI IDs to the TUXEDO SUITE IDs (XLOC IDs) by grepping the XLOC IDs against merged.gtf, which contains the NCBI IDs.
+We'll next obtain the NCBI IDs that correspond to the TUXEDO SUITE IDs (XLOC IDs), which are in column 1 of partial_summary.txt, by grepping the XLOC IDs against merged.gtf, which contains the NCBI IDs.
 ```bash
-# We extract only the XLOC ID column from the "yes," i.e., differentially expressed, genes.
-$ grep "yes" gene_exp.diff|cut -f1 > signif_xlocIDs
+# We first extract only the XLOC ID column from the "yes," i.e., differentially expressed, genes. This is similar to the previous command, but includes only the XLOC ID column.
+$ grep "yes" gene_exp.diff | cut -f1 > signif_xlocIDs
 
-# We grep the significantly regulated xlocIDs against merged.gtf.
+# We grep these significantly regulated xlocIDs (signif_xlocIDs) against merged.gtf.
 $ grep -wFf signif_xlocIDs merged.gtf > results_summary
 
-# We extract those columns representing xlocIDs, gene names, and NCBI IDs
+# From results_summary, we extract the information representing xlocIDs, gene names, and NCBI IDs. The gene names column is used for double-checking whether it lines up with the gene names from partial_summary.txt
 $ cut -f9 results_summary|cut -d " " -f2,8,10 > results_summary2.txt
 ```
 
-Now that we have both the gene_exp.diff's columns and their corresponding NCBI IDs, we'll export them both into Excel, sort both, then check if they align. If so, we will then join the tables by introducing .
+Now that we have both the file containing gene_exp.diff's relevant columns and file containing their corresponding NCBI IDs, we'll first download them to the local computer.
+```bash
+# The following commands are run on local, inside my RNA-seq local folder.
+
+# Use gcloud compute scp to copy partial_summary.txt and results_summary2.txt to a new subfolder.
+
+# Rename the files to more clearly represent what they are used for. 
+$ mv partial_summary.txt partial_from_gene_exp.txt
+$ mv results_summary2.txt partial_from_merged.txt
+```
+
+Create 
+
+
+export them both into Excel, sort both, then check if they align. If so, we will then join the tables by introducing .
 
 
 ## Results & interpretation.
