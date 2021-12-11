@@ -108,12 +108,12 @@ The agreement in read numbers between the forward and reverse read files makes s
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of the analysis.
+## 2A - Objective(s) of this step of the analysis.
 The goal is to use Trimmomatic to trim the raw reads so as to remove the problematic first ten bases of each read, reduce adapter content, improve reverse read quality, and do an overall trimming via sliding window. 
 
 Review trimmed PE files in FastQC to ensure Trim achieved aims as intended.
 
-## Files involved.
+## 2B - Files involved.
 
 ### —Trimmomatic—
 ### *input files*
@@ -142,7 +142,7 @@ Review trimmed PE files in FastQC to ensure Trim achieved aims as intended.
     - trimmed_forward_FastQC_report.html
     - trimmed_reverse_FastQC_report.html
 
-## Specific commands used in the analysis.
+## 2C - Specific commands used in the analysis.
 ### Create trim.sbatch
 ```bash
 $ nano trim.sbatch
@@ -216,7 +216,7 @@ $ fastqc -o trimmed_reverse WTC2_2.trPE.fq.gz
 
 The resulting FastQC .html reports were stored in raw_forward/, raw_reverse/, trimmed_forward/, and trimmed_reverse/ folders. The .html reports were uploaded to this notebook.
 
-## Results & interpretation.
+## 2D - Results & interpretation.
 
 ### Interpreting Trimmomatic results.
 - [**z01.trim_WTC2**](slurm_outputs/z01.trim_WTC2)
@@ -256,21 +256,21 @@ All other metrics were largely unchanged between raw and trimmed reads. The full
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of the analysis.
+## 3A - Objective(s) of this step of the analysis.
 Goal is to download refseq C. albicans genome assembly from Entrez genome into a separate folder.
 
 Species: [Candida albicans SC5314 (budding yeasts)](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=237561&lvl=3&lin=f&keep=1&srchmode=1&unlock)
 Link at Entrez Genome: [GCA_000182965.3](https://www.ncbi.nlm.nih.gov/assembly/GCA_000182965.3)
 
-## Files involved.
-## Specific commands used in the analysis.
+## 3B - Files involved.
+## 3C - Specific commands used in the analysis.
 ```bash
 $ mkdir refseq_GCF_000182965.3
 $ cd refseq_GCF_000182965.3
 $ wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/182/965/GCF_000182965.3_ASM18296v3/GCF_000182965.3_ASM18296v3_genomic.fna.gz
 ```
 
-## Results & interpretation.
+## 3D - Results & interpretation.
 File obtained:
 GCF_000182965.3_ASM18296v3_genomic.fna.gz
 
@@ -284,10 +284,10 @@ GCF_000182965.3_ASM18296v3_genomic.fna.gz
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of the analysis.
+## 4A - Objective(s) of this step of the analysis.
 Run a bowtie2 (non-spliced) alignment of trimmed reads to the reference genome for C. albicans. Mostly, this results from this bt2 run will be replaced by the tophat results later on, so this step is mostly to familiarize the student with bowtie2 usage.
 
-## Files involved.
+## 4B - Files involved.
 ### —bowtie2-build—
 ### *input files*
 - GCF_000182965.3_ASM18296v3_genomic.fna.gz
@@ -319,7 +319,7 @@ Trimmed FastQ paired-end files (from Trimmomatic) to align
 Sequence alignment map
 - WTC2.sam
 
-## Specific commands used in the analysis.
+## 4C - Specific commands used in the analysis.
 ```bash
 # Create & navigate to directory
 $ mkdir 1021-26_bowtie2_alignment
@@ -360,7 +360,7 @@ $ less z01.bt2_WTC2
 ```
 - [**z01.bt2_WTC2**](slurm_outputs/z01.bt2_WTC2)
 
-## Results & interpretation.
+## 4D - Results & interpretation.
 90.52% of the input (paired) reads aligned concordantly exactly 1 time.
 
 97.97% overall alignment rate
@@ -379,10 +379,10 @@ The bowtie2 job took 01:37:18 (1.5+ hours) to complete.
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of the analysis.
+## 5A - Objective(s) of this step of the analysis.
 Perform spliced alignment using tophat. 
 
-## Files involved.
+## 5B - Files involved.
 ### —Tophat—
 ### *input files*
 Annotation file (unzipped) for identifying splice sites
@@ -412,7 +412,7 @@ Folder containing all outputs
 
 **Bolded files** are important.
 
-## Specific commands used in the analysis.
+## 5C - Specific commands used in the analysis.
 ```bash
 $ gunzip GCF_000182965.3_ASM18296v3_genomic.gff.gz
 
@@ -438,7 +438,7 @@ $ less align_summary.txt
 ```
 - [**align_summary.txt**](summary_outputs/tophat_align_summary.txt)
 
-## Results & interpretation.
+## 5D - Results & interpretation.
 Tophat spliced alignment resulted in 90.3% concordant pair alignment rate. 
 Reads aligned to the reference genome were collected in the accepted_hits.bam file.
 
@@ -454,17 +454,17 @@ Reads aligned to the reference genome were collected in the accepted_hits.bam fi
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of the analysis.
+## 6A - Objective(s) of this step of the analysis.
 Transfer notes to GitHub.
 
-## Files involved.
+## 6B - Files involved.
 Repository
 - lil-qorgi:379-rnaseq
 
 READ<span>ME.md</span>
 - Notes document for RNAseq workflow.
 
-## Specific commands used in the analysis.
+## 6C - Specific commands used in the analysis.
 ```bash
 # Create local repo.
 # (in parent folder:)
@@ -477,7 +477,7 @@ $ git commit -m "Transferred journal to readme."
 $ git push
 ```
 
-## Results & interpretation.
+## 6D - Results & interpretation.
 The journal has been transferred onto Github.
 
 ---
@@ -490,12 +490,12 @@ The journal has been transferred onto Github.
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of the analysis.
+## 7A - Objective(s) of this step of the analysis.
 The goal is to use cufflinks to take in the tophat read alignment results to infer the transcripts that are found in the sequenced samples. 
 
 See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/)
 
-## Files involved.
+## 7B - Files involved.
 ### —cufflinks—
 ### *input files*
 - GCF_000182965.3_ASM18296v3_genomic.gff
@@ -511,7 +511,7 @@ See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/)
     - **transcripts.gtf**
         - this is the annotations file containing the transcripts inferred from the accepted_hits.bam alignment file.
 
-## Specific commands used in the analysis.
+## 7C - Specific commands used in the analysis.
 ```bash
 # First, pull all required files together into the same folder for easier usage.
 
@@ -555,7 +555,7 @@ $ wc -l transcripts.gtf
 # There are 12994 lines in the file. There is no header in the file.
 ```
 
-## Results & interpretation.
+## 7D - Results & interpretation.
 The cufflinks program successfully inferred transcripts based on the tophat alignment results. 
 
 ---
@@ -568,10 +568,10 @@ The cufflinks program successfully inferred transcripts based on the tophat alig
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of the analysis.
+## 8A - Objective(s) of this step of the analysis.
 The goal is to merge the transcript annotations from all biological replicates to obtain the merged annotation file merged.gtf.
 
-## Files involved.
+## 8B - Files involved.
 ### —cuffmerge—
 ### *input files*
 - GCF_000182965.3_ASM18296v3_genomic.gff
@@ -601,7 +601,7 @@ The goal is to merge the transcript annotations from all biological replicates t
     - **merged.gtf**
         - this is the annotation file that merges the transcripts.gtf file from the previous (cufflinks) step obtained for all biological replicates and experimental conditions: WTA1, A2, B1, B2, C1, C2. 
 
-## Specific commands used in the analysis.
+## 8C - Specific commands used in the analysis.
 ```bash
 # First, move all required input files into the same folder.
 # Obtain all transcripts.gtf files from Google Bucket:
@@ -661,7 +661,7 @@ $ sacct -j 47686 --format=jobname,jobid,user,elapsed
 # the process took 35 seconds.
 ```
 
-## Results & interpretation.
+## 8D - Results & interpretation.
 The process took 35 seconds.
 
 Cuffmerge successfully merged the transcript annotation (.gtf) files and produced the merged.gtf file.
@@ -677,14 +677,14 @@ Cuffmerge successfully merged the transcript annotation (.gtf) files and produce
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of the analysis.
+## 9A - Objective(s) of this step of the analysis.
 The goal is to identify genes that are significantly differentially expressed between the control (Thi+) and treatment (Thi-) groups ...
 
 i.e., between WTX1 (Thi+) vs. WTX2 (Thi-), where X is one of {A, B, C} 
 
 ... using cuffdiff.
 
-## Files involved.
+## 9B - Files involved.
 ### —cuffdiff—
 ### *input files*
 Place all input files for cuffdiff into a new folder named "cuffdiff_input"
@@ -711,7 +711,7 @@ Place all input files for cuffdiff into a new folder named "cuffdiff_input"
     - ... (many other cuffdiff results)
 - [**z01.cuffdiff**](slurm_outputs/z01.cuffdiff)
 
-## Specific commands used in the analysis.
+## 9C - Specific commands used in the analysis.
 ```bash
 $ mkdir cuffdiff_input
 # copy merged.gtf and all of the <sample>.bam files into cuffdiff_input/
@@ -771,7 +771,7 @@ $ less gene_exp.diff
 # the file appears to have 14 tab-delimited columns and contents. This file appears to be properly generated.
 ```
 
-## Results & interpretation.
+## 9D - Results & interpretation.
 Cuffdiff differential expression analysis output appeared successful. We can now move on to building the RNAseq summary table of differentially genes. 
 
 
@@ -785,12 +785,12 @@ Cuffdiff differential expression analysis output appeared successful. We can now
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of the analysis.
+## 10A - Objective(s) of this step of the analysis.
 Using the results stored in gene_exp.diff from the previous cuffdiff run as well as Uniprot and Entrez Nucleotide websites (for protein functional annotation), we will build a summary table of the genes that were (statistically) significantly differentially expressed in the absence of thiamine when compared with in the presence of thiamine.
 
 The method is to link the genes along with their FPKMs, log2 FC, and q-value from cuffdiff with NCBI protein IDs and known descriptions of their functions from Uniprot and Entrez Nucleotide.
 
-## Files involved.
+## 10B - Files involved.
 - **gene_exp.diff**
     - value_1
         - FPKM for the gene in Thiamine+ samples
@@ -799,7 +799,7 @@ The method is to link the genes along with their FPKMs, log2 FC, and q-value fro
 
 
 
-## Specific commands used in the analysis.
+## 10C - Specific commands used in the analysis.
 Columns we'll need in our summary table:
 - TUXEDO SUITE ID
 - NCBI ID
@@ -849,7 +849,7 @@ Create
 export them both into Excel, sort both, then check if they align. If so, we will then join the tables by introducing .
 
 
-## Results & interpretation.
+## 10D - Results & interpretation.
 
 ---
 
@@ -861,21 +861,21 @@ export them both into Excel, sort both, then check if they align. If so, we will
 
 <br></br>
 
-# Step # - Title
+# Step n - Title
 
 **Date: yyyy.mm.dd**
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of the analysis.
+## nA - Objective(s) of this step of the analysis.
 
-## Files involved.
+## nB - Files involved.
 
-## Specific commands used in the analysis.
+## nC - Specific commands used in the analysis.
 ```bash
 ```
 
-## Results & interpretation.
+## nD - Results & interpretation.
 
 ---
 
