@@ -285,13 +285,15 @@ GCF_000182965.3_ASM18296v3_genomic.fna.gz
 [Back to menu](#menu)
 
 ## 4A - Objective(s) of this step of the analysis.
-Run a bowtie2 (non-spliced) alignment of trimmed reads to the reference genome for C. albicans. Mostly, this results from this bt2 run will be replaced by the tophat results later on, so this step is mostly to familiarize the student with bowtie2 usage.
+Run a bowtie2 (non-spliced) alignment of trimmed reads to the reference genome for C. albicans. Mostly, the results from this bt2 run will be replaced by the tophat results later on, so this step is mostly to familiarize the student with bowtie2 usage.
+
+We will be using the GCF_000182965.3 assembly as the reference genome for *Candida albicans* to which we align our lab-produced (then trimmed) reads. This assembly was selected out of the [73 available on NCBI Entrez Genome](https://www.ncbi.nlm.nih.gov/genome/browse/#!/eukaryotes/21/) due to its being the only one on RefSeq, which is a highly curated genomic database (filtering by "RefSeq category" gives only this assembly). Using RefSeq assemblies ensures that the assembly has high enough standards to be a reference genome against which we can align and then build our transcripts accurately.
 
 ## 4B - Files involved.
 ### —bowtie2-build—
 ### *input files*
 - GCF_000182965.3_ASM18296v3_genomic.fna.gz
-    - It's the C. albicans reference genome that will be used.
+    - The C. albicans reference genome that will be used.
 ### *output files*
 Index files
 - Calbicans.1.bt2
