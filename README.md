@@ -12,22 +12,30 @@ v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02-??
 - Entries transferred to and logged using GitHub.
 - Repo: lil-qorgi:379-rnaseq
 
-## *Requirements for this document
+## (Requirements for this document)
 - Document everything that someone would need to follow to recapitulate your analysis:
     - downloading files, software, commands, scripts, analyses runs, etc.
     - explain all file names
     - [see example notebook (private link)](https://docs.google.com/document/d/1KJAZZpvzMqlzfekco8q_vjajGqBRnzcg/edit)
 
-# Background
+# Introduction & Background
 
-The Rolfes lab has sequenced wildtype *Candida albicans* yeast cells grown in two different environments: with thiamine (Thi+) and without thiamine (Thi-).
+The Rolfes lab is conducting a study to identify possible genes that regulate thiamine biosynthesis in the yeast *Candida albicans*. *Candida albicans* is a normally commensal species commonly found on humans, but can become pathogenic under certain environmental conditions, leading to the candidiasis disease. By examining the genes that are significantly differentially expressed after removing thiamine from the growing medium, the team hopes to better understand the role of thiamine in the normal growth as well as the pathogenesis of *C. albicans*. 
 
-For each environmental condition, there are three biological replicates — A, B, and C — grown and sequenced. 
+The Rolfes lab has sequenced wildtype *Candida albicans* yeast cells grown in two media differing only in thiamine presence — with the control having thiamine (Thi+) and the treatment absent thiamine (Thi-). For each environmental condition, three biological replicates, A, B, and C, were grown and their cellular RNA sequenced via next-gen sequencing techniques. 
 
-The biological motivation is to identify genes regulating 
-thiamine biosynthesis. Through this process, we may also (?) better understand the role of thiamine in modulating the pathogenicity of *C. albicans*, which is a normally commensal species. 
+The aim of this bioinformatics workflow is to identify *C. albicans* genes that were differentially expressed between Thi+ and Thi- conditions. To do so, we will first clean up the raw sequences, then assemble identified transcripts, and, finally, compare gene expressions between the two treatment conditions across all three replicates. 
 
-The aim of this bioinformatics analysis is to identify genes that are differentially expressed in yeast cells grown in Thi+ versus Thi- environments. 
+## Starting files overview
+The two treatment conditions and three biological replicates per condition resulted in six distinct RNA-sequencing samples, each being a paired-end sequencing sample contained in a pair of forward- and reverse-reads FASTQ files. The naming convention to be maintained throughout the workflow is as follows:
+
+The raw RNA-seq files of paired-end sequencing data all derive from the same wildtype (WT) cell line.
+
+| Thiamine+ environment             | Thiamine- environment                 |
+| -----------                       | -----------                           |
+| **WTA1**: wildtype, replicate A, Thi+ | **WTA2**: wildtype, replicate A, Thi-     |
+| **WTB1**: wildtype, replicate B, Thi+ | **WTB2**: wildtype, replicate B, Thi-     |
+| **WTC1**: wildtype, replicate C, Thi+ | **WTC2**: wildtype, replicate C, Thi-     |
 
 ---
 
@@ -58,16 +66,6 @@ The aim of this bioinformatics analysis is to identify genes that are differenti
 The goal in this step is to obtain the raw RNA sequencing reads files (focusing on the WTC2 biological replicate) and count the total number of reads in the R1 and R2 fastq files before cleaning. 
 
 ## Files involved.
-The raw RNA-seq files for paired-end sequencing data for biological replicates are all from the same wildtype (WT) cell line.
-- Overview of all of the replicates and treatment conditions
-    - WTA1 is wildtype, Thi+ environment, replicate A.
-    - WTB1 is wildtype, Thi+ environment, replicate B.
-    - WTC1 is wildtype, Thi+ environment, replicate C.
-    <br></br>
-    - WTA2 is wildtype, Thi- environment, replicate A.
-    - WTB2 is wildtype, Thi- environment, replicate B.
-    - **WTC2** is wildtype, Thi- environment, replicate C.
-
 As the class used a divide & conquer strategy on these files, I focused on WTC2's paired-end raw data files.
 - WTC2_1.fq.gz
     - forward reads of wildtype, Thi-, replicate C.
