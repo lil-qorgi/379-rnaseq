@@ -429,10 +429,11 @@ jobid: 37967
 
 $ less z01.tophat_WTC2
 # last two lines of z01.tophat_WTC2 are:
-
+```
 [2021-10-28 13:03:03] A summary of the alignment counts can be found in WTC2_tophat/align_summary.txt
 [2021-10-28 13:03:03] Run complete: 02:52:28 elapsed
 
+```bash
 $ cd WTC2_tophat
 
 $ less align_summary.txt
@@ -440,8 +441,9 @@ $ less align_summary.txt
 - [**align_summary.txt**](summary_outputs/tophat_align_summary.txt)
 
 ## 5D - Results & interpretation.
-Tophat spliced alignment resulted in 90.3% concordant pair alignment rate. 
 Reads aligned to the reference genome were collected in the accepted_hits.bam file.
+
+Tophat spliced alignment resulted in 90.3% concordant pair alignment rate. Similar to the results in the previous step, this concordance rate is high enough to give us confidence in the downstream data processing and analyses based on these reads.
 
 [See class's alignment results.](https://docs.google.com/spreadsheets/d/1GZOHIUhfYA523kkOdoF9APQEkRsberddvEsEZOkIIvA/edit)
 
@@ -466,11 +468,19 @@ READ<span>ME.md</span>
 - Notes document for RNAseq workflow.
 
 ## 6C - Specific commands used in the analysis.
+
+### Create online repository on GitHub.
+Create a new repository called "379-rnaseq"
+
+### Cloning online repo to local machine.
+The full journal is added to README.md.
+
 ```bash
 # Create local repo.
 # (in parent folder:)
 $ git clone https://github.com/lil-qorgi/379-rnaseq.git RNAseq_notes
 $ cd RNAseq_notes
+
 # make changes to README.md
 # add & commit changes
 $ git add .
@@ -479,7 +489,7 @@ $ git push
 ```
 
 ## 6D - Results & interpretation.
-The journal has been transferred onto Github.
+The journal has been transferred onto Github. All script and output files were extracted into their own folders and linked to from README.md 
 
 ---
 
