@@ -23,8 +23,6 @@ The raw RNA-seq files of paired-end sequencing data all derive from the same wil
 | **WTB1**: wildtype, replicate B, Thi+ | **WTB2**: wildtype, replicate B, Thi-     |
 | **WTC1**: wildtype, replicate C, Thi+ | **WTC2**: wildtype, replicate C, Thi-     |
 
-<br></br>
-
 ## Menu
 
 [See Menu](#menu) &nbsp;&nbsp;&nbsp;&nbsp; [See Version log](#version) &nbsp;&nbsp;&nbsp;&nbsp; [See Requirements](#requirements-for-this-document)
@@ -820,8 +818,6 @@ export them both into Excel, sort both, then check if they align. If so, we will
 ---
 
 <copy-to-here>
-    
----
 
 # Document information
 [Back to menu](#menu)
