@@ -366,7 +366,7 @@ $ less z01.bt2_WTC2
 ## 4D - Results & interpretation.
 The overall alignment rate is 97.97%, which includes both concordant and non-concordant alignments.
 
-90.52% of the input (paired) reads aligned concordantly exactly 1 time (unique concordance rate). Concordance occurs when reads align to the reference genome with both an expected direction and an insert size consistent with the insert size in the RNAseq data. Since this assembly is haploid, this concordance rate is normal, allowing downstream processing to be performed as normal. 
+90.52% of the input (paired) reads aligned concordantly exactly 1 time (unique concordance rate). Concordance occurs when reads align to the reference genome with both an expected direction and an insert size consistent with the insert size in the RNAseq data. Since this assembly is haploid, this concordance rate is normal, allowing downstream processing to be performed as normal. Since this is also the *unique* concordance rate, we know that more than 90% of the reads can be unequivocably interpreted in the context of the *C. albicans* genome.
 
 [See class's alignment results.](https://docs.google.com/spreadsheets/d/1GZOHIUhfYA523kkOdoF9APQEkRsberddvEsEZOkIIvA/edit)
 
