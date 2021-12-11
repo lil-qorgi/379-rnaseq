@@ -29,7 +29,7 @@ The raw RNA-seq files of paired-end sequencing data all derive from the same wil
 
 ## Menu
 
-[See Menu](#menu) &nbsp;&nbsp;&nbsp;&nbsp; [See Version log](#version) &nbsp;&nbsp;&nbsp;&nbsp; [See Requirements](#requirements-for-this-document)
+[Menu](#menu) &nbsp;&nbsp;&nbsp;&nbsp; [Version log](#version) &nbsp;&nbsp;&nbsp;&nbsp; [Requirements](#requirements-for-this-document)
 
 | Workflow steps         |
 | -----------  |
