@@ -194,23 +194,29 @@ $ bc -l <<< '/4'
 # download from GCloud to local directory (with custom alias)
 $ get_hpc /home/qz108/RNA_seq_workflow/WTC2*trPE*
 
-# run FastQC command-line version to obtain .html reports for raw reads files
+# run FastQC command-line version to obtain .html reports 
+# for raw reads files
 $ fastqc -o raw_forward WTC2_1.fq.gz
 $ fastqc -o raw_reverse WTC2_2.fq.gz
 ```
 - [**raw_forward_FastQC_report.html**](summary_outputs/raw_forward_FastQC_report.html)
 - [**raw_reverse_FastQC_report.html**](summary_outputs/raw_reverse_FastQC_report.html)
+(see rendered reports in Results section)
 
 ```bash
-# run FastQC command-line version to obtain .html reports for raw reads files
+# run FastQC command-line version to obtain .html reports 
+# for trimmed reads files
 $ fastqc -o trimmed_forward WTC2_1.trPE.fq.gz
 $ fastqc -o trimmed_reverse WTC2_2.trPE.fq.gz
 
-# the resulting FastQC .html reports are stored in raw_forward, raw_reverse, trimmed_forward, and trimmed_reverse folders. We copied the .html reports to this notebook as well.
+# the resulting FastQC .html reports were stored in 
+# raw_forward/, raw_reverse/, trimmed_forward/, and trimmed_reverse/ 
+# folders. We copied the .html reports to this notebook as well.
 ```
 
 - [**trimmed_forward_FastQC_report.html**](summary_outputs/trimmed_forward_FastQC_report.html)
 - [**trimmed_reverse_FastQC_report.html**](summary_outputs/trimmed_reverse_FastQC_report.html)
+(see rendered reports in Results section)
 
 ## Results & interpretation.
 ### Interpreting Trimmomatic results.
@@ -218,13 +224,17 @@ $ fastqc -o trimmed_reverse WTC2_2.trPE.fq.gz
 There are 19,459,631 reads in both the forward and reverse trimmed paired-end fastq files.
 The read-survival rate is **95.35%.** 
 
-### Preview FastQC reports
+### Links to FastQC reports 
 | Forward | Reverse |
 | --- | --- |
 | [Raw forward reads FastQC report](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/raw_forward_FastQC_report.html)                        | [Raw reverse reads FastQC report](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/raw_reverse_FastQC_report.html) |
 | [Trimmed forward reads FastQC report](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/trimmed_forward_FastQC_report.html)    | [Trimmed reverse reads FastQC report](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/trimmed_reverse_FastQC_report.html) |
 
 ### Interpreting FastQC results.
+Firstly, comparing *within* the raw or trimmed reads, between forward and reverse reads, the FastQC reports are similar in most metrics. The only difference of note is that reverse reads had slightly more tiles with lower sequence quality than the forward reads. 
+
+Therefore, for the next comparisons, between pre-trim and post-trim reads, we will only compare between the forward reads, as their differences should be representative of the effects of this Trimmomatic run.
+
 
 
 ### Comparing read quality before vs. after on FastQC
