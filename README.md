@@ -32,17 +32,18 @@ The raw RNA-seq files of paired-end sequencing data all derive from the same wil
 | Menu         |
 | -----------  |
 | [Introduction & Background](#introduction--background) |
-| [2021.10.13 - Obtain reads and read counting](#20211013---obtain-reads-and-read-counting) |
-| [2021.10.19 - Clean reads via Trimmomatic](#20211019---clean-reads-via-trimmomatic) |
-| [2021.10.21 - Obtain reference genome](#20211021---obtain-reference-genome) |
-| [2021.10.26 - bowtie2 sequence alignment (mostly for practice)](#20211026---bowtie2-sequence-alignment-mostly-for-practice) |
-| [2021.10.28 - Tophat alignment](#20211028---tophat-alignment) |
-| [2021.11.02 - Transfer to GitHub](#20211102---transfer-to-github) |
-| [2021.11.04 - Infer transcripts using cufflinks](#20211104---infer-transcripts-using-cufflinks) |
-| [2021.11.09 - Merge transcript annotation files using cuffmerge](#20211109---merge-transcript-annotation-files-using-cuffmerge) |
-| [2021.11.11 - Identify differentially expressed genes using cuffdiff](#20211111---identify-differentially-expressed-genes-using-cuffdiff) |
-| [2021.11.16 - Building summary table](#20211116---building-summary-table) |
-| [2021.11.18 - cummeRbund]() |
+| [Step 1 - Obtain reads and read counting](#step-1---obtain-reads-and-read-counting) |
+| [Step 2 - Clean reads via Trimmomatic](#step-2---clean-reads-via-trimmomatic) |
+| [Step 3 - Obtain reference genome](#step-3---obtain-reference-genome) |
+| [Step 4 - bowtie2 sequence alignment (mostly for practice)](#step-4---bowtie2-sequence-alignment-mostly-for-practice) |
+| [Step 5 - Tophat alignment](#step-5---tophat-alignment) |
+| [Step 6 - Transfer to GitHub](#step-6---transfer-to-github) |
+| [Step 7 - Infer transcripts using cufflinks](#step-7---infer-transcripts-using-cufflinks) |
+| [Step 8 - Merge transcript annotation files using cuffmerge](#step-8---merge-transcript-annotation-files-using-cuffmerge) |
+| [Step 9 - Identify differentially expressed genes using cuffdiff](#step-9---identify-differentially-expressed-genes-using-cuffdiff) |
+| [Step 10 - Building summary table](#step-10---building-summary-table) |
+| [Step 11 - Data visualization using cummeRbund]() |
+| [Step 12 - Gene ontology (GO) analysis]() |
 | insert here |
 | [Template](#template) |
 
@@ -638,10 +639,10 @@ Place all input files for cuffdiff into a new folder named "cuffdiff_input"
         - **WTB2_accepted_hits.bam**
         - **WTC2_accepted_hits.bam**
         - these accepted hits .bam files were obtained from tophat alignment over Trimmomatic-cleaned RNAseq data for each of the samples. In other words, we repeated the previous analysis steps from the first step (2021.10.13) through to the tophat alignment step (2021.10.28) for each raw sequence reads file (excluding the bowtie2 step, which was for practice). The links below reference those steps.
-            1. [Obtain the reference genome](#20211021---obtain-reference-genome) for *Candida albicans*. It only needs to be obtained once.
-            1. [Obtain the raw RNA-seq paired-end fastq files](#20211013---obtain-reads-and-read-counting) for the biological replicate (e.g. WTB1)
-            1. Clean the reads via [Trimmomatic]((#20211019---clean-reads-via-trimmomatic))
-            1. Run the paired-end reads against the reference genome using the [Tophat spliced alignment program](#20211028---tophat-alignment) to obtain accepted_hits.bam for the replicate. 
+            1. [Obtain the reference genome](#step-3---obtain-reference-genome) for *Candida albicans*. It only needs to be obtained once.
+            1. [Obtain the raw RNA-seq paired-end fastq files](#step-1---obtain-reads-and-read-counting) for the biological replicate (e.g. WTB1)
+            1. Clean the reads via [Trimmomatic]((#step-2---clean-reads-via-trimmomatic))
+            1. Run the paired-end reads against the reference genome using the [Tophat spliced alignment program](#step-5---tophat-alignment) to obtain accepted_hits.bam for the replicate. 
                 - After obtaining the file, prepend accepted_hits.bam with the replicate name (e.g. WTB1_accepted_hits.bam), then copy the file into cuffdiff_input/
 
 ### *output files*
