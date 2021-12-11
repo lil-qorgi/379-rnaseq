@@ -44,9 +44,8 @@ The raw RNA-seq files of paired-end sequencing data all derive from the same wil
 | [Step 8 - Merge transcript annotation files using cuffmerge](#step-8---merge-transcript-annotation-files-using-cuffmerge) |
 | [Step 9 - Identify differentially expressed genes using cuffdiff](#step-9---identify-differentially-expressed-genes-using-cuffdiff) |
 | [Step 10 - Building summary table](#step-10---building-summary-table) |
-| [Step 11 - Data visualization using cummeRbund]() |
-| [Step 12 - Gene ontology (GO) analysis]() |
-| insert here |
+| [Step 11 - Visualize DE genes using cummeRbund](#step-11---visualize-de-genes-using-cummerbund) |
+| [Step 12 - Identify enriched gene ontology categories](#step-12---identify-enriched-gene-ontology-categories) |
 | [Template](#template) |
 
 ---
