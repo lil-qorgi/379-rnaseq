@@ -218,6 +218,12 @@ $ fastqc -o trimmed_reverse WTC2_2.trPE.fq.gz
 There are 19,459,631 reads in both the forward and reverse trimmed paired-end fastq files.
 The read-survival rate is **95.35%.** 
 
+### Preview FastQC reports
+[Raw forward reads FastQC report](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/raw_forward_FastQC_report.html)
+[Raw reverse reads FastQC report](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/raw_reverse_FastQC_report.html)
+[Trimmed forward reads FastQC report](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/trimmed_forward_FastQC_report.html)
+[Trimmed reverse reads FastQC report](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/trimmed_reverse_FastQC_report.html)
+
 ### Interpreting FastQC results.
 
 
