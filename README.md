@@ -59,10 +59,10 @@ The raw RNA-seq files of paired-end sequencing data all derive from the same wil
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of the analysis.
+## 1A - Objective(s) of this step of the analysis.
 The goal in this step is to obtain the raw RNA sequencing reads files (focusing on the WTC2 biological replicate) and count the total number of reads in the R1 and R2 fastq files before cleaning. 
 
-## Files involved.
+## 1B - Files involved.
 As the class used a divide & conquer strategy on these files, I focused on WTC2's paired-end raw data files.
 - WTC2_1.fq.gz
     - forward reads of wildtype, Thi-, replicate C.
@@ -70,7 +70,7 @@ As the class used a divide & conquer strategy on these files, I focused on WTC2'
     - reverse reads of wildtype, Thi-, replicate C.
 
 
-## Specific commands used in the analysis.
+## 1C - Specific commands used in the analysis.
 ```bash
 # obtain the .gz files from Google Bucket
 $ gsutil cp gs://gu-biology-dept-class/WTC2*.gz
@@ -93,7 +93,7 @@ $ bc -l <<< '81630776/4'
 20407694
 ```
 
-## Results & interpretation.
+## 1D - Results & interpretation.
 There are **20,407,694** reads in both the forward and the reverse read files for WTC2.
 
 The agreement in read numbers between the forward and reverse read files makes sense because they are obtained from the same paired-end sequencing run.
@@ -285,7 +285,7 @@ GCF_000182965.3_ASM18296v3_genomic.fna.gz
 [Back to menu](#menu)
 
 ## Objective(s) of this step of the analysis.
-Run a bowtie2 (non-spliced) alignment of trimmed reads to the reference genome for C. albicans. Mostly, this bowtie2 run results will be replaced by the tophat results later on. This is mostly to familiarize with bowtie2 usage.
+Run a bowtie2 (non-spliced) alignment of trimmed reads to the reference genome for C. albicans. Mostly, this results from this bt2 run will be replaced by the tophat results later on, so this step is mostly to familiarize the student with bowtie2 usage.
 
 ## Files involved.
 ### —bowtie2-build—
