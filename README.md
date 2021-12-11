@@ -208,17 +208,16 @@ $ fastqc -o raw_reverse WTC2_2.fq.gz
 # for trimmed reads files
 $ fastqc -o trimmed_forward WTC2_1.trPE.fq.gz
 $ fastqc -o trimmed_reverse WTC2_2.trPE.fq.gz
-
-# the resulting FastQC .html reports were stored in 
-# raw_forward/, raw_reverse/, trimmed_forward/, and trimmed_reverse/ 
-# folders. We copied the .html reports to this notebook as well.
 ```
 
 - [**trimmed_forward_FastQC_report.html**](summary_outputs/trimmed_forward_FastQC_report.html)
 - [**trimmed_reverse_FastQC_report.html**](summary_outputs/trimmed_reverse_FastQC_report.html)
 (see rendered reports in Results section)
 
+The resulting FastQC .html reports were stored in raw_forward/, raw_reverse/, trimmed_forward/, and trimmed_reverse/ folders. The .html reports were uploaded to this notebook.
+
 ## Results & interpretation.
+
 ### Interpreting Trimmomatic results.
 - [**z01.trim_WTC2**](slurm_outputs/z01.trim_WTC2)
 There are 19,459,631 reads in both the forward and reverse trimmed paired-end fastq files.
@@ -235,17 +234,19 @@ Firstly, comparing *within* the raw or trimmed reads, between forward and revers
 
 Therefore, for the next comparisons, between pre-trim and post-trim reads, we will only compare between the forward reads, as their differences should be representative of the effects of this Trimmomatic run.
 
+Note first that trimming reduced read lengths from [all 150 bp in the raw reads](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/raw_forward_FastQC_report.html) to [from 75 bp to at most 140 bp in the trimmed reads](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/trimmed_forward_FastQC_report.html). Note that the first 10 bp were trimmed from all raw reads using "HEADCROP:10" in Trimmomatic.
 
+In terms of "Per base sequence quality," the trimmed (forward) reads *slightly* improved quality scores across all positions in the reads while significantly improving quality scores towards the end of the reads (note that the last 10 bp were trimmed from all reads). 
 
-### Comparing read quality before vs. after on FastQC
-| Before trimming               | After trimming                     |
-| -----------                           | -----------                               |
-| [image]()   |  [image]()  |
-|  description & issue  |  description & comparison  | 
+The raw reads were [highly varied in "Per base sequence content" in the first 10 base pairs](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/raw_forward_FastQC_report.html#M1), which is a pattern commonly seen in NGS data as the machine is still calibrating. This large variation was [largely gone in the trimmed reads](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/trimmed_forward_FastQC_report.html#M1), since the trimming cropped the first 10 base pairs, which contained the majority of the variation. Still, visible wobbliness remains in the first 3 bases.
 
-Per Base Sequence Content greatly improved from before, but still has some visible wobbliness in the first 3 bases. 
+As expected, the "Sequence length distribution" had [only one value in the raw reads (150 bp)](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/raw_forward_FastQC_report.html#M7), but [ranged from 75 to 140 in the trimmed reads](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/trimmed_forward_FastQC_report.html#M7), with 140 bp being the largest bin. Shorter reads could have been possible from the "SLIDINGWINDOW" command, which trimmed the portions of reads that had low average quality.
 
-High-Duplication sequences do not appear to have been trimmed, which is fine considering this is RNA-seq data.
+"Sequence duplication levels" were largely unchanged between [raw](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/raw_forward_FastQC_report.html#M8) and [trimmed](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/trimmed_forward_FastQC_report.html#M8) reads. Although FastQC reports them with warnings, the high sequence duplication levels are fine because the information on read duplication from RNA-seq will become informative in later analyses of gene expression levels.
+
+"Adapter content" [increased towards the end of the reads in the raw reads](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/raw_forward_FastQC_report.html#M10), while this [adapter contamination was effectively gone in the trimmed reads](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/trimmed_forward_FastQC_report.html#M10) thanks to the "ILLUMINACLIP" command.
+
+All other metrics were largely unchanged between raw and trimmed reads. The full reports are linked to in the preview section above.
 
 ---
 
