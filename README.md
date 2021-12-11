@@ -197,13 +197,20 @@ $ get_hpc /home/qz108/RNA_seq_workflow/WTC2*trPE*
 # run FastQC command-line version to obtain .html reports for raw reads files
 $ fastqc -o raw_forward WTC2_1.fq.gz
 $ fastqc -o raw_reverse WTC2_2.fq.gz
+```
+- [**raw_forward_FastQC_report.html**](summary_outputs/raw_forward_FastQC_report.html)
+- [**raw_reverse_FastQC_report.html**](summary_outputs/raw_reverse_FastQC_report.html)
 
+```bash
 # run FastQC command-line version to obtain .html reports for raw reads files
 $ fastqc -o trimmed_forward WTC2_1.trPE.fq.gz
 $ fastqc -o trimmed_reverse WTC2_2.trPE.fq.gz
 
 # the resulting FastQC .html reports are stored in raw_forward, raw_reverse, trimmed_forward, and trimmed_reverse folders. We copied the .html reports to this notebook as well.
 ```
+
+- [**trimmed_forward_FastQC_report.html**](summary_outputs/trimmed_forward_FastQC_report.html)
+- [**trimmed_reverse_FastQC_report.html**](summary_outputs/trimmed_reverse_FastQC_report.html)
 
 ## Results & interpretation.
 ### Interpreting Trimmomatic results.
