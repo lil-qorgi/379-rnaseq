@@ -4,9 +4,10 @@ Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Q Zhang
 
 Course&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BIOL 379
 
-[See Menu](#menu)
-[See Version log](#version)
-[See Requirements](#requirements-for-this-document)
+Links.
+
+[See Menu](#menu) &nbsp;&nbsp;&nbsp;&nbsp; [See Version log](#version) &nbsp;&nbsp;&nbsp;&nbsp; [See Requirements](#requirements-for-this-document)
+
 
 # Introduction & Background
 
@@ -788,23 +789,29 @@ export them both into Excel, sort both, then check if they align. If so, we will
 <copy-to-here>
     
 ---
-    
 
+# Document Info.
+[Back to menu](#menu)
+    
 ## Version
-v0.1.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.10.12-10.31
+    
+v0.1.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.10.12
 - Entries logged using Google Docs.
 
 v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02
 - Entries transferred to and logged using GitHub.
 - Repo: lil-qorgi:379-rnaseq
 
-v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02
-- Entries transferred to and logged using GitHub.
-- Repo: lil-qorgi:379-rnaseq
+v1.1.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.12.11
+- All contents added.
+    
+v1.2.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.12.11(?)
+- Revised.
 
-## (Requirements for this document)
+## Requirements for this document
+(notes to self)
 - Document everything that someone would need to follow to recapitulate your analysis:
-    - downloading files, software, commands, scripts, analyses runs, etc.
-    - explain all file names
-    - [see example notebook (private link)](https://docs.google.com/document/d/1KJAZZpvzMqlzfekco8q_vjajGqBRnzcg/edit)
+    - All commands for downloading files, running software & scripts, performing analyses, etc.
+    - Explain all input & output file names.
+    - [See example notebook (private link)](https://docs.google.com/document/d/1KJAZZpvzMqlzfekco8q_vjajGqBRnzcg/edit)
 
