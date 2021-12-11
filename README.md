@@ -503,12 +503,13 @@ The journal has been transferred onto GitHub. All script and output files were e
 [Back to menu](#menu)
 
 ## 7A - Objective(s) of this step of the analysis.
-The goal of this step is to use cufflinks to take in the tophat read alignment results from step 5 to infer the transcripts that are found in the sequenced samples. 
+The goal of this step is to use cufflinks to take in the tophat read alignment results from step 5 to infer the transcripts that are found in the sequenced samples, for the single sample we are focusing on, which is WTC2 (wildtype, replicate C, thiamine-). 
 
-See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/)
+See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/).
 
 ## 7B - Files involved.
 ### —cufflinks—
+
 ### *input files*
 - GCF_000182965.3_ASM18296v3_genomic.gff
     - The reference genome annotation file
