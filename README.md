@@ -189,7 +189,7 @@ $ bc -l <<< '/4'
 19459631
 ```
 
-### Observe output on local
+### Observe output on local machine
 ```bash
 # download from GCloud to local directory (with custom alias)
 $ get_hpc /home/qz108/RNA_seq_workflow/WTC2*trPE*
