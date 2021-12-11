@@ -59,7 +59,7 @@ The raw RNA-seq files of paired-end sequencing data all derive from the same wil
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of analysis.
+## Objective(s) of this step of the analysis.
 The goal in this step is to obtain the raw RNA sequencing reads files (focusing on the WTC2 biological replicate) and count the total number of reads in the R1 and R2 fastq files before cleaning. 
 
 ## Files involved.
@@ -108,7 +108,7 @@ The agreement in read numbers between the forward and reverse read files makes s
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of analysis.
+## Objective(s) of this step of the analysis.
 The goal is to use Trimmomatic to trim the raw reads so as to remove the problematic first ten bases of each read, reduce adapter content, improve reverse read quality, and do an overall trimming via sliding window. 
 
 Review trimmed PE files in FastQC to ensure Trim achieved aims as intended.
@@ -241,7 +241,7 @@ High-Duplication sequences do not appear to have been trimmed, which is fine con
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of analysis.
+## Objective(s) of this step of the analysis.
 Goal is to download refseq C. albicans genome assembly from Entrez genome into a separate folder.
 
 Species: [Candida albicans SC5314 (budding yeasts)](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=237561&lvl=3&lin=f&keep=1&srchmode=1&unlock)
@@ -269,7 +269,7 @@ GCF_000182965.3_ASM18296v3_genomic.fna.gz
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of analysis.
+## Objective(s) of this step of the analysis.
 Run a bowtie2 (non-spliced) alignment of trimmed reads to the reference genome for C. albicans. Mostly, this bowtie2 run results will be replaced by the tophat results later on. This is mostly to familiarize with bowtie2 usage.
 
 ## Files involved.
@@ -364,7 +364,7 @@ The bowtie2 job took 01:37:18 (1.5+ hours) to complete.
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of analysis.
+## Objective(s) of this step of the analysis.
 Perform spliced alignment using tophat. 
 
 ## Files involved.
@@ -439,7 +439,7 @@ Reads aligned to the reference genome were collected in the accepted_hits.bam fi
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of analysis.
+## Objective(s) of this step of the analysis.
 Transfer notes to GitHub.
 
 ## Files involved.
@@ -475,7 +475,7 @@ The journal has been transferred onto Github.
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of analysis.
+## Objective(s) of this step of the analysis.
 The goal is to use cufflinks to take in the tophat read alignment results to infer the transcripts that are found in the sequenced samples. 
 
 See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/)
@@ -553,7 +553,7 @@ The cufflinks program successfully inferred transcripts based on the tophat alig
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of analysis.
+## Objective(s) of this step of the analysis.
 The goal is to merge the transcript annotations from all biological replicates to obtain the merged annotation file merged.gtf.
 
 ## Files involved.
@@ -662,7 +662,7 @@ Cuffmerge successfully merged the transcript annotation (.gtf) files and produce
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of analysis.
+## Objective(s) of this step of the analysis.
 The goal is to identify genes that are significantly differentially expressed between the control (Thi+) and treatment (Thi-) groups ...
 
 i.e., between WTX1 (Thi+) vs. WTX2 (Thi-), where X is one of {A, B, C} 
@@ -770,7 +770,7 @@ Cuffdiff differential expression analysis output appeared successful. We can now
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of analysis.
+## Objective(s) of this step of the analysis.
 Using the results stored in gene_exp.diff from the previous cuffdiff run as well as Uniprot and Entrez Nucleotide websites (for protein functional annotation), we will build a summary table of the genes that were (statistically) significantly differentially expressed in the absence of thiamine when compared with in the presence of thiamine.
 
 The method is to link the genes along with their FPKMs, log2 FC, and q-value from cuffdiff with NCBI protein IDs and known descriptions of their functions from Uniprot and Entrez Nucleotide.
@@ -852,7 +852,7 @@ export them both into Excel, sort both, then check if they align. If so, we will
 
 [Back to menu](#menu)
 
-## Objective(s) of this step of analysis.
+## Objective(s) of this step of the analysis.
 
 ## Files involved.
 
