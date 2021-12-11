@@ -287,7 +287,7 @@ GCF_000182965.3_ASM18296v3_genomic.fna.gz
 ## 4A - Objective(s) of this step of the analysis.
 Run a bowtie2 (non-spliced) alignment of trimmed reads to the reference genome for C. albicans. Mostly, the results from this bt2 run will be replaced by the tophat results later on, so this step is mostly to familiarize the student with bowtie2 usage.
 
-We will be using the GCF_000182965.3 assembly as the reference genome for *Candida albicans* to which we align our lab-produced (then trimmed) reads. This assembly was selected out of the [73 available on NCBI Entrez Genome](https://www.ncbi.nlm.nih.gov/genome/browse/#!/eukaryotes/21/) due to its being the only one on RefSeq, which is a highly curated genomic database (filtering by "RefSeq category" gives only this assembly). Using RefSeq assemblies ensures that the assembly has high enough standards to be a reference genome against which we can align and then build our transcripts accurately.
+We will be using the GCF_000182965.3 assembly as the reference genome for *Candida albicans* to which we align our lab-produced (then trimmed) reads. This assembly was selected out of the [73 available on NCBI Entrez Genome](https://www.ncbi.nlm.nih.gov/genome/browse/#!/eukaryotes/21/) due to its being the only one on RefSeq, which is a highly curated genomic database (filtering by "RefSeq category" gives only this assembly). Using RefSeq assemblies ensures that the assembly has high enough standards to be a reference genome against which we can align and then build our transcripts accurately. Additionally, this is a haploid assembly, reducing the likelihood that reads that are present in the genome align more than once (which would be a likely scenario if we try to align against a diploid assembly).
 
 ## 4B - Files involved.
 ### —bowtie2-build—
@@ -356,6 +356,7 @@ $ sbatch bt2.sbatch
 
 # Check run stats.
 $ 31143 --format=jobid,jobname,account,state,elapsed
+# The bowtie2 job took 01:37:18 (1.5+ hours) to complete.
 
 # Check z01 output:
 $ less z01.bt2_WTC2
@@ -363,11 +364,9 @@ $ less z01.bt2_WTC2
 - [**z01.bt2_WTC2**](slurm_outputs/z01.bt2_WTC2)
 
 ## 4D - Results & interpretation.
-90.52% of the input (paired) reads aligned concordantly exactly 1 time.
+The overall alignment rate is 97.97%, which includes both concordant and non-concordant alignments.
 
-97.97% overall alignment rate
-
-The bowtie2 job took 01:37:18 (1.5+ hours) to complete.
+90.52% of the input (paired) reads aligned concordantly exactly 1 time (unique concordance rate). Concordance occurs when reads align to the reference genome with both an expected direction and an insert size consistent with the insert size in the RNAseq data. Since this assembly is haploid, this concordance rate is normal, allowing downstream processing to be performed as normal. 
 
 [See class's alignment results.](https://docs.google.com/spreadsheets/d/1GZOHIUhfYA523kkOdoF9APQEkRsberddvEsEZOkIIvA/edit)
 
