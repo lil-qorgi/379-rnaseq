@@ -29,7 +29,7 @@ The raw RNA-seq files of paired-end sequencing data all derive from the same wil
 
 ## Menu
 
-[Menu](#menu) &nbsp;&nbsp;&nbsp;&nbsp; [Version log](#version) &nbsp;&nbsp;&nbsp;&nbsp; [Requirements](#requirements-for-this-document)
+[Version log](#version) &nbsp;&nbsp;&nbsp;&nbsp; [Requirements](#requirements-for-this-document)
 
 | Workflow steps         |
 | -----------  |
@@ -46,7 +46,7 @@ The raw RNA-seq files of paired-end sequencing data all derive from the same wil
 | [Step 10 - Building summary table](#step-10---building-summary-table) |
 | [Step 11 - Visualize DE genes using cummeRbund](#step-11---visualize-de-genes-using-cummerbund) |
 | [Step 12 - Identify enriched gene ontology categories](#step-12---identify-enriched-gene-ontology-categories) |
-| [Template](#template) |
+| [Journal entry template](#journal-entry-template) |
 
 ---
 
