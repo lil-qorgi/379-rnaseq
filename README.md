@@ -4,25 +4,15 @@ Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Q Zhang
 
 Course&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BIOL 379
 
-## Version
-v0.1.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.10.12-10.31
-- Entries logged using Google Docs.
-
-v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02-??
-- Entries transferred to and logged using GitHub.
-- Repo: lil-qorgi:379-rnaseq
-
-## (Requirements for this document)
-- Document everything that someone would need to follow to recapitulate your analysis:
-    - downloading files, software, commands, scripts, analyses runs, etc.
-    - explain all file names
-    - [see example notebook (private link)](https://docs.google.com/document/d/1KJAZZpvzMqlzfekco8q_vjajGqBRnzcg/edit)
+[See Menu](#menu)
+[See Version log](#version)
+[See Requirements](#requirements-for-this-document)
 
 # Introduction & Background
 
 The Rolfes lab is conducting a study to identify possible genes that regulate thiamine biosynthesis in the yeast *Candida albicans*. *Candida albicans* is a normally commensal species commonly found on humans, but can become pathogenic under certain environmental conditions, leading to the candidiasis disease. By examining the genes that are significantly differentially expressed after removing thiamine from the growing medium, the team hopes to better understand the role of thiamine in the normal growth as well as the pathogenesis of *C. albicans*. 
 
-The Rolfes lab has sequenced wildtype *Candida albicans* yeast cells grown in two media differing only in thiamine presence — with the control having thiamine (Thi+) and the treatment absent thiamine (Thi-). For each environmental condition, three biological replicates, A, B, and C, were grown and their cellular RNA sequenced via next-gen sequencing techniques. 
+The Rolfes lab has already sequenced wildtype *Candida albicans* yeast cells grown in two media differing only in thiamine presence — with the control having thiamine (Thi+) and the treatment absent thiamine (Thi-). For each environmental condition, three biological replicates, A, B, and C, were grown and their cellular RNA sequenced via next-gen sequencing techniques. 
 
 The aim of this bioinformatics workflow is to identify *C. albicans* genes that were differentially expressed between Thi+ and Thi- conditions. To do so, we will first clean up the raw sequences, then assemble identified transcripts, and, finally, compare gene expressions between the two treatment conditions across all three replicates. 
 
@@ -31,8 +21,8 @@ The two treatment conditions and three biological replicates per condition resul
 
 The raw RNA-seq files of paired-end sequencing data all derive from the same wildtype (WT) cell line.
 
-| Thiamine+ environment             | Thiamine- environment                 |
-| -----------                       | -----------                           |
+| Thiamine+ environment                 | Thiamine- environment                     |
+| -----------                           | -----------                               |
 | **WTA1**: wildtype, replicate A, Thi+ | **WTA2**: wildtype, replicate A, Thi-     |
 | **WTB1**: wildtype, replicate B, Thi+ | **WTB2**: wildtype, replicate B, Thi-     |
 | **WTC1**: wildtype, replicate C, Thi+ | **WTC2**: wildtype, replicate C, Thi-     |
@@ -796,3 +786,25 @@ export them both into Excel, sort both, then check if they align. If so, we will
 ---
 
 <copy-to-here>
+    
+---
+    
+
+## Version
+v0.1.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.10.12-10.31
+- Entries logged using Google Docs.
+
+v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02
+- Entries transferred to and logged using GitHub.
+- Repo: lil-qorgi:379-rnaseq
+
+v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02
+- Entries transferred to and logged using GitHub.
+- Repo: lil-qorgi:379-rnaseq
+
+## (Requirements for this document)
+- Document everything that someone would need to follow to recapitulate your analysis:
+    - downloading files, software, commands, scripts, analyses runs, etc.
+    - explain all file names
+    - [see example notebook (private link)](https://docs.google.com/document/d/1KJAZZpvzMqlzfekco8q_vjajGqBRnzcg/edit)
+
