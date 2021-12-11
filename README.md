@@ -14,7 +14,7 @@ The Rolfes lab is conducting a study to identify possible genes that regulate th
 
 The Rolfes lab has already sequenced wildtype *Candida albicans* yeast cells grown in two media differing only in thiamine presence — with the control having thiamine (Thi+) and the treatment absent thiamine (Thi-). For each environmental condition, three biological replicates, A, B, and C, were grown and their cellular RNA sequenced via next-gen sequencing techniques. 
 
-The aim of this bioinformatics workflow is to identify *C. albicans* genes that were differentially expressed between Thi+ and Thi- conditions. To do so, we will first clean up the raw sequences, then assemble identified transcripts, and, finally, compare gene expressions between the two treatment conditions across all three replicates. 
+The aim of this bioinformatics workflow is to identify *C. albicans* genes that were differentially expressed between Thi+ and Thi- conditions. To do so, we will first clean up the raw sequences, then assemble identified transcripts, and, finally, compare gene expressions between the two treatment conditions across all three replicates. Most of the sequence-processing software programs are a part of the Tuxedo Suite.
 
 ## Starting files overview
 The two treatment conditions and three biological replicates per condition resulted in six distinct RNA-sequencing samples, each being a paired-end sequencing sample contained in a pair of forward- and reverse-reads FASTQ files. The naming convention to be maintained throughout the workflow is as follows:
@@ -60,7 +60,7 @@ The raw RNA-seq files of paired-end sequencing data all derive from the same wil
 [Back to menu](#menu)
 
 ## 1A - Objective(s) of this step of the analysis.
-The goal in this step is to obtain the raw RNA sequencing reads files (focusing on the WTC2 biological replicate) and count the total number of reads in the R1 and R2 fastq files before cleaning. 
+The goal in this step is to obtain the raw RNA sequencing reads files (focusing on the WTC2 biological replicate) and count the total number of reads in the forward and reverse FASTQ files before read cleaning in step 2. 
 
 ## 1B - Files involved.
 As the class used a divide & conquer strategy on these files, I focused on WTC2's paired-end raw data files.
@@ -94,9 +94,7 @@ $ bc -l <<< '81630776/4'
 ```
 
 ## 1D - Results & interpretation.
-There are **20,407,694** reads in both the forward and the reverse read files for WTC2.
-
-The agreement in read numbers between the forward and reverse read files makes sense because they are obtained from the same paired-end sequencing run.
+There are **20,407,694** reads in both the forward and the reverse read files for WTC2. This agreement in read numbers between the forward and reverse read files is expected, since the forward and reverse reads are obtained from the same paired-end sequencing run.
 
 ---
 
@@ -109,9 +107,9 @@ The agreement in read numbers between the forward and reverse read files makes s
 [Back to menu](#menu)
 
 ## 2A - Objective(s) of this step of the analysis.
-The goal is to use Trimmomatic to trim the raw reads so as to remove the problematic first ten bases of each read, reduce adapter content, improve reverse read quality, and do an overall trimming via sliding window. 
+The goal of this step is to use Trimmomatic to trim the raw reads in order to remove the problematic first ten bases of each read, reduce adapter content, improve reverse read quality, and improve read quality scores via sliding window trimming. 
 
-Review trimmed PE files in FastQC to ensure Trim achieved aims as intended.
+Additionally, the trimmed paired-end reads files will be compared with pre-trim raw reads files using FastQC to ensure that the clean achieved above aims as intended.
 
 ## 2B - Files involved.
 
@@ -244,6 +242,8 @@ As expected, the "Sequence length distribution" had [only one value in the raw r
 
 "Adapter content" [increased towards the end of the reads in the raw reads](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/raw_forward_FastQC_report.html#M10), while this [adapter contamination was effectively gone in the trimmed reads](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/trimmed_forward_FastQC_report.html#M10) thanks to the "ILLUMINACLIP" command.
 
+Thus, FastQC has shown that the read cleaning has worked as intended.
+
 All other metrics were largely unchanged between raw and trimmed reads. The full reports are linked to in the preview section above.
 
 ---
@@ -257,12 +257,15 @@ All other metrics were largely unchanged between raw and trimmed reads. The full
 [Back to menu](#menu)
 
 ## 3A - Objective(s) of this step of the analysis.
-Goal is to download refseq C. albicans genome assembly from Entrez genome into a separate folder.
+The goal of this step is to download the RefSeq *C. albicans* genome assembly from Entrez genome into a separate folder. The reason for downloading this particular assembly is provided in step 4A. 
 
 Species: [Candida albicans SC5314 (budding yeasts)](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=237561&lvl=3&lin=f&keep=1&srchmode=1&unlock)
 Link at Entrez Genome: [GCA_000182965.3](https://www.ncbi.nlm.nih.gov/assembly/GCA_000182965.3)
 
 ## 3B - Files involved.
+GCF_000182965.3_ASM18296v3_genomic.fna.gz
+- The RefSeq genome assembly for *C. albicans*, to be used as reference genome in step 4.
+
 ## 3C - Specific commands used in the analysis.
 ```bash
 $ mkdir refseq_GCF_000182965.3
@@ -271,8 +274,7 @@ $ wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/182/965/GCF_000182965.3_
 ```
 
 ## 3D - Results & interpretation.
-File obtained:
-GCF_000182965.3_ASM18296v3_genomic.fna.gz
+File obtained: GCF_000182965.3_ASM18296v3_genomic.fna.gz
 
 ---
 
@@ -285,9 +287,9 @@ GCF_000182965.3_ASM18296v3_genomic.fna.gz
 [Back to menu](#menu)
 
 ## 4A - Objective(s) of this step of the analysis.
-Run a bowtie2 (non-spliced) alignment of trimmed reads to the reference genome for C. albicans. Mostly, the results from this bt2 run will be replaced by the tophat results later on, so this step is mostly to familiarize the student with bowtie2 usage.
+The goal in this step is to run bowtie2 (bt2) on the trimmed reads obtained from step 2 to obtain a (non-spliced) alignment to the reference genome for *C. albicans*. The results from this bt2 run will be replaced by the tophat results later on, so this step is mostly to familiarize the student with bowtie2 usage.
 
-We will be using the GCF_000182965.3 assembly as the reference genome for *Candida albicans* to which we align our lab-produced (then trimmed) reads. This assembly was selected out of the [73 available on NCBI Entrez Genome](https://www.ncbi.nlm.nih.gov/genome/browse/#!/eukaryotes/21/) due to its being the only one on RefSeq, which is a highly curated genomic database (filtering by "RefSeq category" gives only this assembly). Using RefSeq assemblies ensures that the assembly has high enough standards to be a reference genome against which we can align and then build our transcripts accurately. Additionally, this is a haploid assembly, reducing the likelihood that reads that are present in the genome align more than once (which would be a likely scenario if we try to align against a diploid assembly).
+We will be using the GCF_000182965.3 assembly as the reference genome for *Candida albicans* to which we align our lab-produced (then trimmed) reads. This assembly was selected out of the [73 available on NCBI Entrez Genome](https://www.ncbi.nlm.nih.gov/genome/browse/#!/eukaryotes/21/) due to its being the only one on RefSeq — a highly curated genomic database (filtering by "RefSeq category" gives only this assembly). Using a RefSeq assembly ensures that the assembly is of high enough quality to be a reference genome against which we can align and then build our transcripts accurately. Additionally, this is a haploid assembly rather than a diploid one, reducing the likelihood that our reads align more than once (which would be much more likely if we tried to align against a diploid assembly).
 
 ## 4B - Files involved.
 ### —bowtie2-build—
@@ -381,7 +383,7 @@ The overall alignment rate is 97.97%, which includes both concordant and non-con
 [Back to menu](#menu)
 
 ## 5A - Objective(s) of this step of the analysis.
-Perform spliced alignment using tophat. 
+Similar to step 4, the goal of this step is to align our trimmed reads from step 2 to a reference genome. This time, we use tophat, which runs bowtie2 under the hood and allows for *spliced* (instead of non-spliced) alignment. Doing a spliced alignment allows us to take into account genes (i.e., their transcripts) that have multiple transcripts due to alternative splicing, which is usually more useful when aligning reads of more complex eukaryotic organisms against their reference genomes.
 
 ## 5B - Files involved.
 ### —Tophat—
@@ -440,10 +442,10 @@ $ less align_summary.txt
 ```
 - [**align_summary.txt**](summary_outputs/tophat_align_summary.txt)
 
-## 5D - Results & interpretation.
-Reads aligned to the reference genome were collected in the accepted_hits.bam file.
+The reads that were splice-aligned to the reference genome were collected in the accepted_hits.bam file (not included here).
 
-Tophat spliced alignment resulted in 90.3% concordant pair alignment rate. Similar to the results in the previous step, this concordance rate is high enough to give us confidence in the downstream data processing and analyses based on these reads.
+## 5D - Results & interpretation.
+Tophat spliced alignment resulted in 90.3% concordant pair alignment rate. Similar to the results in the bowtie2 non-spliced alignment from step 4, this concordance rate is high enough to give us confidence in the results we will obtain after downstream data processing and analyses based on these reads.
 
 [See class's alignment results.](https://docs.google.com/spreadsheets/d/1GZOHIUhfYA523kkOdoF9APQEkRsberddvEsEZOkIIvA/edit)
 
@@ -458,7 +460,7 @@ Tophat spliced alignment resulted in 90.3% concordant pair alignment rate. Simil
 [Back to menu](#menu)
 
 ## 6A - Objective(s) of this step of the analysis.
-Transfer notes to GitHub.
+Transfer the journal from Google Docs to GitHub.
 
 ## 6B - Files involved.
 Repository
@@ -489,7 +491,7 @@ $ git push
 ```
 
 ## 6D - Results & interpretation.
-The journal has been transferred onto Github. All script and output files were extracted into their own folders and linked to from README.md 
+The journal has been transferred onto GitHub. All script and output files were extracted into their own folders and linked to from within README.md (this document).
 
 ---
 
@@ -502,7 +504,7 @@ The journal has been transferred onto Github. All script and output files were e
 [Back to menu](#menu)
 
 ## 7A - Objective(s) of this step of the analysis.
-The goal is to use cufflinks to take in the tophat read alignment results to infer the transcripts that are found in the sequenced samples. 
+The goal of this step is to use cufflinks to take in the tophat read alignment results from step 5 to infer the transcripts that are found in the sequenced samples. 
 
 See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/)
 
@@ -863,6 +865,49 @@ export them both into Excel, sort both, then check if they align. If so, we will
 ## 10D - Results & interpretation.
 
 ---
+
+
+<br></br>
+
+# Step 11 - Visualize DE genes using cummeRbund
+
+**Date: 2021.11.18**
+
+[Back to menu](#menu)
+
+## 11A - Objective(s) of this step of the analysis.
+
+## 11B - Files involved.
+
+## 11C - Specific commands used in the analysis.
+```bash
+```
+
+## 11D - Results & interpretation.
+
+---
+
+
+<br></br>
+
+# Step 12 - Identify enriched gene ontology categories
+
+**Date: 2021.11.23**
+
+[Back to menu](#menu)
+
+## 12A - Objective(s) of this step of the analysis.
+
+## 12B - Files involved.
+
+## 12C - Specific commands used in the analysis.
+```bash
+```
+
+## 12D - Results & interpretation.
+
+---
+
 
 <br></br>
 
