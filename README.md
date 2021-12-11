@@ -114,20 +114,33 @@ The goal is to use Trimmomatic to trim the raw reads so as to remove the problem
 Review trimmed PE files in FastQC to ensure Trim achieved aims as intended.
 
 ## Files involved.
+
 ### —Trimmomatic—
 ### *input files*
-- WTC2_1.fq.gz, WTC2_2.fq.gz
-    - Raw data files for wildtype C2 treatment. (Yeast grown without thiamine.) (see also previous entry)
+- Raw RNA-seq reads from wildtype, replicate C, thiamine- treatment.
+    - WTC2_1.fq.gz
+    - WTC2_2.fq.gz
 
 ### *output files*
-- Paired-end and Single-end trimmed sequence files for forward reads (R1)
+- Paired-end (PE) trimmed sequence files, both forward (_1) and reverse (_2) reads 
     - WTC2_1.trPE.fq.gz
-    - WTC2_1.trSE.fq.gz
-- Paired-end and Single-end trimmed sequence files for reverse reads (R2)
     - WTC2_2.trPE.fq.gz
+- Single-end (SE) trimmed sequence files. Note that the forward and reverse reads here are *not* paired.
+    - WTC2_1.trSE.fq.gz
     - WTC2_2.trSE.fq.gz
-- *Note that the trSE versions will not be used in subsequent steps.
+    - We will not use these trimmed single-end reads in subsequent steps.
 
+### —FastQC—
+### *input files*
+- The raw (pre-trim) paired-end sequence files (see input files in Step 1).
+- The trimmed paired-end sequence files.
+
+### *output files*
+- FastQC reports (renamed from FastQC default report names)
+    - raw_forward_FastQC_report.html
+    - raw_reverse_FastQC_report.html
+    - trimmed_forward_FastQC_report.html
+    - trimmed_reverse_FastQC_report.html
 
 ## Specific commands used in the analysis.
 ### Create trim.sbatch
@@ -150,7 +163,7 @@ $ sacct -j 24813 --format=Elapsed
 39:05
 ```
 
-### Observe output on GCP
+### Observe output on Google Cloud Platform 
 ```bash
 # observe output
 $ less z01.trim_WTC2
@@ -159,11 +172,15 @@ $ less z01.trim_WTC2
 
 ```bash
 # Highlighted output:
-Input Read Pairs: 20407694 Both Surviving: 19459631 (95.35%) Forward Only Surviving: 599344 (2.94%) Reverse Only Surviving: 218664 (1.07%) Dropped: 130055 (0.64%)
-# This already gives the answer of 19459631 reads. Let's check by unzipping.
+Input Read Pairs: 20407694 
+Both Surviving: 19459631 (95.35%) 
+Forward Only Surviving: 599344 (2.94%) 
+Reverse Only Surviving: 218664 (1.07%) 
+Dropped: 130055 (0.64%)
+# This already gives the answer of 19459631 paired-end reads surviving. Let's check by unzipping.
 
 # copy & store the .gz files in a local folder for later use.
-# unzip output files and check number of reads
+# unzip output files and check number of reads in the trimmed paired-end reads file.
 $ gunzip WTC2*trPE*.gz
 $ wc -l WTC2_1.trPE.fq
 77838524
@@ -174,17 +191,30 @@ $ bc -l <<< '/4'
 
 ### Observe output on local
 ```bash
-# download (with custom alias)
-get_hpc /home/qz108/RNA_seq_workflow/WTC2*trPE*
+# download from GCloud to local directory (with custom alias)
+$ get_hpc /home/qz108/RNA_seq_workflow/WTC2*trPE*
 
-# open with FastQC & observe.
+# run FastQC command-line version to obtain .html reports for raw reads files
+$ fastqc -o raw_forward WTC2_1.fq.gz
+$ fastqc -o raw_reverse WTC2_2.fq.gz
+
+# run FastQC command-line version to obtain .html reports for raw reads files
+$ fastqc -o trimmed_forward WTC2_1.trPE.fq.gz
+$ fastqc -o trimmed_reverse WTC2_2.trPE.fq.gz
+
+# the resulting FastQC .html reports are stored in raw_forward, raw_reverse, trimmed_forward, and trimmed_reverse folders. We copied the .html reports to this notebook as well.
 ```
 
 ## Results & interpretation.
-There are 19,459,631 reads in the trimmed paired-end fastq files.
-**95.35% surviving.** 
+### Interpreting Trimmomatic results.
+- [**z01.trim_WTC2**](slurm_outputs/z01.trim_WTC2)
+There are 19,459,631 reads in both the forward and reverse trimmed paired-end fastq files.
+The read-survival rate is **95.35%.** 
 
-### Comparing reads before vs. after on FastQC
+### Interpreting FastQC results.
+
+
+### Comparing read quality before vs. after on FastQC
 | Before trimming               | After trimming                     |
 | -----------                           | -----------                               |
 | [image]()   |  [image]()  |
