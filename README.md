@@ -4,9 +4,6 @@ Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Q Zhang
 
 Course&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BIOL 379
 
-[See Menu](#menu) &nbsp;&nbsp;&nbsp;&nbsp; [See Version log](#version) &nbsp;&nbsp;&nbsp;&nbsp; [See Requirements](#requirements-for-this-document)
-
-
 # Introduction & Background
 
 The Rolfes lab is conducting a study to identify possible genes that regulate thiamine biosynthesis in the yeast *Candida albicans*. *Candida albicans* is a normally commensal species commonly found on humans, but can become pathogenic under certain environmental conditions, leading to the candidiasis disease. By examining the genes that are significantly differentially expressed after removing thiamine from the growing medium, the team hopes to better understand the role of thiamine in the normal growth as well as the pathogenesis of *C. albicans*. 
@@ -29,7 +26,10 @@ The raw RNA-seq files of paired-end sequencing data all derive from the same wil
 <br></br>
 
 ## Menu
-| Menu         |
+
+[See Menu](#menu) &nbsp;&nbsp;&nbsp;&nbsp; [See Version log](#version) &nbsp;&nbsp;&nbsp;&nbsp; [See Requirements](#requirements-for-this-document)
+
+| Workflow steps         |
 | -----------  |
 | [Introduction & Background](#introduction--background) |
 | [Step 1 - Obtain reads and read counting](#step-1---obtain-reads-and-read-counting) |
