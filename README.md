@@ -184,6 +184,12 @@ get_hpc /home/qz108/RNA_seq_workflow/WTC2*trPE*
 There are 19,459,631 reads in the trimmed paired-end fastq files.
 **95.35% surviving.** 
 
+### Comparing reads before vs. after on FastQC
+| Before trimming               | After trimming                     |
+| -----------                           | -----------                               |
+| [image]()   |  [image]()  |
+|  description & issue  |  description & comparison  | 
+
 Per Base Sequence Content greatly improved from before, but still has some visible wobbliness in the first 3 bases. 
 
 High-Duplication sequences do not appear to have been trimmed, which is fine considering this is RNA-seq data.
