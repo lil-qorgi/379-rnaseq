@@ -4,8 +4,6 @@ Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Q Zhang
 
 Course&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BIOL 379
 
-Links.
-
 [See Menu](#menu) &nbsp;&nbsp;&nbsp;&nbsp; [See Version log](#version) &nbsp;&nbsp;&nbsp;&nbsp; [See Requirements](#requirements-for-this-document)
 
 
@@ -28,29 +26,34 @@ The raw RNA-seq files of paired-end sequencing data all derive from the same wil
 | **WTB1**: wildtype, replicate B, Thi+ | **WTB2**: wildtype, replicate B, Thi-     |
 | **WTC1**: wildtype, replicate C, Thi+ | **WTC2**: wildtype, replicate C, Thi-     |
 
+<br></br>
+
+## Menu
+| Menu         |
+| -----------  |
+| [Introduction & Background](#introduction--background) |
+| [2021.10.13 - Obtain reads and read counting](#20211013---obtain-reads-and-read-counting) |
+| [2021.10.19 - Clean reads via Trimmomatic](#20211019---clean-reads-via-trimmomatic) |
+| [2021.10.21 - Obtain reference genome](#20211021---obtain-reference-genome) |
+| [2021.10.26 - bowtie2 sequence alignment (mostly for practice)](#20211026---bowtie2-sequence-alignment-mostly-for-practice) |
+| [2021.10.28 - Tophat alignment](#20211028---tophat-alignment) |
+| [2021.11.02 - Transfer to GitHub](#20211102---transfer-to-github) |
+| [2021.11.04 - Infer transcripts using cufflinks](#20211104---infer-transcripts-using-cufflinks) |
+| [2021.11.09 - Merge transcript annotation files using cuffmerge](#20211109---merge-transcript-annotation-files-using-cuffmerge) |
+| [2021.11.11 - Identify differentially expressed genes using cuffdiff](#20211111---identify-differentially-expressed-genes-using-cuffdiff) |
+| [2021.11.16 - Building summary table](#20211116---building-summary-table) |
+| [2021.11.18 - cummeRbund]() |
+| insert here |
+| [Template](#template) |
+
 ---
 
 <br></br>
 
-# Menu
-- [2021.10.13 - Obtain reads and read counting](#20211013---obtain-reads-and-read-counting)
-- [2021.10.19 - Clean reads via Trimmomatic](#20211019---clean-reads-via-trimmomatic)
-- [2021.10.21 - Obtain reference genome](#20211021---obtain-reference-genome)
-- [2021.10.26 - bowtie2 sequence alignment (mostly for practice)](#20211026---bowtie2-sequence-alignment-mostly-for-practice)
-- [2021.10.28 - Tophat alignment](#20211028---tophat-alignment)
-- [2021.11.02 - Transfer to GitHub](#20211102---transfer-to-github)
-- [2021.11.04 - Infer transcripts using cufflinks](#20211104---infer-transcripts-using-cufflinks)
-- [2021.11.09 - Merge transcript annotation files using cuffmerge](#20211109---merge-transcript-annotation-files-using-cuffmerge)
-- [2021.11.11 - Identify differentially expressed genes using cuffdiff](#20211111---identify-differentially-expressed-genes-using-cuffdiff)
-- [2021.11.16 - Building summary table](##20211116---building-summary-table)
-- [2021.11.18 - cummeRbund]()
-- [Template](#template)
+# Step 1 - Obtain reads and read counting
 
----
+**Date: 2021.10.13**
 
-<br></br>
-
-# 2021.10.13 - Obtain reads and read counting
 [Back to menu](#menu)
 
 ## Objective(s) of this step of analysis.
@@ -96,7 +99,10 @@ The agreement in read numbers between the forward and reverse read files makes s
 
 <br></br>
 
-# 2021.10.19 - Clean reads via Trimmomatic
+# Step 2 - Clean reads via Trimmomatic
+
+**Date: 2021.10.19**
+
 [Back to menu](#menu)
 
 ## Objective(s) of this step of analysis.
@@ -183,8 +189,12 @@ High-Duplication sequences do not appear to have been trimmed, which is fine con
 
 <br></br>
 
-# 2021.10.21 - Obtain reference genome
+# Step 3 - Obtain reference genome
+
+**Date: 2021.10.21**
+
 [Back to menu](#menu)
+
 ## Objective(s) of this step of analysis.
 Goal is to download refseq C. albicans genome assembly from Entrez genome into a separate folder.
 
@@ -207,7 +217,10 @@ GCF_000182965.3_ASM18296v3_genomic.fna.gz
 
 <br></br>
 
-# 2021.10.26 - bowtie2 sequence alignment (mostly for practice)
+# Step 4 - bowtie2 sequence alignment (mostly for practice)
+
+**Date: 2021.10.26**
+
 [Back to menu](#menu)
 
 ## Objective(s) of this step of analysis.
@@ -299,7 +312,10 @@ The bowtie2 job took 01:37:18 (1.5+ hours) to complete.
 
 <br></br>
 
-# 2021.10.28 - Tophat alignment
+# Step 5 - Tophat alignment
+
+**Date: 2021.10.28**
+
 [Back to menu](#menu)
 
 ## Objective(s) of this step of analysis.
@@ -371,7 +387,10 @@ Reads aligned to the reference genome were collected in the accepted_hits.bam fi
 
 <br></br>
 
-# 2021.11.02 - Transfer to GitHub
+# Step 6 - Transfer to GitHub
+
+**Date: 2021.11.02**
+
 [Back to menu](#menu)
 
 ## Objective(s) of this step of analysis.
@@ -404,7 +423,10 @@ The journal has been transferred onto Github.
 
 <br></br>
 
-# 2021.11.04 - Infer transcripts using cufflinks
+# Step 7 - Infer transcripts using cufflinks
+
+**Date: 2021.11.04**
+
 [Back to menu](#menu)
 
 ## Objective(s) of this step of analysis.
@@ -479,7 +501,10 @@ The cufflinks program successfully inferred transcripts based on the tophat alig
 
 <br></br>
 
-# 2021.11.09 - Merge transcript annotation files using cuffmerge
+# Step 8 - Merge transcript annotation files using cuffmerge
+
+**Date: 2021.11.09**
+
 [Back to menu](#menu)
 
 ## Objective(s) of this step of analysis.
@@ -585,7 +610,10 @@ Cuffmerge successfully merged the transcript annotation (.gtf) files and produce
 
 <br></br>
 
-# 2021.11.11 - Identify differentially expressed genes using cuffdiff
+# Step 9 - Identify differentially expressed genes using cuffdiff
+
+**Date: 2021.11.11**
+
 [Back to menu](#menu)
 
 ## Objective(s) of this step of analysis.
@@ -690,7 +718,10 @@ Cuffdiff differential expression analysis output appeared successful. We can now
 
 <br></br>
 
-# 2021.11.16 - Building summary table
+# Step 10 - Building summary table
+
+**Date: 2021.11.16**
+
 [Back to menu](#menu)
 
 ## Objective(s) of this step of analysis.
@@ -761,17 +792,18 @@ export them both into Excel, sort both, then check if they align. If so, we will
 
 ---
 
-
-
 <br></br>
 
-# —Template—
+# Journal entry template
 
 <copy-from-here>
 
 <br></br>
 
-# yyyy.mm.dd - Title
+# Step # - Title
+
+**Date: yyyy.mm.dd**
+
 [Back to menu](#menu)
 
 ## Objective(s) of this step of analysis.
@@ -790,7 +822,7 @@ export them both into Excel, sort both, then check if they align. If so, we will
     
 ---
 
-# Document Info.
+# Document information
 [Back to menu](#menu)
     
 ## Version
