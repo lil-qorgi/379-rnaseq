@@ -27,6 +27,9 @@ The raw RNA-seq files of paired-end sequencing data all derive from the same wil
 | **WTB1**: wildtype, replicate B, Thi+ | **WTB2**: wildtype, replicate B, Thi-     |
 | **WTC1**: wildtype, replicate C, Thi+ | **WTC2**: wildtype, replicate C, Thi-     |
 
+## Shell environment
+Both the Google Cloud Platform (GCP)'s High-performance cluster (HPC) and the local machine are set to run bash.
+
 ## Menu
 
 [Version log](#version) &nbsp;&nbsp;&nbsp;&nbsp; [Requirements](#requirements-for-this-document)
@@ -43,7 +46,7 @@ The raw RNA-seq files of paired-end sequencing data all derive from the same wil
 | [Step 7 - Infer transcripts using cufflinks](#step-7---infer-transcripts-using-cufflinks) |
 | [Step 8 - Merge transcript annotation files using cuffmerge](#step-8---merge-transcript-annotation-files-using-cuffmerge) |
 | [Step 9 - Identify differentially expressed genes using cuffdiff](#step-9---identify-differentially-expressed-genes-using-cuffdiff) |
-| [Step 10 - Building summary table](#step-10---building-summary-table) |
+| [Step 10 - Build summary table](#step-10---build-summary-table) |
 | [Step 11 - Visualize DE genes using cummeRbund](#step-11---visualize-de-genes-using-cummerbund) |
 | [Step 12 - Identify enriched gene ontology categories](#step-12---identify-enriched-gene-ontology-categories) |
 | [Journal entry template](#journal-entry-template) |
@@ -812,7 +815,7 @@ Now that we have the differential expression results from the experiment stored 
 
 <br></br>
 
-# Step 10 - Building summary table
+# Step 10 - Build summary table
 
 **Date: 2021.11.16**
 
@@ -918,14 +921,44 @@ For online viewing, here is also a [csv version](final_results/DE_genes_summary_
 [Back to menu](#menu)
 
 ## 11A - Objective(s) of this step of the analysis.
+The goal of this step is to use multiple plot types to visualize the gene expressions of the DE genes identified in step 9 by cuffdiff and summarized in step 10 in DE_genes_summary_table.csv. We will create 5 plots using the R package cummeRbund.
 
 ## 11B - Files involved.
+### —Data visualization—
+### *R script*
+[cummeRbund.R](scripts/cummeRbund.R)
+
+### *underlying data*
+cuffdiff_output/
+- The full cuffdiff_output/ folder that was the output of the cuffdiff run from step 9.
+
 
 ## 11C - Specific commands used in the analysis.
+
+On local terminal: download cuffdiff_output/ folder from HPC to local machine. 
 ```bash
+$ gcloud compute scp --recurse cherries-controller:<path to cuffdiff_output> .
 ```
 
+[See the R script](scripts/cummeRbund.R) for which commands create which plots.
+
 ## 11D - Results & interpretation.
+
+![Figure 1 Density plot](final_results/1_density.png)
+**Figure 1. Density plot ...**
+
+![Figure 2. Simple volcano plot](final_results/2_volcano1.png)
+**Figure 2. Simple volcano plot ...**
+
+![Figure 3. Volcano plot](final_results/3_volcano2.png)
+**Figure 3. Volcano plot ...**
+
+![Figure 4. Scatter plot](final_results/4_scatter.png)
+**Figure 4. Scatter plot ...**
+
+![Figure 5. Bar plot](final_results/5_bar.png)
+**Figure 5. Bar plot ...**
+
 
 ---
 
