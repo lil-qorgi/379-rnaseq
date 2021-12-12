@@ -819,16 +819,18 @@ Now that we have the differential expression results from the experiment stored 
 [Back to menu](#menu)
 
 ## 10A - Objective(s) of this step of the analysis.
-Using the results stored in gene_exp.diff from the previous cuffdiff run as well as Uniprot and Entrez Nucleotide websites (for protein functional annotation), we will build a summary table of the genes that were (statistically) significantly differentially expressed in the absence of thiamine when compared with in the presence of thiamine.
+Using the results stored in gene_exp.diff from the previous step as well as two online resources, Uniprot and Entrez Nucleotide (for protein functional annotation), we will build a summary table of the genes that were (statistically) significantly differentially expressed in the absence of thiamine (Thi-; treatment) versus in the presence of thiamine (Thi+; control).
 
-The method is to link the genes along with their FPKMs, log2 FC, and q-value from cuffdiff with NCBI protein IDs and known descriptions of their functions from Uniprot and Entrez Nucleotide.
+Our method is to join two sub-tables, derived from merged.gtf and gene_exp.diff, along the Tuxedo Suite ID field that they share. We will build a table that contains differentially expressed (**DE**) genes along with their FPKMs, log2 fold changes, and q-values (from gene_exp.diff) along with their NCBI protein IDs (from merged.gtf) and known descriptions of their functions (from Uniprot and Entrez Nucleotide).
 
 ## 10B - Files involved.
-- **gene_exp.diff**
-    - value_1
-        - FPKM for the gene in Thiamine+ samples
-    - value_2
-        - FPKM for the gene in Thiamine- samples 
+### Files to build sub-tables
+**gene_exp.diff**
+
+**merged.gtf**
+
+### DE genes summary table
+**DE_genes_summary_table.xlsx**
 
 ## 10C - Specific commands used in the analysis.
 Columns we'll need in our summary table:
@@ -841,52 +843,70 @@ Columns we'll need in our summary table:
 - Q-VALUE (FDR CORRECTED)
 - NOTES INTERPRETATION (from uniport and entrez nucleotide)
 
-To begin, we'll copy merged.gtf and gene_exp.diff into a separate folder. 
+On the HPC cloud node, we'll copy merged.gtf and gene_exp.diff into a separate folder. (In this case, I named that folder 1116_cuffdiff_results_interpretation/)
 
-In this case, I named that folder 1116_cuffdiff_results_interpretation/
-
-We'll first obtain the columns we want from gene_exp.diff.
+### extract data from gene_exp.diff to obtain genes and expression levels.
+We'll first obtain the columns we want from gene_exp.diff
 
 ```bash
 # The columns that we need from gene_exp.diff are: 1, 3, 8, 9, 10, 13
-$ grep "yes" gene_exp.diff | cut -f1,3,8-10,13 > partial_summary.txt
+$ grep "yes" gene_exp.diff | cut -f1,3,8-10,13 > DE_genes.txt
 ```
 
-We'll next obtain the NCBI IDs that correspond to the TUXEDO SUITE IDs (XLOC IDs), which are in column 1 of partial_summary.txt, by grepping the XLOC IDs against merged.gtf, which contains the NCBI IDs.
+### extract data from merged.gtf to find NCBI IDs.
+We'll next obtain the NCBI IDs by grepping the XLOC IDs from gene_exp.diff against merged.gtf.
 
 ```bash
 # We first extract only the XLOC ID column from the "yes," i.e., differentially expressed, genes. This is similar to the previous command, but includes only the XLOC ID column.
 $ grep "yes" gene_exp.diff | cut -f1 > signif_xlocIDs
 
-# We grep these significantly regulated xlocIDs (signif_xlocIDs) against merged.gtf.
+# We grep these significantly regulated xlocIDs (signif_xlocIDs) against merged.gtf to obtain the corresponding transcripts and their NCBI IDs.
 $ grep -wFf signif_xlocIDs merged.gtf > results_summary
 
-# From results_summary, we extract the information representing xlocIDs, gene names, and NCBI IDs. The gene names column is used for double-checking whether it lines up with the gene names from partial_summary.txt
-$ cut -f9 results_summary | cut -d " " -f2,8,10 > results_summary2.txt
+# From results_summary, we extract the columns representing xlocIDs, gene names, and NCBI IDs. The gene name column is used for double-checking whether it lines up with the gene names from DE_genes.txt extracted from gene_exp.diff earlier.
+$ cut -f9 results_summary | cut -d " " -f2,8,10 > NCBI_IDs.txt
 ```
 
-Now that we have both the file containing gene_exp.diff's relevant columns and file containing their corresponding NCBI IDs, we'll first download them to the local machine.
+### Join the two sub-tables.
+
+Now that we have both the file containing gene_exp.diff's relevant columns and the file containing their corresponding NCBI IDs from merged.gtf, we'll first download them to the local machine.
 
 ```bash
 # The following commands are run on local, inside my RNA-seq local folder.
 
-# Use gcloud compute scp to copy partial_summary.txt and results_summary2.txt to a new subfolder.
-
-# Rename the files to more clearly represent what they are used for. 
-$ mv partial_summary.txt partial_from_gene_exp.txt
-$ mv results_summary2.txt partial_from_merged.txt
+# Use gcloud compute scp to copy DE_genes.txt and NCBI_IDs.txt to a new subfolder.
+$ gcloud compute scp cherries-controller:<path to DE_genes.txt> .
+$ gcloud compute scp cherries-controller:<path to NCBI_IDs.txt> .
 ```
+#### Import data
+- Create an Excel spreadsheet called "Join subtables.xlsx"
+- Inside this Excel file, create two empty sheets called "DE_genes" and "NCBI_IDs". 
+- Import DE_genes.txt and NCBI_IDs.txt into corresponding sheets.
+- Sort both sheets by their field of commonality, which is the XLOC ID column. 
 
-Create an Excel spreadsheet called ""
+#### Correspondence check
+- Next, create a new sheet called "Correspondence check" and copy both sheets' data side-by-side into this sheet.
+- In a new column, use the formula "=IF(cellA=cellB,"Match","Nomatch")" where cell A is an XLOC ID from DE_genes and cell B is the corresponding XLOC ID from merged.gtf. 
+- Extend this formula to the last observation. Check that all cells in this column say "Match"
+- Create a new sheet called "Joined"
+- Combine the two sub-tables from "Correspondence check" into one, eliminating duplicate columns. 
 
-
-export them both into Excel, sort both, then check if they align. If so, we will then join the tables.
-
+### Complete the summary table with UniProt and Entrez Nucleotide descriptions
+- Duplicate Excel file, naming the new file "DE_genes_summary_table", and keep only the "Joined" sheet.
+- Add new columns:
+    - gene_interpretation_uniprot
+    - gene_interpretation_entrez_nucleotide
+    - uniprot_link-
+    - entrez_nucleotide_link"
+- Perform UniProt and Entrez Nucleotide searches using the NCBI IDs and fill in the corresponding cells for the four new columns.
 
 ## 10D - Results & interpretation.
+Using the gene_exp.diff results from step 9 and their corresponding NCBI IDs from merged.gtf, we built a summary table of the genes (statistically significantly) differentially expressed between the Thi+ and Thi- treatments.
+
+[The table is here](final_results/DE_genes_summary_table.xlsx).
+
 
 ---
-
 
 <br></br>
 
