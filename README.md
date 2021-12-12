@@ -953,7 +953,7 @@ The five figures are arranged in order of their creation in the cummeRbund.R scr
 - Figures 2 and 3 are both volcano plots plotting genes based on their log-transformed values of their expression level change (fold change) and differential expression significance (p-value).
 - Figure 2 is a direct pre-cursor to Figure 3, which adds red highlights for the genes with significant differential expression between the two treatments.
 - Figure 4 is a scatter plot of the FPKM values (gene expression levels) between genes treated under Thiamine+ versus genes under Thiamine- conditions.
-- Figure 5 is a bar plot demonstrating 
+- Figure 5 is a bar plot demonstrating one of the DE genes, SNZ1, being expressed at significantly higher levels in Thiamine- condition compared with Thiamine+ condition.
 
 ### More detailed descriptions of figures a & b.
 TODO
