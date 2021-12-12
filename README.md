@@ -958,33 +958,33 @@ Figure 5 is ...
 
 <img src="final_results/1_density.png" alt="Figure 1 Density plot" width="600"/>
 
-**Figure 1. Density plot ...**
+**Figure 1. Density plots of FPKM values for Thiamine+ (q1) and Thiamine- (q2) *Candida albicans* gene transcripts.**
  
 <br></br>
 
 <img alt="Figure 2. Simple volcano plot" src="final_results/2_volcano1.png" width="600"/>
 
-**Figure 2. Simple volcano plot .** 
+**Figure 2. Simple volcano plot of *Candida albicans* genes plotted on -log10(p value) versus log2(fold change) scale.** 
 
 <br></br>
 
 <img alt="Figure 3. Detailed volcano plot" src="final_results/3_volcano2.png" width="600" />
 
-**Figure 3. Volcano plot ...**
+**Figure 3. Volcano plot of *Candida albicans* genes plotted on -log10(p value) versus log2(fold change) scale.** Red color highlights genes with significant differential expression between Thiamine+ and Thiamine- treatments.
 
 <br></br>
 
 
 <img alt="Figure 4. Scatter plot" src="final_results/4_scatter.png" width="600" />
 
-**Figure 4. Scatter plot ...**
+**Figure 4. Log-scale scatter plot of FPKM values for genes under Thiamine- (q2) versus under Thiamine+ (q1) treatment.**
 
 <br></br>
 
 
 <img alt="Figure 5. Bar plot" src="final_results/5_bar.png" width="600" />
 
-**Figure 5. Bar plot ...**
+**Figure 5. Bar plot of a significantly differentially expressed gene, SNZ1, comparing *Candida albicans* gene expression (FPKM) levels between Thiamine+ (q1) and Thiamine- (q2) conditions.**
 
 
 ---
