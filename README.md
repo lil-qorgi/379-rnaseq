@@ -953,7 +953,7 @@ Figures 2 and 3 are both volcano plots plotting genes based on their log-transfo
 Figure 2 is a direct pre-cursor to Figure 3, which adds red highlights for the genes with significant differential expression between the two treatments.
 Figure 4 is a scatter plot of the FPKM values (gene expression levels) 
 
-<img src="final_results/1_density.png" alt="Figure 1 Density plot" width="200"/>
+<img src="final_results/1_density.png" alt="Figure 1 Density plot" width="600"/>
 **Figure 1. Density plot ...**
  
 
