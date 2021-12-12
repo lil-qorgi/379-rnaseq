@@ -947,17 +947,22 @@ $ gcloud compute scp --recurse cherries-controller:<path to cuffdiff_output> .
 ![Figure 1 Density plot](final_results/1_density.png)
 **Figure 1. Density plot ...**
 
+
 ![Figure 2. Simple volcano plot](final_results/2_volcano1.png)
 **Figure 2. Simple volcano plot ...**
+
 
 ![Figure 3. Volcano plot](final_results/3_volcano2.png)
 **Figure 3. Volcano plot ...**
 
+
 ![Figure 4. Scatter plot](final_results/4_scatter.png)
 **Figure 4. Scatter plot ...**
 
+
 ![Figure 5. Bar plot](final_results/5_bar.png)
 **Figure 5. Bar plot ...**
+
 
 
 ---
@@ -972,6 +977,7 @@ $ gcloud compute scp --recurse cherries-controller:<path to cuffdiff_output> .
 [Back to menu](#menu)
 
 ## 12A - Objective(s) of this step of the analysis.
+The goal of this step is to identify the gene ontology (GO) categories that are overrepresented among the DE genes from step 9. We will use [](link) and [](link) to identify the GO categories and compare the results from the two websites.
 
 ## 12B - Files involved.
 
@@ -981,7 +987,33 @@ $ gcloud compute scp --recurse cherries-controller:<path to cuffdiff_output> .
 
 ## 12D - Results & interpretation.
 
+
 ---
+
+# Document information
+[Back to menu](#menu)
+    
+## Version
+    
+v0.1.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.10.12
+- Entries logged using Google Docs.
+
+v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02
+- Entries transferred to and logged using GitHub.
+- Repo: lil-qorgi:379-rnaseq
+
+v1.1.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.12.11
+- All contents added.
+    
+v1.2.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.12.11(?)
+- Revised.
+
+## Requirements for this document
+(notes to self)
+- Document everything that one would need to follow to recapitulate your analysis. Include: 
+    - Explanations for all input & output file names.
+    - All commands / steps for downloading files, running software & scripts, performing analyses, etc.
+    - [See example notebook (private link)](https://docs.google.com/document/d/1KJAZZpvzMqlzfekco8q_vjajGqBRnzcg/edit)
 
 
 <br></br>
@@ -1011,29 +1043,4 @@ $ gcloud compute scp --recurse cherries-controller:<path to cuffdiff_output> .
 ---
 
 <copy-to-here>
-
-# Document information
-[Back to menu](#menu)
-    
-## Version
-    
-v0.1.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.10.12
-- Entries logged using Google Docs.
-
-v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02
-- Entries transferred to and logged using GitHub.
-- Repo: lil-qorgi:379-rnaseq
-
-v1.1.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.12.11
-- All contents added.
-    
-v1.2.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.12.11(?)
-- Revised.
-
-## Requirements for this document
-(notes to self)
-- Document everything that someone would need to follow to recapitulate your analysis:
-    - All commands for downloading files, running software & scripts, performing analyses, etc.
-    - Explain all input & output file names.
-    - [See example notebook (private link)](https://docs.google.com/document/d/1KJAZZpvzMqlzfekco8q_vjajGqBRnzcg/edit)
 
