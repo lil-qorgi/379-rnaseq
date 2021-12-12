@@ -236,7 +236,7 @@ Therefore, for the next comparisons, between pre-trim and post-trim reads, we wi
 
 In terms of "Per base sequence quality," compared to [raw reads](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/raw_forward_FastQC_report.html#M1), the [trimmed (forward) reads](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/trimmed_forward_FastQC_report.html#M1) had *slightly* improved quality scores across all positions in the reads as well as significantly improved quality scores towards the end of the reads (note that the last 10 bp were trimmed from all reads). 
 
-The raw reads were [highly varied in "Per base sequence content" in the first 10 base pairs](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/raw_forward_FastQC_report.html#M1), which is a pattern commonly seen in NGS data as the machine is still calibrating. This large variation was [largely gone in the trimmed reads](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/trimmed_forward_FastQC_report.html#M1), since the trimming cropped the first 10 base pairs, which contained the majority of the variation. Still, visible wobbliness remains in the first 3 bases.
+The raw reads were [highly varied in "Per base sequence content" in the first 10 base pairs](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/raw_forward_FastQC_report.html#M4), which is a pattern commonly seen in NGS data as the machine is still calibrating. This large variation was [largely gone in the trimmed reads](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/trimmed_forward_FastQC_report.html#M4), since the trimming cropped the first 10 base pairs, which contained the majority of the variation. Still, visible wobbliness remains in the first 3 bases.
 
 As expected, the "Sequence length distribution" had [only one value in the raw reads (150 bp)](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/raw_forward_FastQC_report.html#M7), but [ranged from 75 to 140 in the trimmed reads](https://htmlpreview.github.io/?https://github.com/lil-qorgi/379-rnaseq/blob/main/summary_outputs/trimmed_forward_FastQC_report.html#M7), with 140 bp being the largest bin. The first 10 bp were trimmed from all raw reads using "HEADCROP:10" in Trimmomatic. Reads shorter than 140 bp were created due to the "SLIDINGWINDOW:4:15" command trimming parts of some reads that had low average quality scores (&lt;15) within 4-bp-wide sliding windows.
 
@@ -962,7 +962,6 @@ $ gcloud compute scp --recurse cherries-controller:<path to cuffdiff_output> .
 
 ![Figure 5. Bar plot](final_results/5_bar.png)
 **Figure 5. Bar plot ...**
-
 
 
 ---
