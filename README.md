@@ -503,7 +503,7 @@ The journal has been transferred onto GitHub. All script and output files were e
 [Back to menu](#menu)
 
 ## 7A - Objective(s) of this step of the analysis.
-The goal of this step is to use cufflinks to take in the tophat read alignment results from step 5 to infer the transcripts that are found in the sequenced samples, for the single sample we are focusing on, which is WTC2 (wildtype, replicate C, thiamine-). 
+The goal of this step is to use cufflinks, taking in the tophat read alignment results from step 5, to infer the gene transcripts that are found in the RNA-seq samples, focusing on the sample we began with, which is WTC2 (wildtype, replicate C, thiamine-). 
 
 See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/).
 
@@ -561,15 +561,20 @@ $ ls -l
 -rw-r--r-- 1 qz108 users       0 Nov  2 19:55 skipped.gtf
 -rw-r--r-- 1 qz108 users 2958558 Nov  2 19:59 transcripts.gtf
 
-$ less transcripts.gft
-# The file looks good.
-
 $ wc -l transcripts.gtf
 # There are 12994 lines in the file. There is no header in the file.
+
+$ less transcripts.gtf
+# The file looks good.
+
+# show the first line of the transcripts file
+$ head -1 transcripts.gtf
+NC_032089.1	Cufflinks	transcript	4409	4720	1000	-	.	gene_id "gene-CAALFM_C100020CA"; transcript_id "rna-XM_713980.1"; FPKM "521.8005143954"; frac "1.000000"; conf_lo "476.336034"; conf_hi "567.264995"; cov "2354.204503";
+
 ```
 
 ## 7D - Results & interpretation.
-The cufflinks program successfully inferred transcripts based on the tophat alignment results. 
+The cufflinks program successfully inferred transcripts based on the tophat alignment results and placed the transcripts into an annotation file called transcripts.gtf.
 
 ---
 
@@ -582,7 +587,9 @@ The cufflinks program successfully inferred transcripts based on the tophat alig
 [Back to menu](#menu)
 
 ## 8A - Objective(s) of this step of the analysis.
-The goal is to merge the transcript annotations from all biological replicates to obtain the merged annotation file merged.gtf.
+The goal in this step is to merge the transcript annotation files from all biological replicates to obtain the merged annotation file, merged.gtf.
+
+The six transcript files being merged came from performing steps 2, 5, and 7 on all of the six sets of raw RNA-seq sample data (WTA1, A2, B1, B2, C1, C2).  
 
 ## 8B - Files involved.
 ### —cuffmerge—
@@ -675,12 +682,11 @@ $ sacct -j 47686 --format=jobname,jobid,user,elapsed
 ```
 
 ## 8D - Results & interpretation.
-The process took 35 seconds.
+Cuffmerge successfully merged the six transcript annotation (.gtf) files and produced the merged.gtf file. This merged.gtf file contains all of the gene transcripts that could be identified based on the RNA-seq data of the wildtype *C. albicans* samples collected in this experiment. 
 
-Cuffmerge successfully merged the transcript annotation (.gtf) files and produced the merged.gtf file.
+merged.gtf serves as the overall set of transcripts from which the transcripts (genes) that were significantly differentially expressed between the control (Thi+) and the treatment (Thi-) will be identified in the next step.
 
 ---
-
 
 <br></br>
 
@@ -691,16 +697,12 @@ Cuffmerge successfully merged the transcript annotation (.gtf) files and produce
 [Back to menu](#menu)
 
 ## 9A - Objective(s) of this step of the analysis.
-The goal is to identify genes that are significantly differentially expressed between the control (Thi+) and treatment (Thi-) groups ...
-
-i.e., between WTX1 (Thi+) vs. WTX2 (Thi-), where X is one of {A, B, C} 
-
-... using cuffdiff.
+The goal in this step is to identify the genes (i.e., their transcripts) that were significantly differentially expressed between the control (Thi+) and treatment (Thi-) groups. The replicates from the control and from the treatment will be pooled into two groups and compared against each other in a single step using the cuffdiff program. In other words, the gene expression levels in the set {A1, B1, C1} (Thi+) will be compared with those in the set {A2, B2, C2} (Thi-).
 
 ## 9B - Files involved.
 ### —cuffdiff—
 ### *input files*
-Place all input files for cuffdiff into a new folder named "cuffdiff_input"
+All input files for cuffdiff are placed into a new folder named "cuffdiff_input"
 - cuffdiff_input/
     - **merged.gtf**
         - the feature annotation file from the previous step that merged all biological replicates (A1 through C2) via cuffmerge.
@@ -719,6 +721,7 @@ Place all input files for cuffdiff into a new folder named "cuffdiff_input"
                 - After obtaining the file, prepend accepted_hits.bam with the replicate name (e.g. WTB1_accepted_hits.bam), then copy the file into cuffdiff_input/
 
 ### *output files*
+All output files will be exported into "cuffdiff_output" as specified by the cuffdiff call (see sbatch). 
 - cuffdiff_output/
     - **gene_exp.diff**
     - ... (many other cuffdiff results)
@@ -749,6 +752,7 @@ $ sacct -j <jobid> --format=jobid,jobname,account,state,elapsed
 $ less z01.cuffdiff
 ```
 [**z01.cuffdiff**](slurm_outputs/z01.cuffdiff)
+
 ```bash
 # first change into the output folder, then check the output files
 $ cd cuffdiff_output
@@ -781,12 +785,28 @@ var_model.info
 # check whether the gene_exp.diff file was properly generated 
 $ less gene_exp.diff
 
-# the file appears to have 14 tab-delimited columns and contents. This file appears to be properly generated.
+$ head -2 gene_exp.diff
+test_id	gene_id	gene	locus	sample_1	sample_2	status	value_1	value_2	log2(fold_change)	test_stat	p_value	q_value	significant
+XLOC_000001	XLOC_000001	CTA2	NC_032089.1:10717-11485	q1	q2	OK	115.839	102.977	-0.169788	-0.2598790.6459	0.99995	no
+# the file appears to have 14 tab-delimited columns and the corresponding contents. This file appears to be properly generated.
+
+$ wc -l gene_exp.diff
+# there are 6239 lines. So, subtracting line 1 as header, there are 6238 observations.
 ```
 
 ## 9D - Results & interpretation.
-Cuffdiff differential expression analysis output appeared successful. We can now move on to building the RNAseq summary table of differentially genes. 
+The cuffdiff differential expression analysis was successful. 
 
+We were able to calculate the log fold change, p-value, q-value (p-value adjusted by false discovery rate), and significance of differential expression between genes from the Thiamine+ group (column q1) and genes from the Thiamine- group (column q2). 
+
+In the gene_exp.diff:
+- The test_id is the internal label given to a particular transcript within this particular Tuxedo Suite run (starting at cuffmerge step).
+- The gene_id is the NCBI locus ID.
+- The FPKM (fragments per kilobase of transcript per million mapped reads) values, representing normalized gene expression levels, for q1 and q2 are value_1 and value_2, respectively. 
+- The log2(fold_change) is calculated as log-base-2 of (value_2/value_1). 
+- The 'significant' column indicates whether the q-value of a column is less than 0.05.
+
+Now that we have the differential expression results from the experiment stored in gene_diff.exp, we can move on to building the RNAseq summary table of differentially expressed genes. 
 
 ---
 
@@ -810,12 +830,10 @@ The method is to link the genes along with their FPKMs, log2 FC, and q-value fro
     - value_2
         - FPKM for the gene in Thiamine- samples 
 
-
-
 ## 10C - Specific commands used in the analysis.
 Columns we'll need in our summary table:
 - TUXEDO SUITE ID
-- NCBI ID
+- NCBI ID (taken from merged.gtf)
 - GENE LABEL (acronym)
 - FPKM_THI+
 - FPKM_THI-
@@ -828,12 +846,14 @@ To begin, we'll copy merged.gtf and gene_exp.diff into a separate folder.
 In this case, I named that folder 1116_cuffdiff_results_interpretation/
 
 We'll first obtain the columns we want from gene_exp.diff.
+
 ```bash
 # The columns that we need from gene_exp.diff are: 1, 3, 8, 9, 10, 13
 $ grep "yes" gene_exp.diff | cut -f1,3,8-10,13 > partial_summary.txt
 ```
 
 We'll next obtain the NCBI IDs that correspond to the TUXEDO SUITE IDs (XLOC IDs), which are in column 1 of partial_summary.txt, by grepping the XLOC IDs against merged.gtf, which contains the NCBI IDs.
+
 ```bash
 # We first extract only the XLOC ID column from the "yes," i.e., differentially expressed, genes. This is similar to the previous command, but includes only the XLOC ID column.
 $ grep "yes" gene_exp.diff | cut -f1 > signif_xlocIDs
@@ -842,10 +862,11 @@ $ grep "yes" gene_exp.diff | cut -f1 > signif_xlocIDs
 $ grep -wFf signif_xlocIDs merged.gtf > results_summary
 
 # From results_summary, we extract the information representing xlocIDs, gene names, and NCBI IDs. The gene names column is used for double-checking whether it lines up with the gene names from partial_summary.txt
-$ cut -f9 results_summary|cut -d " " -f2,8,10 > results_summary2.txt
+$ cut -f9 results_summary | cut -d " " -f2,8,10 > results_summary2.txt
 ```
 
-Now that we have both the file containing gene_exp.diff's relevant columns and file containing their corresponding NCBI IDs, we'll first download them to the local computer.
+Now that we have both the file containing gene_exp.diff's relevant columns and file containing their corresponding NCBI IDs, we'll first download them to the local machine.
+
 ```bash
 # The following commands are run on local, inside my RNA-seq local folder.
 
@@ -856,10 +877,10 @@ $ mv partial_summary.txt partial_from_gene_exp.txt
 $ mv results_summary2.txt partial_from_merged.txt
 ```
 
-Create 
+Create an Excel spreadsheet called ""
 
 
-export them both into Excel, sort both, then check if they align. If so, we will then join the tables by introducing .
+export them both into Excel, sort both, then check if they align. If so, we will then join the tables.
 
 
 ## 10D - Results & interpretation.
