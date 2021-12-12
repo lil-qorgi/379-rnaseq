@@ -903,7 +903,8 @@ $ gcloud compute scp cherries-controller:<path to NCBI_IDs.txt> .
 ## 10D - Results & interpretation.
 Using the gene_exp.diff results from step 9 and their corresponding NCBI IDs from merged.gtf, we built a summary table of the genes (statistically significantly) differentially expressed between the Thi+ and Thi- treatments.
 
-[The table is here](final_results/DE_genes_summary_table.xlsx).
+[The Excel table is here](final_results/DE_genes_summary_table.xlsx).
+For online viewing, here is also a [csv version](final_results/DE_genes_summary_table.csv).
 
 
 ---
