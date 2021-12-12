@@ -960,20 +960,26 @@ Figure 5 is ...
 
 **Figure 1. Density plot ...**
  
+<br></br>
 
 <img alt="Figure 2. Simple volcano plot" src="final_results/2_volcano1.png" width="600"/>
 
 **Figure 2. Simple volcano plot .** 
 
+<br></br>
 
 <img alt="Figure 3. Detailed volcano plot" src="final_results/3_volcano2.png" width="600" />
 
 **Figure 3. Volcano plot ...**
 
+<br></br>
+
 
 <img alt="Figure 4. Scatter plot" src="final_results/4_scatter.png" width="600" />
 
 **Figure 4. Scatter plot ...**
+
+<br></br>
 
 
 <img alt="Figure 5. Bar plot" src="final_results/5_bar.png" width="600" />
