@@ -49,7 +49,8 @@ Both the Google Cloud Platform (GCP)'s High-performance cluster (HPC) and the lo
 | [Step 10 - Build summary table](#step-10---build-summary-table) |
 | [Step 11 - Visualize DE genes using cummeRbund](#step-11---visualize-de-genes-using-cummerbund) |
 | [Appendx - All cummeRbund plots](#appendix---all-cummerbund-plots) |
-| [Journal entry template](#notebook-entry-template) |
+| [Document information](#document-information) |
+| [Notebook entry template](#notebook-entry-template) |
 
 ---
 
@@ -59,7 +60,7 @@ Both the Google Cloud Platform (GCP)'s High-performance cluster (HPC) and the lo
 
 **Date: 2021.10.13**
 
-[Back to menu](#menu)
+[Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-2---clean-reads-via-trimmomatic)
 
 ## 1A - Objective(s) of this step of the analysis.
 The goal in this step is to obtain the raw RNA sequencing reads files (focusing on the WTC2 biological replicate) and count the total number of reads in the forward and reverse FASTQ files before read cleaning in step 2. 
@@ -106,7 +107,7 @@ There are **20,407,694** reads in both the forward and the reverse read files fo
 
 **Date: 2021.10.19**
 
-[Back to menu](#menu)
+[Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-1---obtain-reads-and-read-counting)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-3---obtain-reference-genome)
 
 ## 2A - Objective(s) of this step of the analysis.
 The goal of this step is to use Trimmomatic to trim the raw reads in order to remove the problematic first ten bases of each read, reduce adapter content, improve reverse read quality, and improve read quality scores via sliding window trimming. 
@@ -256,7 +257,7 @@ All other metrics were largely unchanged between raw and trimmed reads. The full
 
 **Date: 2021.10.21**
 
-[Back to menu](#menu)
+[Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-2---clean-reads-via-trimmomatic)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-4---bowtie2-sequence-alignment-mostly-for-practice)
 
 ## 3A - Objective(s) of this step of the analysis.
 The goal of this step is to download the RefSeq *C. albicans* genome assembly from Entrez genome into a separate folder. The reason for downloading this particular assembly is provided in step 4A. 
@@ -286,7 +287,7 @@ File obtained: GCF_000182965.3_ASM18296v3_genomic.fna.gz
 
 **Date: 2021.10.26**
 
-[Back to menu](#menu)
+[Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-3---obtain-reference-genome)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-5---tophat-alignment)
 
 ## 4A - Objective(s) of this step of the analysis.
 The goal in this step is to run bowtie2 (bt2) on the trimmed reads obtained from step 2 to obtain a (non-spliced) alignment to the reference genome for *C. albicans*. The results from this bt2 run will be replaced by the tophat results later on, so this step is mostly to familiarize the student with bowtie2 usage.
@@ -382,7 +383,7 @@ The overall alignment rate is 97.97%, which includes both concordant and non-con
 
 **Date: 2021.10.28**
 
-[Back to menu](#menu)
+[Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-4---bowtie2-sequence-alignment-mostly-for-practice)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-6---transfer-to-github)
 
 ## 5A - Objective(s) of this step of the analysis.
 Similar to step 4, the goal of this step is to align our trimmed reads from step 2 to a reference genome. This time, we use tophat, which runs bowtie2 under the hood and allows for *spliced* (instead of non-spliced) alignment. Doing a spliced alignment allows us to take into account genes (i.e., their transcripts) that have multiple transcripts due to alternative splicing, which is usually more useful when aligning reads of more complex eukaryotic organisms against their reference genomes.
@@ -459,7 +460,7 @@ Tophat spliced alignment resulted in 90.3% concordant pair alignment rate. Simil
 
 **Date: 2021.11.02**
 
-[Back to menu](#menu)
+[Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-5---tophat-alignment)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-7---infer-transcripts-using-cufflinks)
 
 ## 6A - Objective(s) of this step of the analysis.
 Transfer the journal from Google Docs to GitHub.
@@ -503,7 +504,7 @@ The journal has been transferred onto GitHub. All script and output files were e
 
 **Date: 2021.11.04**
 
-[Back to menu](#menu)
+[Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-6---transfer-to-github)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-8---merge-transcript-annotation-files-using-cuffmerge)
 
 ## 7A - Objective(s) of this step of the analysis.
 The goal of this step is to use cufflinks, taking in the tophat read alignment results from step 5, to infer the gene transcripts that are found in the RNA-seq samples, focusing on the sample we began with, which is WTC2 (wildtype, replicate C, thiamine-). 
@@ -587,7 +588,7 @@ The cufflinks program successfully inferred transcripts based on the tophat alig
 
 **Date: 2021.11.09**
 
-[Back to menu](#menu)
+[Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-7---infer-transcripts-using-cufflinks)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-9---identify-differentially-expressed-genes-using-cuffdiff)
 
 ## 8A - Objective(s) of this step of the analysis.
 The goal in this step is to merge the transcript annotation files from all biological replicates to obtain the merged annotation file, merged.gtf.
@@ -697,7 +698,7 @@ merged.gtf serves as the overall set of transcripts from which the transcripts (
 
 **Date: 2021.11.11**
 
-[Back to menu](#menu)
+[Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-8---merge-transcript-annotation-files-using-cuffmerge)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-10---build-summary-table)
 
 ## 9A - Objective(s) of this step of the analysis.
 The goal in this step is to identify the genes (i.e., their transcripts) that were significantly differentially expressed between the control (Thi+) and treatment (Thi-) groups. The replicates from the control and from the treatment will be pooled into two groups and compared against each other in a single step using the cuffdiff program. In other words, the gene expression levels in the set {A1, B1, C1} (Thi+) will be compared with those in the set {A2, B2, C2} (Thi-).
@@ -819,7 +820,7 @@ Now that we have the differential expression results from the experiment stored 
 
 **Date: 2021.11.16**
 
-[Back to menu](#menu)
+[Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-9---identify-differentially-expressed-genes-using-cuffdiff)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-11---visualize-de-genes-using-cummerbund)
 
 ## 10A - Objective(s) of this step of the analysis.
 Using the results stored in gene_exp.diff from the previous step as well as two online resources, Uniprot and Entrez Nucleotide (for protein functional annotation), we will build a summary table of the genes that were (statistically) significantly differentially expressed in the absence of thiamine (Thi-; treatment) versus in the presence of thiamine (Thi+; control).
@@ -918,7 +919,7 @@ For online viewing, here is also a [csv version](final_results/DE_genes_summary_
 
 **Date: 2021.11.18**
 
-[Back to menu](#menu)
+[Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-10---build-summary-table)&nbsp;&nbsp;&nbsp;&nbsp;[Next section](#appendix---all-cummerbund-plots)
 
 ## 11A - Objective(s) of this step of the analysis.
 The goal of this step is to use multiple plot types to visualize the gene expressions of the DE genes identified in step 9 by cuffdiff and summarized in step 10 in DE_genes_summary_table.csv. 
@@ -974,7 +975,8 @@ Figure 2 is a scatter plot of the FPKM values (gene expression levels) between g
 
 
 ## Appendix - All cummeRbund plots
-[Back to menu](#menu)
+
+[Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous section](#step-11---visualize-de-genes-using-cummerbund)&nbsp;&nbsp;&nbsp;&nbsp;[Next section](#document-information)
 
 This appendix contains all five plots produced by the cummeRbund.R script. The figures are arranged in order of their creation in the script.
 
@@ -1011,7 +1013,8 @@ This appendix contains all five plots produced by the cummeRbund.R script. The f
 ---
 
 # Document information
-[Back to menu](#menu)
+
+[Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous section](#appendix---all-cummerbund-plots)&nbsp;&nbsp;&nbsp;&nbsp;[Next section](#notebook-entry-template)
     
 ## Version
     
@@ -1040,6 +1043,8 @@ v1.2.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.12.11(?)
 
 # Notebook entry template
 
+[Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous section](#document-information)
+
 <copy-from-here>
 
 <br></br>
@@ -1048,7 +1053,7 @@ v1.2.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.12.11(?)
 
 **Date: yyyy.mm.dd**
 
-[Back to menu](#menu)
+[Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step]()&nbsp;&nbsp;&nbsp;&nbsp;[Next step]()
 
 ## nA - Objective(s) of this step of the analysis.
 
