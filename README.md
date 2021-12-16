@@ -30,6 +30,8 @@ The raw RNA-seq files of paired-end sequencing data all derive from the same wil
 ## Shell environment
 Both the Google Cloud Platform (GCP)'s High-performance cluster (HPC) and the local machine are set to run bash.
 
+[Go to step 1](#step-1---obtain-reads-and-read-counting)
+
 ## Menu
 
 [Version log](#version) &nbsp;&nbsp;&nbsp;&nbsp; [Requirements](#requirements-for-this-document)
@@ -60,7 +62,7 @@ Both the Google Cloud Platform (GCP)'s High-performance cluster (HPC) and the lo
 
 **Date: 2021.10.13**
 
-[Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-2---clean-reads-via-trimmomatic)
+[Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Back to intro](#introduction--background)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-2---clean-reads-via-trimmomatic)
 
 ## 1A - Objective(s) of this step of the analysis.
 The goal in this step is to obtain the raw RNA sequencing reads files (focusing on the WTC2 biological replicate) and count the total number of reads in the forward and reverse FASTQ files before read cleaning in step 2. 
