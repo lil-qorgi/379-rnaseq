@@ -10,16 +10,16 @@ Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs
 
 # Introduction & Background
 
-The Rolfes lab is conducting a study to identify possible genes that regulate thiamine biosynthesis in the yeast *Candida albicans*. *Candida albicans* is a normally commensal species commonly found on humans, but can become pathogenic under certain environmental conditions, leading to the candidiasis disease. By examining the genes that are significantly differentially expressed after removing thiamine from the growing medium, the team hopes to better understand the role of thiamine in the normal growth as well as the pathogenesis of *C. albicans*. 
+The Rolfes lab is conducting a study to identify possible genes that regulate thiamine biosynthesis in the yeast species *Candida albicans*. *Candida albicans* is a normally commensal species commonly found on humans, but can become pathogenic under certain environmental conditions, leading to candidiasis, which can be a life-threatening disease. By examining the genes that are significantly differentially expressed after removing thiamine from the growing medium, the team hopes to better understand the role of thiamine in the normal growth of as well as the pathogenesis of *C. albicans*. 
 
-The Rolfes lab has already sequenced wildtype *Candida albicans* yeast cells grown in two media differing only in thiamine presence — with the control having thiamine (Thi+) and the treatment absent thiamine (Thi-). For each environmental condition, three biological replicates, A, B, and C, were grown and their cellular RNA sequenced via next-gen sequencing techniques. 
+The Rolfes lab cultured wildtype *Candida albicans* yeast cells in two types of media differing only in thiamine presence — with thiamine (Thi+) and without thiamine (Thi-). For each environmental condition, three biological replicates, A, B, and C, were grown and their cellular RNA sequenced via next-gen sequencing techniques. 
 
-The aim of this bioinformatics workflow is to identify *C. albicans* genes that were differentially expressed between Thi+ and Thi- conditions. To do so, we will first clean up the raw sequences, then assemble identified transcripts, and, finally, compare gene expressions between the two treatment conditions across all three replicates. Most of the sequence-processing software programs are a part of the Tuxedo Suite.
+The aim of this bioinformatics workflow is to identify *C. albicans* genes that were differentially expressed between Thi+ (control) and Thi- (treatment) conditions. To do so, we will clean up the raw sequences, align them with a reference genome, identify transcripts, and, finally, compare gene expression levels between the two treatments across all three replicates at once. The software we will use include Trimmomatic for read cleaning, the Tuxedo Suite programs and protocol for downstream analyses, Excel for data organization, and R for data visualization.
 
 ## Starting files overview
-The two treatment conditions and three biological replicates per condition resulted in six distinct RNA-sequencing samples, each being a paired-end sequencing sample contained in a pair of forward- and reverse-reads FASTQ files. The naming convention to be maintained throughout the workflow is as follows:
+The two treatment conditions and three biological replicates per condition imply that we have six distinct RNA-sequencing samples, with each being a paired-end sequencing sample stored in a pair of .fastq files (as forward reads and reverse reads). The naming convention for the raw data samples is as follows:
 
-The raw RNA-seq files of paired-end sequencing data all derive from the same wildtype (WT) cell line.
+The raw .fastq files from paired-end RNA sequencing derive from the same wildtype (WT) cell line.
 
 | Thiamine+ environment                 | Thiamine- environment                     |
 | -----------                           | -----------                               |
@@ -28,7 +28,7 @@ The raw RNA-seq files of paired-end sequencing data all derive from the same wil
 | **WTC1**: wildtype, replicate C, Thi+ | **WTC2**: wildtype, replicate C, Thi-     |
 
 ## Shell environment
-Both the Google Cloud Platform (GCP)'s High-performance cluster (HPC) and the local machine are set to run bash.
+Both the Google Cloud Platform (GCP)'s High-performance cluster (HPC) node and the local machine will be set to run on bash shell. 
 
 [Go to step 1](#step-1---obtain-reads-and-read-counting)
 
