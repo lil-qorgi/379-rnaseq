@@ -534,7 +534,7 @@ See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/).
 ## 7B - Files involved.
 ### —cufflinks—
 ### *Slurm script*
-[z01.cufflinks_WTC2](slurm_outputs/z01.cufflinks_WTC2)
+[cufflinks.sbatch](scripts/cufflinks.sbatch)
 
 ### *input files*
 - GCF_000182965.3_ASM18296v3_genomic.gff
