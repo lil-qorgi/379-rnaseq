@@ -1014,11 +1014,11 @@ Less clear to interpret are the several dots on the left and right edges of the 
 
 [Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous section](#step-11---visualize-de-genes-using-cummerbund)&nbsp;&nbsp;&nbsp;&nbsp;[Next section](#document-information)
 
-This appendix contains all five plots produced by the cummeRbund.R script. The figures are arranged in order of their creation in the script.
+This appendix contains all five plots produced by the cummeRbund.R script. The figures are arranged by the order of their creation in the script.
 
 <img alt="Figure A. Density plot" src="final_results/1_density.png" width="600"/>
 
-**Figure A. Density plots of FPKM values for Thiamine+ (q1) and Thiamine- (q2) *Candida albicans* gene transcripts.** This figure is equivalent to Figure 1 found in section 11D in the main body of this notebook.
+**Figure A. Density plot of FPKM values for Thiamine+ (q1) and Thiamine- (q2) *Candida albicans* gene transcripts.** This figure is equivalent to Figure 1 found in section 11D in the main body of this notebook.
  
 <br></br>
 
@@ -1062,18 +1062,18 @@ v1.0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.11.02
 - Repo: lil-qorgi:379-rnaseq
 
 v1.1.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.12.11
-- All contents added.
+- Last script run and results obtained.
     
-v1.2.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.12.11(?)
-- Revised.
+v1.2.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.12.16
+- Results & interpretations sections finished.
 
 ## Requirements for this document
-(notes to self)
-- Document everything that one would need to follow to recapitulate your analysis. Include: 
+
+- Document everything that one would need to follow to recapitulate the analysis. Include: 
     - Explanations for all input & output file names.
     - All commands / steps for downloading files, running software & scripts, performing analyses, etc.
-    - [See example notebook (private link)](https://docs.google.com/document/d/1KJAZZpvzMqlzfekco8q_vjajGqBRnzcg/edit)
 
+<!--[See example notebook (ignore - private link)](https://docs.google.com/document/d/1KJAZZpvzMqlzfekco8q_vjajGqBRnzcg/edit)-->
 
 <br></br>
 
