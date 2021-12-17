@@ -65,7 +65,7 @@ Both the Google Cloud Platform (GCP)'s High-performance cluster (HPC) node and t
 [Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Back to intro](#introduction--background)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-2---clean-reads-via-trimmomatic)
 
 ## 1A - Objective(s) of this step of the analysis.
-The goal in this step is to obtain the raw RNA sequencing reads files (focusing on the WTC2 biological replicate) and count the total number of reads in the forward and reverse FASTQ files before read cleaning in step 2. 
+The goal in this step is to obtain the raw RNA sequencing reads files (focusing on the WTC2 biological replicate) and to count the total number of reads in the forward and reverse .fastq files before cleaning the reads in step 2. 
 
 ## 1B - Files involved.
 As the class used a divide & conquer strategy on these files, I focused on WTC2's paired-end raw data files.
