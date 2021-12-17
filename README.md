@@ -926,7 +926,7 @@ For online viewing, here is also a [csv version](final_results/DE_genes_summary_
 ## 11A - Objective(s) of this step of the analysis.
 The goal of this step is to use multiple plot types to visualize the gene expressions of the DE genes identified in step 9 by cuffdiff and summarized in step 10 in DE_genes_summary_table.csv. 
 
-We will create 5 plots using the R package cummeRbund and focus on two of them to analyze.
+We will create 5 plots using the R package cummeRbund and focus on two of them to analyze. The cummeRbund manual is [linked here](http://compbio.mit.edu/cummeRbund/manual_2_0.html).
 
 ## 11B - Files involved.
 ### —Data visualization—
@@ -971,15 +971,18 @@ Figure 2 is a volcano plot of the fold change value for all of the genes, with t
 
 This plot compares the significance of gene expression change with the fold change between the two treatments. 
 
-The cummeRbund manual is linked here [](http://compbio.mit.edu/cummeRbund/manual_2_0.html).
+Figure 2 is a scatter plot of the FPKM values (gene expression levels) between genes treated under Thiamine+ versus genes under Thiamine- conditions.
 
 This plot is relatively straightforward to interpret. The red dots are the significant genes. Because the red dots are all to the right of 0 on the log2(fold change) scale, all of the significantly regulated genes are significantly *up*regulated in the Thiamine- condition when compared with the Thiamine+ condition. The dots on the horizontal line of -log10(pvalue) of 0 represent genes that were not observed to change significantly between conditions. There are also a few dots to the very edges of either side of the plot. These genes are possibly the ones that have no expression under one condition and at least some expression under the other. 
 
-Figure 2 is a scatter plot of the FPKM values (gene expression levels) between genes treated under Thiamine+ versus genes under Thiamine- conditions.
+Figure stuff
+
+Red color highlights genes with significant differential expression between Thiamine+ and Thiamine- treatments.
 
 <img alt="Figure 2. Detailed volcano plot" src="final_results/3_volcano2.png" width="600" />
 
-**Figure 2. Volcano plot of *Candida albicans* genes plotted on -log10(p value) versus log2(fold change) scale.** Red color highlights genes with significant differential expression between Thiamine+ and Thiamine- treatments.
+**Figure 2. Volcano plot of *Candida albicans* genes plotted on -log10(p value) versus log2(fold change) scale.** 
+
 
 <br></br>
 
