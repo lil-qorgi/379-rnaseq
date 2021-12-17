@@ -76,6 +76,7 @@ As the class used a divide & conquer strategy on these files, I focused on WTC2'
 
 
 ## 1C - Specific commands used in the analysis.
+On HPC.
 ```bash
 # obtain the .gz files from Google Bucket
 $ gsutil cp gs://gu-biology-dept-class/WTC2*.gz
@@ -114,7 +115,7 @@ There are **20,407,694** reads in both the forward and the reverse read files fo
 ## 2A - Objective(s) of this step of the analysis.
 The goal of this step is to use Trimmomatic to trim the raw reads in order to remove the problematic first ten bases of each read, reduce adapter content, improve reverse read quality, and improve read quality scores via sliding window trimming. 
 
-Additionally, the trimmed paired-end reads files will be compared with pre-trim raw reads files using FastQC to ensure that the clean achieved above aims as intended.
+Additionally, the trimmed paired-end reads files will be compared with pre-trim raw reads files using FastQC to ensure that the cleaning has achieved the aforementioned aims.
 
 ## 2B - Files involved.
 
@@ -158,6 +159,9 @@ FastQC reports (after renaming from FastQC default report names)
 - trimmed_reverse_FastQC_report.html
 
 ## 2C - Specific commands used in the analysis.
+
+On HPC.
+
 ### Create trim.sbatch
 ```bash
 $ nano trim.sbatch
@@ -205,6 +209,9 @@ $ bc -l <<< '/4'
 ```
 
 ### Observe output on local machine
+
+On local.
+
 ```bash
 # download from GCloud to local directory (with custom alias)
 $ get_hpc /home/qz108/RNA_seq_workflow/WTC2*trPE*
@@ -274,7 +281,7 @@ All other metrics were largely unchanged between raw and trimmed reads. The full
 [Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-2---clean-reads-via-trimmomatic)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-4---bowtie2-sequence-alignment-mostly-for-practice)
 
 ## 3A - Objective(s) of this step of the analysis.
-The goal of this step is to download the RefSeq *C. albicans* genome assembly from Entrez genome into a separate folder. The reason for downloading this particular assembly is provided in step 4A. 
+The goal of this step is to download the RefSeq *C. albicans* genome assembly from Entrez Genome into a new folder on HPC. The reason for downloading this particular assembly is provided in step 4A. 
 
 Species: [Candida albicans SC5314 (budding yeasts)](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=237561&lvl=3&lin=f&keep=1&srchmode=1&unlock)
 Link at Entrez Genome: [GCA_000182965.3](https://www.ncbi.nlm.nih.gov/assembly/GCA_000182965.3)
@@ -284,6 +291,9 @@ GCF_000182965.3_ASM18296v3_genomic.fna.gz
 - The RefSeq genome assembly for *C. albicans*, to be used as reference genome in step 4.
 
 ## 3C - Specific commands used in the analysis.
+
+On HPC.
+
 ```bash
 $ mkdir refseq_GCF_000182965.3
 $ cd refseq_GCF_000182965.3
@@ -344,12 +354,16 @@ Sequence alignment map
 - WTC2.sam
 
 ## 4C - Specific commands used in the analysis.
+
+On HPC.
+
 ```bash
 # Create & navigate to directory
 $ mkdir 1021-26_bowtie2_alignment
 $ cd 1021-26_bowtie2_alignment
 ```
 ### —bowtie2-build—
+
 ```bash
 # This is to build an index of the reference genome, which is then used by bowtie2 for alignment.
 
@@ -360,6 +374,7 @@ $ srun --pty bash
 $ bowtie2-build GCF_000182965.3_ASM18296v3_genomic.fna.gz Calbicans
 ```
 ### —bowtie2—
+
 ```bash
 # Copy over the WTC2 trPE fastq files from the outputs of the Trimmomatic run.
 $ cp ../1019_Trimmomatic/WTC2*trPE.fq .
@@ -439,6 +454,9 @@ Folder containing all outputs
 **Bolded files** are important.
 
 ## 5C - Specific commands used in the analysis.
+
+On HPC.
+
 ```bash
 $ gunzip GCF_000182965.3_ASM18296v3_genomic.gff.gz
 
@@ -498,7 +516,10 @@ READ<span>ME.md</span>
 Create a new repository called "379-rnaseq"
 
 ### Cloning online repo to local machine.
-The full journal is added to README.md.
+
+On local.
+
+The full journal up to this point was added to the README.md file of this repo.
 
 ```bash
 # Create local repo.
@@ -551,6 +572,9 @@ See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/).
         - this is the annotations file containing the transcripts inferred from the accepted_hits.bam alignment file.
 
 ## 7C - Specific commands used in the analysis.
+
+On HPC.
+
 ```bash
 # First, pull all required files together into the same folder for easier usage.
 
@@ -651,6 +675,9 @@ The six transcript files being merged came from performing steps 2, 5, and 7 on 
         - this is the annotation file that merges the transcripts.gtf file from the previous (cufflinks) step obtained for all biological replicates and experimental conditions: WTA1, A2, B1, B2, C1, C2. 
 
 ## 8C - Specific commands used in the analysis.
+
+On HPC.
+
 ```bash
 # First, move all required input files into the same folder.
 # Obtain all transcripts.gtf files from Google Bucket:
@@ -759,6 +786,9 @@ All output files will be exported into "cuffdiff_output" as specified by the cuf
     - ... (many other cuffdiff results)
 
 ## 9C - Specific commands used in the analysis.
+
+On HPC.
+
 ```bash
 $ mkdir cuffdiff_input
 # copy merged.gtf and all of the <sample>.bam files into cuffdiff_input/
@@ -939,8 +969,7 @@ $ gcloud compute scp cherries-controller:<path to NCBI_IDs.txt> .
 ## 10D - Results & interpretation.
 Using the gene_exp.diff results from step 9 and their corresponding NCBI IDs from merged.gtf, we built a summary table of the genes (statistically significantly) differentially expressed between the Thi+ and Thi- treatments.
 
-
-For earlier online viewing, here is the [csv version](final_results/DE_genes_summary_table.csv) of the summary table.
+For easier online viewing, here is the [csv version](final_results/DE_genes_summary_table.csv) of the summary table.
 
 The Excel table [can be downloaded here](final_results/DE_genes_summary_table.xlsx).
 
