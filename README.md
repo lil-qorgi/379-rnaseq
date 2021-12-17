@@ -60,7 +60,7 @@ Both the Google Cloud Platform (GCP)'s High-performance cluster (HPC) node and t
 
 # Step 1 - Obtain reads and read counting
 
-**Date: 2021.10.13**
+**Date due: 2021.10.13**
 
 [Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Back to intro](#introduction--background)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-2---clean-reads-via-trimmomatic)
 
@@ -108,7 +108,7 @@ There are **20,407,694** reads in both the forward and the reverse read files fo
 
 # Step 2 - Clean reads via Trimmomatic
 
-**Date: 2021.10.19**
+**Date due: 2021.10.19**
 
 [Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-1---obtain-reads-and-read-counting)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-3---obtain-reference-genome)
 
@@ -276,7 +276,7 @@ All other metrics were largely unchanged between raw and trimmed reads. The full
 
 # Step 3 - Obtain reference genome
 
-**Date: 2021.10.21**
+**Date due: 2021.10.21**
 
 [Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-2---clean-reads-via-trimmomatic)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-4---bowtie2-sequence-alignment-mostly-for-practice)
 
@@ -309,7 +309,7 @@ File obtained: GCF_000182965.3_ASM18296v3_genomic.fna.gz
 
 # Step 4 - bowtie2 sequence alignment (mostly for practice)
 
-**Date: 2021.10.26**
+**Date due: 2021.10.26**
 
 [Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-3---obtain-reference-genome)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-5---tophat-alignment)
 
@@ -413,7 +413,7 @@ The overall alignment rate is 97.97%, which includes both concordant and non-con
 
 # Step 5 - Tophat alignment
 
-**Date: 2021.10.28**
+**Date due: 2021.10.28**
 
 [Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-4---bowtie2-sequence-alignment-mostly-for-practice)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-6---transfer-to-github)
 
@@ -496,7 +496,7 @@ Tophat spliced alignment resulted in 90.3% concordant pair alignment rate. Simil
 
 # Step 6 - Transfer to GitHub
 
-**Date: 2021.11.02**
+**Date due: 2021.11.02**
 
 [Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-5---tophat-alignment)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-7---infer-transcripts-using-cufflinks)
 
@@ -543,7 +543,7 @@ The journal has been transferred onto GitHub. All script and output files were e
 
 # Step 7 - Infer transcripts using cufflinks
 
-**Date: 2021.11.04**
+**Date due: 2021.11.04**
 
 [Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-6---transfer-to-github)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-8---merge-transcript-annotation-files-using-cuffmerge)
 
@@ -632,7 +632,7 @@ The cufflinks program successfully inferred transcripts based on the tophat alig
 
 # Step 8 - Merge transcript annotation files using cuffmerge
 
-**Date: 2021.11.09**
+**Date due: 2021.11.09**
 
 [Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-7---infer-transcripts-using-cufflinks)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-9---identify-differentially-expressed-genes-using-cuffdiff)
 
@@ -748,7 +748,7 @@ merged.gtf serves as the overall set of transcripts from which the transcripts (
 
 # Step 9 - Identify differentially expressed genes using cuffdiff
 
-**Date: 2021.11.11**
+**Date due: 2021.11.11**
 
 [Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-8---merge-transcript-annotation-files-using-cuffmerge)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-10---build-summary-table)
 
@@ -875,7 +875,7 @@ Now that we have the differential expression results from the experiment stored 
 
 # Step 10 - Build summary table
 
-**Date: 2021.11.16**
+**Date due: 2021.11.16**
 
 [Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-9---identify-differentially-expressed-genes-using-cuffdiff)&nbsp;&nbsp;&nbsp;&nbsp;[Next step](#step-11---visualize-de-genes-using-cummerbund)
 
@@ -979,7 +979,7 @@ The Excel table [can be downloaded here](final_results/DE_genes_summary_table.xl
 
 # Step 11 - Visualize DE genes using cummeRbund
 
-**Date: 2021.11.18**
+**Date due: 2021.11.18**
 
 [Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step](#step-10---build-summary-table)&nbsp;&nbsp;&nbsp;&nbsp;[Next section](#appendix---all-cummerbund-plots)
 
@@ -1116,7 +1116,7 @@ v1.2.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2021.12.16
 
 # Step n - Title
 
-**Date: yyyy.mm.dd**
+**Date due: yyyy.mm.dd**
 
 [Back to menu](#menu)&nbsp;&nbsp;&nbsp;&nbsp;[Previous step]()&nbsp;&nbsp;&nbsp;&nbsp;[Next step]()
 
