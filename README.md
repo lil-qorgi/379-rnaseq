@@ -962,8 +962,8 @@ $ gcloud compute scp cherries-controller:<path to NCBI_IDs.txt> .
 - Add new columns:
     - gene_interpretation_uniprot
     - gene_interpretation_entrez_nucleotide
-    - uniprot_link-
-    - entrez_nucleotide_link"
+    - uniprot_link
+    - entrez_nucleotide_link
 - Perform UniProt and Entrez Nucleotide searches using the NCBI IDs and fill in the corresponding cells for the four new columns.
 
 ## 10D - Results & interpretation.
