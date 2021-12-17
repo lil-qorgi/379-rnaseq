@@ -967,13 +967,13 @@ Finally, the density plot in Figure 1 cannot provide information on whether indi
   
 ### Visualizing genes' significance versus fold change between treatments (Figure 2)
 
-Figure 2 is a volcano plot of the fold change value for all of the genes, with the fold change value calculated as the expression level of each gene under Thiamine- condition over the corresponding expression level under Thiamine+ condition. The x-axis represents the log base 2 transformed value of the fold change, as calculated by dividing q2 FPKM by q1 FPKM. The y-axis represents the negative of the log base 10 transformed value of the significance indicator, p-value, calculated from step 9 in cuffdiff. Genes with significance above the threshold 0.05 are colored red. The significance threshold is set at an alpha value of 0.05. 
+Figure 2 is a **volcano plot** of the **fold change** value for all of the genes, with the fold change value calculated as the **expression level of each gene under Thiamine- condition divided by the corresponding expression level under Thiamine+ condition**. The x-axis represents the **log<sub>2</sub>-transformed value of the fold change**, as calculated by **dividing q2 FPKM by q1 FPKM**. The y-axis represents the negative of the **log<sub>10</sub> transformed value** of the **significance metric, p-value,** which was calculated from cuffdiff in step 9. Genes with significance above the **threshold** 0.05 are **colored red**. The significance threshold is set at an **alpha value of 0.05**. 
 
-This plot compares the significance of gene expression change with the fold change between the two treatments. 
+This plot **compares the significance** of gene expression change **with the fold change** **between (the) two treatments.** 
 
 Figure 2 is a scatter plot of the FPKM values (gene expression levels) between genes treated under Thiamine+ versus genes under Thiamine- conditions.
 
-This plot is relatively straightforward to interpret. The red dots are the significant genes. Because the red dots are all to the right of 0 on the log2(fold change) scale, all of the significantly regulated genes are significantly *up*regulated in the Thiamine- condition when compared with the Thiamine+ condition. The dots on the horizontal line of -log10(pvalue) of 0 represent genes that were not observed to change significantly between conditions. There are also a few dots to the very edges of either side of the plot. These genes are possibly the ones that have no expression under one condition and at least some expression under the other. 
+This plot is relatively straightforward to interpret. The **red points are the significant genes**. Because the red dots are all **to the right of 0** on the log2(fold change) scale, all of the significantly regulated genes are **significantly *up*regulated in the Thiamine- condition** when compared with the Thiamine+ condition. The dots on the horizontal line of -log<sub>10</sub>(p value) of 0 represent genes that were calculated to be non-significantly between conditions. There are also a few dots to the very edges of either side of the plot. These genes are possibly the ones that have close to no expression under one condition and some expression under the other, resulting in very large or small ratios, though they are not red, suggesting by some other metric they were.
 
 Figure stuff
 
