@@ -119,31 +119,43 @@ Additionally, the trimmed paired-end reads files will be compared with pre-trim 
 ## 2B - Files involved.
 
 ### —Trimmomatic—
+### *Slurm script*
+[trim.sbatch](scripts/trim.sbatch)
+- By convention in this notebook, scripts will also be linked to from the code sections. 
+
 ### *input files*
-- Raw RNA-seq reads from wildtype, replicate C, thiamine- treatment.
-    - WTC2_1.fq.gz
-    - WTC2_2.fq.gz
+Raw RNA-seq reads from wildtype, replicate C, thiamine- treatment.
+- WTC2_1.fq.gz
+- WTC2_2.fq.gz
 
 ### *output files*
-- Paired-end (PE) trimmed sequence files, both forward (_1) and reverse (_2) reads 
-    - WTC2_1.trPE.fq.gz
-    - WTC2_2.trPE.fq.gz
-- Single-end (SE) trimmed sequence files. Note that the forward and reverse reads here are *not* paired.
-    - WTC2_1.trSE.fq.gz
-    - WTC2_2.trSE.fq.gz
-    - We will not use these trimmed single-end reads in subsequent steps.
+Paired-end (PE) trimmed sequence files, both forward (_1) and reverse (_2) reads 
+- WTC2_1.trPE.fq.gz
+- WTC2_2.trPE.fq.gz
+
+Single-end (SE) trimmed sequence files. Note that the forward and reverse reads here are *not* paired.
+- WTC2_1.trSE.fq.gz
+- WTC2_2.trSE.fq.gz
+- We will not use these trimmed single-end reads in subsequent steps.
 
 ### —FastQC—
 ### *input files*
-- The raw (pre-trim) paired-end sequence files (see input files in Step 1).
-- The trimmed paired-end sequence files.
+Raw (pre-trim) paired-end sequence files, which are the same input files in Step 1.
+- WTC2_1.fq.gz
+    - forward reads of wildtype, Thi-, replicate C.
+- WTC2_2.fq.gz
+    - reverse reads of wildtype, Thi-, replicate C.
+
+The trimmed paired-end sequence files, from the preceding Trimmomatic run.
+- WTC2_1.trPE.fq.gz
+- WTC2_2.trPE.fq.gz
 
 ### *output files*
-- FastQC reports (renamed from FastQC default report names)
-    - raw_forward_FastQC_report.html
-    - raw_reverse_FastQC_report.html
-    - trimmed_forward_FastQC_report.html
-    - trimmed_reverse_FastQC_report.html
+FastQC reports (after renaming from FastQC default report names)
+- raw_forward_FastQC_report.html
+- raw_reverse_FastQC_report.html
+- trimmed_forward_FastQC_report.html
+- trimmed_reverse_FastQC_report.html
 
 ## 2C - Specific commands used in the analysis.
 ### Create trim.sbatch
@@ -311,6 +323,9 @@ Index files
 - Calbicans.rev.2.bt2
 
 ### —bowtie2—
+### *Slurm script*
+[bt2.sbatch](scripts/bt2.sbatch)
+
 ### *input files*
 Index files
 - Calbicans.1.bt2
@@ -392,6 +407,9 @@ Similar to step 4, the goal of this step is to align our trimmed reads from step
 
 ## 5B - Files involved.
 ### —Tophat—
+### *Slurm script*
+[tophat_align.sbatch](scripts/tophat_align.sbatch)
+
 ### *input files*
 Annotation file (unzipped) for identifying splice sites
 - GCF_000182965.3_ASM18296v3_genomic.gff
@@ -409,7 +427,7 @@ Folder containing all outputs
 - WTC2_tophat/
     - **accepted_hits.bam**
         - The sequences that were successfully aligned by tophat to the reference genome.
-    - **align_summary.txt**
+    - [**align_summary.txt**](summary_outputs/tophat_align_summary.txt)
         - A summary of the percentage of input reads that were aligned, either concordantly or discordantly, to the reference genome.
     - deletions.bed  
     - insertions.bed   
@@ -515,6 +533,8 @@ See [cufflinks manual](http://cole-trapnell-lab.github.io/cufflinks/manual/).
 
 ## 7B - Files involved.
 ### —cufflinks—
+### *Slurm script*
+[z01.cufflinks_WTC2](slurm_outputs/z01.cufflinks_WTC2)
 
 ### *input files*
 - GCF_000182965.3_ASM18296v3_genomic.gff
@@ -599,6 +619,9 @@ The six transcript files being merged came from performing steps 2, 5, and 7 on 
 
 ## 8B - Files involved.
 ### —cuffmerge—
+### *Slurm script*
+[cuffmerge.sbatch](scripts/cuffmerge.sbatch)
+
 ### *input files*
 - GCF_000182965.3_ASM18296v3_genomic.gff
     - Note that, similar to cufflinks, even though cuffmerge  requires .gtf., .gff works as well because the two file formats are very similar.
@@ -707,6 +730,9 @@ The goal in this step is to identify the genes (i.e., their transcripts) that we
 
 ## 9B - Files involved.
 ### —cuffdiff—
+### *Slurm script*
+[cuffdiff.sbatch](scripts/cuffdiff.sbatch)
+
 ### *input files*
 All input files for cuffdiff are placed into a new folder named "cuffdiff_input"
 - cuffdiff_input/
@@ -731,7 +757,6 @@ All output files will be exported into "cuffdiff_output" as specified by the cuf
 - cuffdiff_output/
     - **gene_exp.diff**
     - ... (many other cuffdiff results)
-- [**z01.cuffdiff**](slurm_outputs/z01.cuffdiff)
 
 ## 9C - Specific commands used in the analysis.
 ```bash
@@ -741,7 +766,7 @@ $ mkdir cuffdiff_input
 # edit cuffdiff.sbatch
 $ nano cuffdiff.sbatch
 ```
-[cuffdiff.sbatch](scripts/cuffdiff.sbatch)
+[**cuffdiff.sbatch**](scripts/cuffdiff.sbatch)
 
 ```bash
 # run sbatch script. Note that cuffdiff_inputs/ is parallel to cuffdiff.sbatch
@@ -840,18 +865,22 @@ Our method is to join two sub-tables, derived from merged.gtf and gene_exp.diff,
 
 ## 10C - Specific commands used in the analysis.
 Columns we'll need in our summary table:
-- TUXEDO SUITE ID
-- NCBI ID (taken from merged.gtf)
-- GENE LABEL (acronym)
-- FPKM_THI+
-- FPKM_THI-
-- LOG2_FC (THI- relative THI+)
-- Q-VALUE (FDR CORRECTED)
-- NOTES INTERPRETATION (from uniport and entrez nucleotide)
+```
+TUXEDO SUITE ID
+NCBI ID                 (taken from merged.gtf)
+GENE LABEL              (gene acronym)
+FPKM_THI+
+FPKM_THI-
+LOG2_FC                 (Thi- relative to Thi+)
+Q-VALUE                 (FDR corrected)
+NOTES INTERPRETATION    (from Uniprot and Entrez Nucleotide)
+```
 
 On the HPC cloud node, we'll copy merged.gtf and gene_exp.diff into a separate folder. (In this case, I named that folder 1116_cuffdiff_results_interpretation/)
 
-### extract data from gene_exp.diff to obtain genes and expression levels.
+### Extract Data
+
+#### Extract data from gene_exp.diff to obtain genes and expression levels.
 We'll first obtain the columns we want from gene_exp.diff
 
 ```bash
@@ -859,7 +888,7 @@ We'll first obtain the columns we want from gene_exp.diff
 $ grep "yes" gene_exp.diff | cut -f1,3,8-10,13 > DE_genes.txt
 ```
 
-### extract data from merged.gtf to find NCBI IDs.
+#### Extract data from merged.gtf to find NCBI IDs.
 We'll next obtain the NCBI IDs by grepping the XLOC IDs from gene_exp.diff against merged.gtf.
 
 ```bash
@@ -884,6 +913,7 @@ Now that we have both the file containing gene_exp.diff's relevant columns and t
 $ gcloud compute scp cherries-controller:<path to DE_genes.txt> .
 $ gcloud compute scp cherries-controller:<path to NCBI_IDs.txt> .
 ```
+
 #### Import data
 - Create an Excel spreadsheet called "Join subtables.xlsx"
 - Inside this Excel file, create two empty sheets called "DE_genes" and "NCBI_IDs". 
@@ -909,9 +939,10 @@ $ gcloud compute scp cherries-controller:<path to NCBI_IDs.txt> .
 ## 10D - Results & interpretation.
 Using the gene_exp.diff results from step 9 and their corresponding NCBI IDs from merged.gtf, we built a summary table of the genes (statistically significantly) differentially expressed between the Thi+ and Thi- treatments.
 
-[The Excel table is here](final_results/DE_genes_summary_table.xlsx).
-For online viewing, here is also a [csv version](final_results/DE_genes_summary_table.csv).
 
+For earlier online viewing, here is the [csv version](final_results/DE_genes_summary_table.csv) of the summary table.
+
+The Excel table [can be downloaded here](final_results/DE_genes_summary_table.xlsx).
 
 ---
 
@@ -926,16 +957,19 @@ For online viewing, here is also a [csv version](final_results/DE_genes_summary_
 ## 11A - Objective(s) of this step of the analysis.
 The goal of this step is to use multiple plot types to visualize the gene expressions of the DE genes identified in step 9 by cuffdiff and summarized in step 10 in DE_genes_summary_table.csv. 
 
-We will create 5 plots using the R package cummeRbund and focus on two of them to analyze. The cummeRbund manual is [linked here](http://compbio.mit.edu/cummeRbund/manual_2_0.html).
+We will create 5 plots using the R package cummeRbund and focus on two of them to analyze. 
+
+For reference, the cummeRbund manual is [found here](http://compbio.mit.edu/cummeRbund/manual_2_0.html).
 
 ## 11B - Files involved.
 ### —Data visualization—
 ### *R script*
 [cummeRbund.R](scripts/cummeRbund.R)
+- See the R script for specific commands used to create the plots.
 
 ### *underlying data*
 cuffdiff_output/
-- The full cuffdiff_output/ folder that was the output of the cuffdiff run from step 9.
+- The full cuffdiff_output/ folder from the cuffdiff run in step 9.
 
 
 ## 11C - Specific commands used in the analysis.
@@ -945,13 +979,11 @@ On local terminal: download cuffdiff_output/ folder from HPC to local machine.
 $ gcloud compute scp --recurse cherries-controller:<path to cuffdiff_output> .
 ```
 
-[See the R script](scripts/cummeRbund.R) for which commands create which plots.
-
 ## 11D - Results & interpretation.
 
 Using cummeRbund visualization of the data sets from both Thiamine+ and Thiamine- conditions, we can now perform exploratory data analysis. We focus on two of the five figures generated by the cummeRbund script for results and discussion. 
 
-### Comparing overall gene expression levels between treatments (Figure 1)
+### Comparing overall gene expression levels between treatments
 
 Figure 1 allows us to compare at a high level the overall gene expression levels from the two *Candida albicans* growing conditions. The figure is a density plot displaying the distributions of gene expression levels for the two conditions studied — one for Thiamine+ (q1) and one for Thiamine- (q2). The figure plots the proportion of genes out of the total genes observed (y-axis: density) that have a given FPKM value (x-axis: log-base-10 transformed). The FPKM values are numerical measures of gene expression levels normalized against transcript and library size. 
 
@@ -962,10 +994,8 @@ Finally, the density plot in Figure 1 cannot provide information on whether indi
 <img alt="Figure 1. Density plot" src="final_results/1_density.png" width="600"/>
 
 **Figure 1. Density plot of gene expression levels for *Candida albicans* grown in Thiamine+ and Thiamine- conditions does not suggest shift in the overall expression level between the conditions.** The gene expression levels for both Thiamine+ (q1) and Thiamine- (q2) treatments are represented as log<sub>10</sub>-transformed FPKM values. The plot was produced using the csDensity() function in R.
- 
-<br></br>
   
-### Visualizing genes' significance versus fold change between treatments (Figure 2)
+### Visualizing gene significance versus fold change between Thi- and Thi+ treatments
 
 Figure 2 is a volcano plot comparing the significance level with the fold change of expression level of each gene from the Thi+ to the Thi- treatment. The genes with differential expression significance exceeding the set threshold (p-value < 0.05) are highlighted as red points. The positions of all red dots being to the right of the log<sub>2</sub>(fold change) = 0 line implies that all significantly differentially expressed (red) genes are *up*regulated in the Thiamine- condition compared with the Thiamine+ condition. These correspond to the genes found by cuffdiff in step 9 and listed in the summary table in step 10.
 
