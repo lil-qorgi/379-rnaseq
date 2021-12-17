@@ -967,26 +967,13 @@ Finally, the density plot in Figure 1 cannot provide information on whether indi
   
 ### Visualizing genes' significance versus fold change between treatments (Figure 2)
 
-Figure 2 is a **volcano plot** of the **fold change** value for all of the genes, with the fold change value calculated as the **expression level of each gene under Thiamine- condition divided by the corresponding expression level under Thiamine+ condition**. The x-axis represents the **log<sub>2</sub>-transformed value of the fold change**, as calculated by **dividing q2 FPKM by q1 FPKM**. The y-axis represents the negative of the **log<sub>10</sub> transformed value** of the **significance metric, p-value,** which was calculated from cuffdiff in step 9. Genes with significance above the **threshold** 0.05 are **colored red**. The significance threshold is set at an **alpha value of 0.05**. 
+Figure 2 is a volcano plot comparing the significance level with the fold change of expression level of each gene from the Thi+ to the Thi- treatment. The genes with differential expression significance exceeding the set threshold (p-value < 0.05) are highlighted as red points. The positions of all red dots being to the right of the log<sub>2</sub>(fold change) = 0 line implies that all significantly differentially expressed (red) genes are *up*regulated in the Thiamine- condition compared with the Thiamine+ condition. These correspond to the genes found by cuffdiff in step 9 and listed in the summary table in step 10.
 
-This plot **compares the significance** of gene expression change **with the fold change** **between (the) two treatments.** 
-
-Figure 2 is a scatter plot of the FPKM values (gene expression levels) between genes treated under Thiamine+ versus genes under Thiamine- conditions.
-
-This plot is relatively straightforward to interpret. The **red points are the significant genes**. Because the red dots are all **to the right of 0** on the log2(fold change) scale, all of the significantly regulated genes are **significantly *up*regulated in the Thiamine- condition** when compared with the Thiamine+ condition. The dots on the horizontal line of -log<sub>10</sub>(p value) of 0 represent genes that were calculated to be non-significantly between conditions. There are also a few dots to the **edges of either side of the plot**. These genes are possibly the ones that have close to no expression under one condition and some expression under the other, resulting in very large or small ratios, though they are not red, suggesting by some other metric cuffdiff found them to be **less than significant**.
-
-Figure stuff
-
-Red color highlights genes with significant differential expression between Thiamine+ and Thiamine- treatments.
-
-Figure 2 is a **volcano plot** of the **fold change** value for all of the genes, with the fold change value calculated as the **expression level of each gene under Thiamine- condition divided by the corresponding expression level under Thiamine+ condition**. The x-axis represents the **log<sub>2</sub>-transformed value of the fold change**, as calculated by **dividing q2 FPKM by q1 FPKM**. The y-axis represents the negative of the **log<sub>10</sub> transformed value** of the **significance metric, p-value,** which was calculated from cuffdiff in step 9. Genes with significance above the **threshold** 0.05 are **colored red**. The significance threshold is set at an **alpha value of 0.05**. 
-
-This plot **compares the significance** of gene expression change **with the fold change** **between (the) two treatments.** 
+Less clear to interpret are the several dots on the left and right edges of the plot, which are possibly genes that have very low or no expression in one condition and more detectable expression in the other condition. The ratios between such FPKM values would give very large or small log<sub>2</sub>(fold change) values. These genes are not significant, likely due to cuffdiff considering criteria other than fold change when calculating p-values in step 9.
 
 <img alt="Figure 2. Detailed volcano plot" src="final_results/3_volcano2.png" width="600" />
 
-**Figure 2. Volcano plot of *Candida albicans* genes plotted on -log10(p value) versus log2(fold change) scale.** 
-
+**Figure 2. Volcano plot of *Candida albicans* genes shows upregulation of some genes in the absence of thiamine.** The significance metric, p-value (α = 0.05), was calculated from cuffdiff, then log<sub>10</sub>-transformed before plotting on the y-axis. The fold change, calculated by dividng Thiamine- (q2) FPKM by Thiamine+ (q1) FPKM, is log<sub>2</sub>-transformed before plotting on the x-axis. Genes found to be significantly differentially expressed are highlighted red in the plot. The plot was produced using the csVolcano() function in R. 
 
 <br></br>
 
